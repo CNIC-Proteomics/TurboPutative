@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TurboPutative</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link href="/assets/css/main.css" type="text/css" rel="stylesheet">
+    <style>
+
+        /* Style Main */
+
+        div.main {
+            display: grid;
+            grid-template-columns: 49% 49%;
+            grid-column-gap: 2%;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        div.description {
+            /*background-color: white;*/
+            /*background-image: linear-gradient(to bottom right, rgba(0, 195, 255, 0.185), rgba(0, 195, 255, 0.001));*/
+            background-image: url("images/description3_mod.jpg");
+            background-size: cover;
+            height: 280px;
+            overflow: auto;
+        }
+
+        div.description h2{
+            text-align: center
+        }
+
+        div.description p {
+            padding: 0 30px;
+            line-height: 150%;
+            text-align: justify;
+            
+        }
+
+        /* Style Try It */
+        div.try {
+            display: grid;
+            grid-template-rows: 50% 50%;
+            /*background-color: white;*/
+            /*background-image: linear-gradient(rgba(0, 238, 255, 0.185), rgba(0, 140, 255, 0.01));*/
+            background-image: url("images/try_mod.jpg");
+            background-size: cover;
+            height: 280px;
+            text-align: center;
+        }
+
+        #tryTitle h2 {
+            text-align: center;
+        }
+
+        #tryRef a {
+            display: inline-block;
+            position: relative;
+            top: -20px;
+            text-align: center;
+            text-decoration: none;
+            padding: 20px 40px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            background-color: #4CAF50;
+            color: white;
+            transition: 1s;
+        }
+
+        #tryRef a:hover {
+            background-color: #204922;
+            transform: scale(1.1, 1.1);
+        }
+
+        div.main:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+    </style>
+    
+</head>
+<body>
+
+    <!-- Header-->
+    <div class="header">
+        <!--<div style="float:left;">
+            <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
+        </div> -->
+        <a href="index.html">
+            <h1></h1>
+            <h2></h2>
+        </a>
+    </div>
+
+    <!-- Navigation bar -->
+    <ul class="nav">
+        <li class="navItem"><a class="active" href="">Home</a></li>
+        <li class="navItem dropDown">
+            <a href="javascript:void(0)" class="dropDownBtn">Help</a>
+            <div class="dropDownContent">
+                <a href="modules.html">Modules</a>
+                <a href='settings.html'>Settings</a>
+            </div>
+        </li>
+        <li class="navItem"><a href="turboputative.html">Execute</a></li>
+        <li class="navItem"><a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a></li>
+        <li class="navItem"><a href="contactUs.html">Contact us</a></li>
+    </ul>
+
+    <!-- Brief Description -->
+    <div class="main">
+        <div class="description">
+            <h2>What is TurboPutative?</h2>
+            <p id="introduction">TurboPutative <!--(<u>P</u>rocessing of <u>Pu</u>tative Annotations for <u>M</u>etabolomic <u>A</u>nalysis) -->
+                is a program made up of a set of tools that automate and streamline 
+                the processing of tables with putative annotations, that is, of tables that in each 
+                row assign a candidate metabolite to the signals detected by the mass spectrometer (feature). 
+                The function of each tool and its configurable parameters are explained in
+                <a href="modules.html" style="text-decoration:none; color:darkblue;">Modules</a> and 
+                <a href="settings.html" style="text-decoration:none; color:darkblue;">Settings</a>
+                section, respectively.
+            </p>
+        </div>
+            
+        <div class="try">
+            <div id="tryTitle">
+                <h2>Design customized workflow</h2>
+            </div>
+            <div id="tryRef">
+                <a href="turboputative.html">Try it!</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footText">
+            <p><a href="https://www.cnic.es/en" target="_blank">Spanish National Center for Cardiovascular Research</a></p>
+            <p>Cardiovascular Proteomics and Metabolomics Unit</p>
+            <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+        </div>
+    </div>
+
+</body>
+</html>

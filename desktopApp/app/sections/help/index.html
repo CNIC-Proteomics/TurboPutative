@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../assets/css/body.css" rel="stylesheet">
+    <link href="../../assets/css/header.css" rel="stylesheet">
+    <link href="../../assets/css/title.css" rel="stylesheet">
+    <title>TurboPutative</title>
+    <style>
+        /* RETURN */
+        #previousContainer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .change {
+            display: inline-block;
+
+            border: 1px solid lightgray;
+            border-radius: 50px;
+            
+            background-color: transparent;
+            color: white;
+            font-family: Arial;
+            font-weight: 300;
+            font-size: 1.2em;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+
+            transition: background-color 1s;
+        }
+
+        .change:hover {
+            background-color: lightgray;
+            color: black;
+        }
+
+        .previous {
+            padding: 8px 16px;
+        }
+
+        /* MAIN CONTENT */
+        #mainText {
+            margin-top: 6%;
+            margin-bottom: 4%;
+            color: lightgray;
+            font-size: 1.4em;
+            font-family: Arial;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .row {
+            width: 80%;
+            height: 20%;
+            margin: auto;
+            margin-bottom: 4%;
+        }
+
+        .row::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .btnContainer {
+            float: left;
+            width: 50%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            border: 2px solid rgba(70, 0, 0, 1);
+            color: white;
+            text-decoration: none;
+            font-family: Arial;
+            font-size: 2em;
+            font-weight: 400;
+            cursor: pointer;
+            width: 80%;
+            padding: 16px 24px;
+            border-radius: 6px;
+            background-color: rgba(129, 0, 0, 0.4);
+            opacity: 0.5;
+            transition: 0.8s;
+            
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 0, 0, 0.8);
+            opacity: 1;
+            border: 2px solid rgba(70, 0, 0, 0.8);
+        }
+
+        /* FOOTER */
+        #footer {
+            position: absolute;
+            bottom: 0px;
+            left: 15%;
+            padding: 0;
+            width: 70%;
+            text-align: center;
+            color: lightgray;
+            font-family: Arial;
+            font-size: 0.8em;
+        }
+
+        #footer a {
+            text-decoration: none;
+            color: lightgray;
+        }
+
+        #footer p {
+            padding: 0;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" href="../../index.html">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span></span>
+        </div>
+        <div id="subtitle">
+            <span></span>
+        </div>
+    </div>
+
+    <div id="mainContent">
+
+        <div id="mainText">Select a module to display help</div>
+
+        <div class="row" id="rowOne">
+            <div id="taggerContent" class="btnContainer">
+                <a id="taggerBtn" class="btn" href="./tagger/function.html">Tagger</a>
+            </div>
+            <div id="REnameContent" class="btnContainer">
+                <a id="REnameBtn" class="btn" href="./REname/function.html">REname</a>
+            </div>
+        </div>
+
+        <div class="row" id="rowTwo">
+            <div id="rowMergerContent" class="btnContainer">
+                <a id="rowMergerBtn" class="btn" href="./rowMerger/function.html">RowMerger</a>
+            </div>
+            <div id="tableMergerContent" class="btnContainer">
+                <a id="tableMergerBtn" class="btn" href="./tableMerger/function.html">TableMerger</a>
+            </div>
+        </div>
+    
+    </div>
+
+    <div id="footer">
+        <div id="footText">
+            <p>Spanish National Center for Cardiovascular Research</p>
+            <p>Cardiovascular Proteomics and Metabolomics Unit</p>
+            <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../assets/css/body.css" rel="stylesheet">
+    <link href="../../assets/css/header.css" rel="stylesheet">
+    <link href="../../assets/css/title.css" rel="stylesheet">
+    <link href="../../assets/css/footer.css" rel="stylesheet">
+    <title>TurboPutative</title>
+    <style>
+        /* MAIN MESSAGE */
+        #msgContent {
+            margin-top: 3%;
+            padding: 16px;
+            text-align: center;
+            color: lightgray;
+            font-family: Arial;
+            font-size: 1.2em;
+            font-weight: 300;
+            /*border: 1px solid red;*/
+        }
+
+        /* BUTTONS */ 
+        #buttonContent {
+            margin-top: 2%;
+            margin-left: 8%;
+            margin-right: 8%;
+            height: 90px;
+        }
+
+        .buttonSpace {
+            float: left;
+            width: 25%;
+            height: 90px;
+        }
+
+        #buttonContent::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .buttonSpace button {
+            width: 80%;
+            height: 80%;
+            font-size: 1.2em;
+            font-weight: 300;
+            display: block;
+            margin:auto;
+        }
+
+        .button {
+            background-color: transparent;
+            border-radius: 10px;
+            border: 3px solid rgba(139, 0, 0, 0.8);
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            text-decoration: none;
+            transition: background-color 0.8s;
+        }
+
+        .button:hover {
+            background-color: rgba(139, 0, 0, 0.5);
+        }
+
+        .button:focus {
+            outline: none;
+        }
+
+
+        /* MODULE SELECTION */
+        #selModDisplay {
+            margin-top: 1%;
+            text-align: center;
+            font-family: Arial;
+            font-weight: 300;
+            color: lightgray;
+
+        }
+
+        /* NEXT */
+        #previousContainer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        #nextContainer {
+            margin-top: 3%;
+        }
+
+        #nextContainer a {
+            width: 10%;
+        }
+
+        .change {
+            display: inline-block;
+
+            border: 1px solid lightgray;
+            border-radius: 50px;
+            
+            background-color: transparent;
+            color: white;
+            font-family: Arial;
+            font-weight: 300;
+            font-size: 1.2em;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+
+            transition: background-color 1s;
+        }
+
+        .previous {
+            padding: 8px 16px;
+        }
+
+        .next {
+            padding: 8px 0px;
+            padding-left: 16px;
+            padding-right: 26px;
+        }
+
+        .change:hover {
+            background-color: lightgray;
+            color: black;
+        }
+
+        #reload {
+            display: inline-block;
+            padding-top: 10px;
+            margin-right: 20px;
+            font-size: 20px;
+            color:lightgray;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" href="../../index.html">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span></span>
+        </div>
+        <div id="subtitle">
+            <span></span>
+        </div>
+    </div>
+
+    <div id="mainContent">
+        
+        <div id="msgContent">
+            <div id="msg">Select modules in order of execution:</div>
+        </div>
+
+        <div id="buttonContent">
+            <div id="spaceTagger" class="buttonSpace">
+                <button id="btnTagger" class="button"  type="button" onclick="displayModule('Tagger')">Tagger</button>
+            </div>
+            <div id="spaceREname" class="buttonSpace">
+                <button id="btnREname" class="button" type="button" onclick="displayModule('REname')">REname</button>
+            </div>
+            <div id="spaceRowMerger" class="buttonSpace">
+                <button id="btnRowMerger" class="button" type="button" onclick="displayModule('RowMerger')">RowMerger</button>
+            </div>
+            <div id="spaceTableMerger" class="buttonSpace">
+                <button id="btnTableMerger" class="button" type="button" onclick="displayModule('TableMerger')">TableMerger</button>
+            </div>
+        </div>
+
+        <div id="selectedModules">
+            <div id="selModDisplay">
+                <!-- <span style="display: block; float:right; font-size: 30px; margin: 1.2% 8% 0 0;">&#10008;</span> -->
+                <!-- <span>Tagger</span> > <span style="display: none;">REname</span> > <span>RowMerger</span> > <span>TableMerger</span> -->
+            </div>
+        </div>
+
+        <div id="nextContainer">
+            <div id="selectBtn" style="visibility: hidden; width:100px; margin: auto; padding: 0px; text-align: center;">
+                <span id="reload" onclick="reload()">&#8634;</span>
+                <a class="change next" onclick="next()">&raquo;</a>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div id="footText">
+                <p>Spanish National Center for Cardiovascular Research</p>
+                <p>Cardiovascular Proteomics and Metabolomics Unit</p>
+                <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+
+<script>
+    // Global variables
+    const { ipcRenderer } = require('electron');
+    var workflow = {modules: [], next: -1, files: {infile: {}, featInfo: {}, regex: {}},  ini: {}, jobID: ""};
+
+    // Modules display
+    function displayModule (module) {
+
+        // If module was already selected, leave the function
+        if (workflow.modules.includes(module)) {
+            return 1;
+        }
+
+        // Add the module to workflow object
+        workflow.modules.push(module);
+
+        // Change background color of the button
+        document.getElementById("btn" + module).style.backgroundColor = "rgba(200, 0, 0, 0.5)";
+
+        // Display selected modules
+        var spanElem = document.createElement("span");
+        var spanSep = document.createElement("span");
+        var container = document.getElementById("selModDisplay");
+
+        // Add separator
+        if (workflow.modules.length > 1) {
+            spanSep.innerHTML = "  &#8594;  ";
+            spanSep.style.fontSize = "30px";
+            container.appendChild(spanSep);
+        }
+
+        // Add module
+        spanElem.innerHTML = module;
+        spanElem.style = "display: inline-block; border: 2px solid darkred; border-radius: 10px; padding: 15px"
+        container.appendChild(spanElem);
+
+        // Allow next button
+        document.getElementById("selectBtn").style.visibility = "visible";
+    }
+
+    function reload() {
+        location.reload();
+    }
+
+
+    function next() {
+        console.log(workflow);
+        ipcRenderer.send('select-modules', workflow);
+    }
+
+    ipcRenderer.on('reply', (e) => {
+        console.log('pong');
+    });
+
+</script>
+
+</html>

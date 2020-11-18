@@ -1,0 +1,58 @@
+#previousContainer {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.change {
+    display: inline-block;
+
+    border: 1px solid lightgray;
+    border-radius: 50px;
+            
+    background-color: transparent;
+    color: white;
+    font-family: Arial;
+    font-weight: 300;
+    font-size: 1.2em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: background-color 1s;
+}
+
+.previous {
+    padding: 8px 16px;
+}
+
+#nextContainer {
+    visibility: hidden;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+#nextContainer a {
+    width: 10%;
+}
+
+.next {
+    padding: 8px 0px;
+    padding-left: 16px;
+    padding-right: 26px;
+}
+
+.change:hover {
+    background-color: lightgray;
+    color: black;
+}
+
+.errorMsg {
+    display: none;
+    /*margin-top: 20px;*/
+    margin-top: 5%;
+    margin-bottom: 5%;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}

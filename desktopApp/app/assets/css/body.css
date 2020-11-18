@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 95%;
+}
+
+body {
+    background-color: black;
+    background-image: url(../images/dark-background.jpg);
+    background-size: cover;
+    position: relative;
+    height: 95%;            
+}

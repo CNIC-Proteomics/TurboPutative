@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../assets/css/body.css" rel="stylesheet">
+    <link href="../../assets/css/header.css" rel="stylesheet">
+    <link href="../../assets/css/title.css" rel="stylesheet">
+    <link href="../../assets/css/footer.css" rel="stylesheet">
+    <title>Results</title>
+    <style>
+        /* MAIN CONTENT */
+        #container h3 {
+            margin-top: 7%;
+            text-align: center;
+            color:white; 
+            font-size: 1.5em; 
+            font-weight: 300; 
+            font-family: Arial;
+        }
+
+        #btnContainer {
+            text-align: center;
+        }
+
+        #btn {
+            display: inline-block;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2em;
+            font-weight: 300;
+            color: lightgray;
+
+            background-color: rgba(129, 0, 0, 0.4);
+            border: none;
+            border-radius: 5px;
+            padding: 16px 24px;
+            cursor: pointer;
+
+            transition: all 0.4s ease 0s;
+        }
+
+        #btn:hover {
+            background-color: rgba(255, 0, 0, 0.8);
+            letter-spacing: 1px;
+        }
+
+        #btn:focus {
+            outline: none;
+        }
+
+        #returnContainer {
+            margin-top: 5%;
+            text-align: center;
+        }
+
+        #return {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            font-size: 2em;
+            font-weight: 300;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <div id="title">
+            <span></span>
+        </div>
+        <div id="subtitle">
+            <span></span>
+        </div>
+    </div>
+
+    <div id="container">
+
+        <h3>The workflow was executed successfully</h3>
+
+        <div id="btnContainer">
+            <button id="btn" type="button" onclick="results()">Open results</button>
+        </div>
+
+        <div id="returnContainer">
+            <a id="return" href="../../index.html">&#8617;</a>
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <div id="footText">
+            <p>Spanish National Center for Cardiovascular Research</p>
+            <p>Cardiovascular Proteomics Laboratory</p>
+            <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        const { ipcRenderer } = require('electron');
+        var workflow;
+
+        // See results
+        function results() {
+            ipcRenderer.send('see-results', workflow);
+        }
+
+        // Handle events
+        ipcRenderer.on('send-jobID', (e, receivedWorkflow) => {
+            workflow = receivedWorkflow;
+        })
+    </script>
+    
+</body>
+</html>

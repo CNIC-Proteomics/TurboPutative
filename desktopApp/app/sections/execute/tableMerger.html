@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TableMerger</title>
+    <link href="../../assets/css/body.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/run.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/tooltip.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/changeButton.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/header.css" rel="stylesheet" type="text/css">
+    <style>
+        /* SETTINGS CONTAINER */
+        #settings {
+            margin: 5% 3% 5% 3%;
+        }
+
+        #settings::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* PARAMS */
+        #moreCont {
+            margin-top: 5%;
+        }
+
+        #moreCont button {
+            display: block;
+            margin: auto;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #params {
+            width: 65%;
+            margin: auto;
+        }
+
+        #params h3 {
+            text-align: center;
+        }
+
+        .paramContainer {
+            margin-top: 3%;
+        }
+
+        #params label {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            font-weight: 300;
+            color: white;
+        }
+
+        #params input {
+            width: 100%;
+            height: 30px;
+            padding: 8px 8px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        #params input:focus {
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" onclick="goBack()">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span>TableMerger</span>
+        </div>
+    </div>
+
+    <div id="settings">
+        <div id="params">
+            <h3 style="color:white; font-size: 1.5em; font-weight: 300; font-family: Arial;">Parameters</h3>
+            <br>
+            <div class="paramContainer" style="text-align: center;">
+                <label for="featInfoFile">File with feature information</label>
+                <input type="file" id="featInfoFile" name="featInfoFile" style="display:block; width:auto; margin: auto; margin-top: 30px; border:none; color:lightgray;">
+            </div>
+            <br>
+            <div id="moreCont">
+                <button type="button" id="more" onclick="showMore()">Advanced</button>
+            </div>
+
+            <div id="hiddenParams" style="display: none;">
+
+                <div class="paramContainer">
+                    <label class="tooltip" for="decimalPlaces">Decimal Places <span class="icon">&#9432</span>
+                        <span class="tooltipText">Number of decimal places to which the experimental mass of the features will be rounded to "merge"</span>
+                    </label>
+                    <input type="text" id="decimalPlaces" name="decimalPlaces" value="4">
+                </div>
+
+                <div class="paramContainer">
+                    <label for="outputName">Output Name</label>
+                    <input type="text" id="outputName" name="outputName">
+                </div>
+
+                <div class="paramContainer">
+                    <label for="outputColumns">Output Columns</label>
+                    <input type="text" id="outputColumns" name="outputColumns">
+                </div>
+
+            </div> 
+
+        </div>
+    </div>
+
+    <div id="nextContainer">
+        <div id="selectBtn" style="width:200px; margin: auto; padding: 0px; text-align: center;">
+            <a class="change next" onclick="next()">&raquo;</a>
+        </div>
+        <div id="run">
+            <button id="runBtn" type="button" name="submit" onclick="run()">RUN</button>
+        </div
+    </div>
+    <div class="errorMsg" id="errorNext"></div>
+    
+    <script>
+        // Global variables
+        const { ipcRenderer } = require('electron');
+        var workflow;
+
+        // Show advanced parameters
+        var moreCont = 0;
+        function showMore() {
+            var paramElem = document.getElementById('hiddenParams');
+            paramElem.style.display = (moreCont == 0) ? "block" : "none";
+            moreCont = (moreCont == 0) ? 1 : 0;
+        }
+
+        // Show next button only when file is uploaded
+        const inputFileElem = document.getElementById("featInfoFile")
+
+        inputFileElem.addEventListener("change", () => {
+            // Add file information to workflow object
+            fileElemObj = document.getElementById('featInfoFile').files[0];
+            workflow.files.featInfo.name = fileElemObj.name
+            workflow.files.featInfo.path = fileElemObj.path
+
+            // Show next button
+            document.getElementById("nextContainer").style.visibility = "visible"
+        })
+
+        // Move to next window
+        function next() {
+            // Build tableMerger.ini
+            var iniPromise = new Promise(iniMaker);
+
+            // When tableMerger.ini is built, send
+            iniPromise.then((iniString) => {
+                console.log(iniString);
+                workflow.ini.tableMerger = iniString;
+                ipcRenderer.send("select-modules", workflow);
+            });
+        }
+
+        // Click go back
+        function goBack() {
+            ipcRenderer.send("go-back", workflow);
+        }
+
+        // Click run
+        function run() {
+            // Build tableMerger.ini
+            var iniPromise = new Promise(iniMaker)
+
+            // When tableMerger.ini is built, send
+            iniPromise.then((iniString) => {
+                console.log(iniString);
+                workflow.ini.tableMerger = iniString;
+                ipcRenderer.send("run-workflow", workflow);
+            });
+        }
+
+        // Handle events
+        ipcRenderer.on('send-workflow', (e, receivedWorkflow) => {
+            // Save received workflow and add one to next attribute
+            workflow = receivedWorkflow;
+            workflow.next += 1;
+            iniReader();
+
+            // If this is the last module, hidde next button and show run button
+            if (workflow.next == (workflow.modules.length)) {
+                document.getElementById('selectBtn').style.display = "none";
+                document.getElementById('run').style.display = "block";
+            }
+            console.log(workflow);
+        });
+
+        ipcRenderer.on('send-workflow-from-next', (e, receivedWorkflow) => {
+            // Refill all fiedls with iniString
+            workflow = receivedWorkflow;
+            workflow.next -= 1;
+            iniReader();
+        });
+
+        // Local function
+        function iniMaker(resolve, reject) {
+            var iniContent;
+            const outputNameElem = document.getElementById('outputName');
+
+            var outputName = outputNameElem.value == "" ? `${workflow.next}_tableMerged_${workflow.files.infile.name}` : outputNameElem.value;
+
+            iniContent = "[Parameters]";
+            iniContent += "###";
+            iniContent += "OutputName = " + outputName;
+            iniContent += "###";
+            iniContent += "OutputColumns = " + document.getElementById('outputColumns').value;
+            iniContent += "###";
+            iniContent += "N_Digits = " + document.getElementById('decimalPlaces').value;
+            iniContent += "###";
+
+            iniContent = iniContent.replace(/###/g, "\n");
+
+            resolve(iniContent);
+        }
+
+        function iniReader () {
+            // If ini is not defined leave the function...
+            if (!Object.keys(workflow.ini).includes('tableMerger')) return -1
+
+            var iniString = workflow.ini.tableMerger;
+            
+            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
+            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
+            document.getElementById('decimalPlaces').value = iniString.match(/\nN_Digits = (\d*)\n/)[1];
+        }
+    </script>
+</body>
+</html>

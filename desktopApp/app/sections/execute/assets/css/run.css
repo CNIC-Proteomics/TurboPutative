@@ -1,0 +1,26 @@
+#run {
+    display: none;
+    margin: auto;
+    text-align: center;
+}
+
+#runBtn {
+    background-color: rgba(139, 0, 0, 0.5);
+    text-decoration: none;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.4s ease 0s;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#runBtn:hover {
+    background-color: red;
+    letter-spacing: 2px;
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}

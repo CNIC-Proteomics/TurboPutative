@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TurboPutative</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link href="assets/css/main.css" type="text/css" rel="stylesheet">
+    <script src="assets/js/iniStringMaker.js"></script>
+    <style>
+
+        /* Style main */
+        #main {
+            width: 100%;
+            margin-top: 10px;
+            height: 250px;
+            position: relative;
+            background-color: white;
+            /*background-image: linear-gradient(rgba(0, 195, 255, 0.185), rgba(0, 195, 255, 0.001));*/
+            background-image: url("images/titleback5_mod_red.jpg");
+            /*background-repeat: no-repeat;*/
+            background-size: cover;
+        }
+
+        #selector {
+            position: relative;  
+            padding: 10px;              
+            margin: auto;
+            text-align: center;
+        }
+
+        .button {
+            text-decoration: none;
+            border: none;
+            font-size: 1.5em;
+            background-color: #4CAF50;
+            color: white;
+            width: 180px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background-color: #204922;
+            cursor: pointer;
+        }
+
+        #selected {
+            margin: 8px;
+            color: #204922;
+            font-weight: bold;
+        }
+
+        #other {
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        #other button {
+            margin: 0 10px;
+        }
+
+        /* Style form */
+        #form {
+            width: 100%;
+            margin-top: 10px;
+            height: auto;
+            position: relative;
+            background-color: white;
+
+        }
+
+        #formTitle {
+            position: relative;
+            margin: auto;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .formContainer {
+            display: grid;
+            grid-template-columns: auto;
+        }
+
+        .formContainer h3{
+            border-bottom: 1px solid grey;
+            font-size: 1.5em;
+        }
+
+        .formModule{
+            padding: 20px;
+            border-top: 1px solid #aaa;
+            border-bottom: 1px solid #aaa;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type=text]:hover, input[type=text]:focus {
+            background-color: #eee;
+        }
+
+        label {
+            padding: 12px 0px 12px 0;
+            display: inline-block;
+        }
+
+        .label {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+            font-weight: bold;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .icon {
+            font-size: 0.8em;
+        }
+
+        .tooltipText {
+            position: absolute;
+            top: 10px;
+            left: 105%;
+            display: inline-block;
+            width: max-content;
+            visibility: hidden;
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 0.8em;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltipText {
+            visibility: visible;
+        }
+
+        .tooltip .tooltipText::after {
+            content: "";
+            position: absolute;
+            right: 100%;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent black transparent transparent;
+            margin-top: 2.5px;
+        }
+
+        .enter {
+            float: left;
+            width: 75%;
+            margin-top: 12px;
+        }
+
+        .exampleFile {
+            float: right;
+            margin-top: 10px;
+            margin-right: 10%;
+            padding: 6px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        #send {
+            text-align: center;
+        }
+
+        button[type=button] {
+            background-color: #4CAF50;
+            text-decoration: none;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            border: none;
+            transition: all 0.4s ease 0s;
+            cursor: pointer;
+        }
+
+        button[type=button]:hover {
+            background-color: #204922;
+            letter-spacing: 1px;
+            box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+            transition: all 0.4s ease 0s;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Header-->
+    <div class="header">
+        <!--<div style="float:left;">
+            <img src="images/insituto_SaludCarlosIII.png" width="50" height="auto">
+        </div> -->
+        <a href="index.html">
+            <h1></h1>
+            <h2></h2>
+        </a>
+    </div>
+
+    <!-- Navigation bar -->
+    <ul class="nav">
+        <li class="navItem"><a href="index.html">Home</a></li>
+        <li class="navItem dropDown">
+            <a href="javascript:void(0)" class="dropDownBtn">Help</a>
+            <div class="dropDownContent">
+                <a href="modules.html">Modules</a>
+                <a href='settings.html'>Settings</a>
+            </div>
+        </li>
+        <li class="navItem"><a class="active" href="turboputative.html">Execute</a></li>
+        <li class="navItem"><a href="https://github.com/CNIC-Proteomics/MetabolomicsWorkflow" target="_blank">GitHub</a></li>
+        <li class="navItem"><a href="contactUs.html">Contact us</a></li>
+    </ul>
+
+    <!-- Workflow Selector -->
+    <div class="main" id="main">
+        <div class="selector" id="selector">
+            <h2>Select the modules in order of execution</h2>
+            <div class="modules">
+                <button id="Tagger" class="button" onclick="clickMod(this)">Tagger</button>
+                <button id="Mod" class="button" onclick="clickMod(this)">REname</button>
+                <button id="Table" class="button" onclick="clickMod(this)">RowMerger</button>
+                <button id="FeatureInfo" class="button" onclick="clickMod(this)">TableMerger</button>
+            </div>
+            <div id="selected"></div>
+            <div id=other>
+                <button class="reset" onclick="window.location.href='turboputative.html'" style="cursor: pointer;">Reset</button>
+                <button class="continue" onclick="showForm()" style="cursor: pointer;">Continue</button>
+                <p id="errorSelection" style="display: none; color: red;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div id="form" style="display: none;">
+        <div id="formTitle">
+            <h2 style="font-size: 2em;">Settings</h2>
+        </div>
+        <div class="formContainer">
+
+            <!-- Real Form -->
+            <form action="#" method="POST" enctype="multipart/form-data" id="myForm">
+
+                <!-- Visible input (file) -->
+                <div style="padding: 40px 20px;" class="formModule">
+                    <div class="row">
+                        <div class="label">
+                            <label for="inputFile">Import input file</label>
+                        </div>
+                        <div class="enter" style="width:35%;">
+                            <input type="file" name="inputFile" id="inputFile">
+                        </div>
+                        <div class="exampleFile">
+                            <a href="assets/files/tests/test4/MS_experiment(2).xls" download="Example_Input.xls" style="text-decoration: none; color: darkblue;">Download example file</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden inputs -->
+                <div class="formModule" id="metaParam" style="display: none;">
+                    <input type="text" id="workflow" name="workflow">
+                    <input type="text" id="jobID" name="jobID">
+                    <input type="textarea" id="TaggerParams" name="TaggerParams">
+                    <input type="textarea" id="ModParams" name="ModParams">
+                    <input type="textarea" id="TableParams" name="TableParams">
+                    <input type="textarea" id="FeatureInfoParams" name="FeatureInfoParams">
+                    <input type="submit" id="mySubmit">
+                </div>
+            </form>
+
+            <!-- Ficticious inputs (visible) -->
+            <div class="formModule" id="formTagger">
+                <h3>Tagger settings</h3>
+                <div id="tagSelection">
+                    <span class=paramName style="display:block; font-weight: bold; margin-bottom: 10px;">Tag Selection</span>
+                    <div class="check">
+                        <input type="checkbox" id="Food" name="Food" value="True">
+                        <label for="Food"> Food</label>
+                    </div>
+                    <div class="check">
+                        <input type="checkbox" id="Drug" name="Drug" value="True">
+                        <label for="Drug"> Drug</label>
+                    </div>
+                    <div class="check">
+                        <input type="checkbox" id="NaturalProduct" name="NaturalProduct" value="True">
+                        <label for="NaturalProduct"> Natural Product</label>                         
+                    </div>
+                    <!--
+                    <div class="check">
+                        <input type="checkbox" id="MicrobialCompound" name="MicrobialCompound" value="True">
+                        <label for="MicrobialCompound"> Microbial Compound</label><br>
+                    </div>
+                    -->
+                    <div class="check">
+                        <input type="checkbox" id="Halogenated" name="Halogenated" value="True">
+                        <label for="Halogenated"> Halogenated</label>                         
+                    </div>
+                    <div class="check">
+                            <input type="checkbox" id="Peptide" name="Peptide" value="True">
+                            <label for="Peptide"> Peptide</label>                         
+                    </div>
+                </div><br>
+                <div id="TaggerParam">
+                    <div class="row">
+                        <div class="label">
+                            <label class="tooltip" for="HalogenatedRegex">Halogenated Regex <span class="icon">&#9432</span>
+                                <span class="tooltipText">Regular expression that matches the name of halogenated compounds</span>
+                            </label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="HalogenatedRegex" id="HalogenatedRegex" value="([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)">
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="label">
+                                <label class="tooltip" for="PeptideRegex">Peptide Regex <span class="icon">&#9432</span>
+                                    <span class="tooltipText">Regular expression that matches the name of peptides</span>
+                                </label>
+                            </div>
+                            <div class="enter">
+                                <input type="text" name="PeptideRegex" id="PeptideRegex" value="(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\s,]){3,}$">
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="Tagger_OutputName">Output name</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="Tagger_OutputName" id="Tagger_OutputName" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="Tagger_OutputColumns">Output columns</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="Tagger_OutputColumns" id="Tagger_OutputColumns" placeholder="Optional">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formModule" id="formMod">
+                <h3>REname settings</h3>
+                <div class="ModParam">
+                    <div class="row">
+                        <div class="label">
+                            <label class="tooltip" for="RemoveRow">Remove Row Regex <span class="icon">&#9432</span>
+                                <span class="tooltipText">Regular expression that matches the name of rows to be removed</span>
+                            </label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="RemoveRow" id="RemoveRow" value="(?i)No compounds found for experimental mass">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label class="tooltip" for="Separator">Separator <span class="icon">&#9432</span>
+                                <span class="tooltipText">Regular expression that matches the character used to separate compound names in the same row</span>
+                            </label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="Separator" id="Separator" value="\s/\s">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label class="tooltip" for="AminoAcidSeparator">Aminoacid Separator <span class="icon">&#9432</span>
+                                <span class="tooltipText">Regular expression that matches the character used to separate aminoacid in peptides</span>
+                            </label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="AminoAcidSeparator" id="AminoAcidSeparator" value="\s">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="Mod_OutputName">Output name</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="Mod_OutputName" id="Mod_OutputName" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="Mod_OutputColumns">Output columns</label>
+                        </div>
+                        <div class="enter">
+                            <input type="text" name="Mod_OutputColumns" id="Mod_OutputColumns" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">
+                            <label for="regexINI">Regular Expressions file (optional)</label>
+                        </div>
+                        <div class="enter" style="width:35%;">
+                            <input type="file" name="regexINI" id="regexINI" form="myForm">
+                        </div>
+                        <div class="exampleFile">
+                            <a href="assets/files/regex.ini" download="Example_regexINI.ini" style="text-decoration: none; color: darkblue;">Download example file</a>
+                        </div>
+                    </div>
+                    <p id="errorINIFormat" style="display: none; color: red; margin-left:25%;"></p>
+                </div>
+            </div>
+
+            <div class="formModule" id="formTable">
+                <h3>RowMerger settings</h3>
+                <div class="row">
+                    <div class="label">
+                        <label class="tooltip" for="ComparedColumns">Compared columns (Index/Name) <span class="icon">&#9432</span>
+                            <span class="tooltipText">Name of columns compared among rows</span>
+                        </label>
+                    </div>
+                    <div class="enter">
+                        <input type="text" name="ComparedColumns" id="ComparedColumns" placeholder="Default: Experimental mass, Adduct, mz Error (ppm), Molecular Weight">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <label class="tooltip" for="ConservedColumns">Conserved columns (Index/Name) <span class="icon">&#9432</span>
+                            <span class="tooltipText">Name of columns whose value will be conserved after row merge</span>
+                        </label>
+                    </div>
+                    <div class="enter">
+                        <input type="text" name="ConservedColumns" id="ConservedColumns" placeholder="Default: Identifier, Name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <label for="Table_OutputName">Output name</label>
+                    </div>
+                    <div class="enter">
+                        <input type="text" name="Table_OutputName" id="Table_OutputName" placeholder="Optional">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <label for="Table_OutputColumns">Output columns</label>
+                    </div>
+                    <div class="enter">
+                        <input type="text" name="Table_OutputColumns" id="Table_OutputColumns" placeholder="Optional">
+                    </div>
+                </div>
+            </div>
+
+            <div class="formModule" id="formFeatureInfo">
+                <h3>TableMerger settings</h3>
+                <div class="row">
+                    <div class="label">
+                        <label class="tooltip" for="N_Digits">Decimal places <span class="icon">&#9432</span>
+                            <span class="tooltipText">Number of decimal places to which the experimental mass of the features will be rounded to "merge"</span>
+                        </label>
+                    </div>
+                    <div class="enter">
+                        <input type="text" name="N_Digits" id="N_Digits" value=4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <label for="FeatureInfo_OutputName">Output name</label>
+                    </div>
+                    <div class="enter">
+                        <input type="text" name="FeatureInfo_OutputName" id="FeatureInfo_OutputName" placeholder="Optional">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <label for="FeatureInfo_OutputColumns">Output columns</label>
+                    </div>
+                    <div class="enter">
+                        <input type="text" name="FeatureInfo_OutputColumns" id="FeatureInfo_OutputColumns" placeholder="Optional">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">
+                        <label for="FeatureInfo_file">Feature info file</label>
+                    </div>
+                    <div class="enter" style="width:35%;">
+                        <input type="file" name="FeatureInfo_file" id="FeatureInfo_file" form="myForm">
+                    </div>
+                    <div class="exampleFile">
+                        <a href="assets/files/tests/test4/table_featureCODE.xlsx" download="Example_FeatInfo.xlsx" style="text-decoration: none; color: darkblue;">Download example file</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formModule">
+                <div id="send">
+                    <button type="button" name="submit" onclick="sendJob()">TurboPutative</button>
+                    <p id="errorFile" style="display: none; color: red;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footText">
+            <p><a href="https://www.cnic.es/en" target="_blank">Spanish National Center for Cardiovascular Research</a></p>
+            <p>Cardiovascular Proteomics and Metabolomics Unit</p>
+            <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+        </div>
+    </div>
+
+    <script src="assets/js/regexINIFormat.js"></script>
+    <script>
+
+        var selectionObj = {Tagger: 0, Mod: 0, Table: 0, FeatureInfo: 0};
+        var counter = 0;
+
+        function clickMod(element) {
+
+            if (document.getElementById("form").style.display == "block") {
+                return 1;
+            }
+            
+            // Remove error message if present
+            document.getElementById("errorSelection").style.display = "none"
+
+            element.style.backgroundColor = "#204922";
+            selected = document.getElementById("selected");
+
+            modulePos = selectionObj[element.id];
+            if (modulePos == 0){
+                counter += 1;
+                selectionObj[element.id] = counter;
+                
+                var arrow = '<span style="font-size:1.5em;"> &rarr; </span>';
+                selected.innerHTML = selected.innerHTML == "" ? element.innerHTML : selected.innerHTML + arrow + element.innerHTML;
+            }
+
+            
+        }
+
+        
+        function avoidSelection () {
+
+            // Select all buttons
+            var buttons = document.querySelectorAll(".button");
+
+            // Fix their background colour and cursor
+            buttons.forEach(element => {
+                element.style.cursor = "default";
+                if (element.style.backgroundColor != "rgb(32, 73, 34)") {
+                    element.addEventListener("mouseover", () => {element.style.backgroundColor = "#4CAF50"});
+                }
+            }); 
+        }
+
+
+        function showForm() {
+
+            // if no module was selected, throw error message
+            if (counter == 0) {
+                document.getElementById("errorSelection").style.display = "block"
+                document.getElementById("errorSelection").innerHTML = "Please, select at least one module."
+                return 1
+            }
+
+            // Avoid reselection of modules. Fix background colour of buttons
+            avoidSelection();
+            
+
+            document.getElementById("form").style.display = "block";
+            var workflow = ["", "", "", ""];
+            var moduleToNum = {Tagger: 1, Mod: 2, Table: 3, FeatureInfo: 4};
+            
+
+            for (var [key, value] of Object.entries(selectionObj)){
+
+                if (value == 0){
+                    document.getElementById("form"+key).style.display = "none";
+                } else {
+                    workflow[value-1] = moduleToNum[key];
+                    document.getElementById("form"+key).style.gridRow = value+1;
+                    // console.log(document.getElementById("form"+key).style.gridRow);
+                }
+            }
+
+            document.getElementById("workflow").value = workflow.toString().replaceAll(",", "");
+            document.getElementById("jobID").value = makeid(10);
+        }
+
+
+        function makeid(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+
+        function sendJob() {
+
+            // Assert that files were uploaded
+            var errorSite = document.getElementById('errorFile');
+            var fileInput = document.getElementById('inputFile');
+            var fileFeatInfo = document.getElementById('FeatureInfo_file')
+
+            // Assert input file always
+            if (fileInput.files[0] === undefined) {
+                errorSite.innerHTML = "Please, upload an input file";
+                document.getElementById("errorFile").style.display = 'block';
+                return 1;
+            }
+
+            // Assert Feature Info file only when 4th module was selected
+            if (fileFeatInfo.files[0] === undefined && document.getElementById("workflow").value.search('4') != -1) {
+                errorSite.innerHTML = "Please, upload an Feature info file";
+                document.getElementById("errorFile").style.display = 'block';
+                return 1;
+            }
+
+            // Assert that regex.ini format is correct (if Mod module was selected)
+            if (INIformat == 1 && document.getElementById("workflow").value.search('2') != -1) {
+                //console.log(sectionCounter);
+                errorSite.innerHTML = `Format error in Regular Expressions file at line ${lineError}`;
+                document.getElementById("errorFile").style.display = 'block';
+                return 1;
+            }
+
+            // Assert that at least one label was selected in Tagger
+            if (document.getElementById("workflow").value.search('1') != -1 &&
+                !document.getElementById('Food').checked &&
+                !document.getElementById('Drug').checked &&
+                !document.getElementById('NaturalProduct').checked &&
+                !document.getElementById('Halogenated').checked &&
+                !document.getElementById('Peptide').checked /*&&
+                !document.getElementById('MicrobialCompound').checked*/) {
+
+                    errorSite.innerHTML = "Please, select at least one Tag (Tagger)"
+                    document.getElementById("errorFile").style.display = 'block';
+                    return 1;
+                }
+        
+            // errorSite.innerHTML = "Enviado";
+            // document.getElementById("errorFile").style.display = 'block';
+            // return 1;
+
+            document.getElementById("TaggerParams").value = iniTagger();
+            document.getElementById("ModParams").value = iniMod();
+            document.getElementById("TableParams").value = iniTable();
+            document.getElementById("FeatureInfoParams").value = iniFeatureInfo();
+            
+            document.getElementById("mySubmit").click();
+        }
+
+
+    </script>
+
+
+
+</body>
+</html>

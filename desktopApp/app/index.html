@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./assets/css/body.css" rel="stylesheet">
+    <link href="./assets/css/header.css" rel="stylesheet">
+    <link href="./assets/css/title.css" rel="stylesheet">
+    <link href="./assets/css/footer.css" rel="stylesheet">
+    <title>TurboPutative</title>
+    <style>
+        /* CORPUS */ 
+        #buttonContent {
+            margin-top: 5%;
+            height: 140px;
+        }
+
+        .buttonSpace {
+            float: left;
+            height: 130px;
+        }
+
+        #buttonContent::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        #spaceExe {
+            width: 40%;
+        }
+
+        #spaceExe a {
+            display: inline-block;
+            text-align: center;
+            padding-top: 50px;
+
+            width: 70%;
+            height: 100%;
+            margin-left: 15%;
+            font-size: 1.5em;
+            font-weight: 300;
+            text-decoration: none;
+            
+        }
+        
+        #spaceHelp {
+            width: 30%;
+        }
+
+        #spaceHelp a {
+            display: inline-block;
+            text-align: center;
+            padding-top: 14px;
+
+            width: 45%;
+            height: 40%;
+            margin-left: 55%;
+            margin-top: 20%; 
+            font-size: 1.2em;
+        }
+
+        #spaceGit {
+            width: 30%;
+        }
+
+        #spaceGit a {
+            display: inline-block;
+            text-align: center;
+            padding-top: 14px;
+
+            width: 45%;
+            height: 40%;
+            margin-top: 20%;
+            font-size: 1.2em;
+        }
+
+        .button {
+            background-color: transparent;
+            border-radius: 10px;
+            border: 3px solid darkred;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            text-decoration: none;
+            transition: background-color 0.8s;
+        }
+
+        .button:hover {
+            background-color: rgba(139, 0, 0, 0.5);
+        }
+
+        /* IMAGE */
+        #imgContent {
+            height: 150px;
+        }
+
+        #imgContent img {
+            display: block;
+            width: 300px;
+            height: auto;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <div id="title">
+            <span></span>
+        </div>
+        <div id="subtitle">
+            <span></span>
+        </div>
+    </div>
+
+    <div id="mainContent">
+
+        <div id="buttonContent">
+            <div id="spaceHelp" class="buttonSpace">
+                <a id="btnHelp" class="button" href="./sections/help/index.html">Help</a>
+            </div>
+            <div id="spaceExe" class="buttonSpace">
+                <a id="btnExe" class="button" href="sections/execute/moduleSelector.html">EXECUTE</a>
+            </div>
+            <div id="spaceGit" class="buttonSpace">
+                <a id="btnGit" class="button" onclick="openGitHub()">GitHub</a>
+            </div>
+        </div>
+        
+        <div id="imgContent">
+            <img src="./assets/images/molecule2.png" alt="fattyAcids">
+        </div>
+
+        <div id="footer">
+            <div id="footText">
+                <p>Spanish National Center for Cardiovascular Research</p>
+                <p>Cardiovascular Proteomics and Metabolomics Unit</p>
+                <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global Variables
+        const { shell } = require('electron');
+
+        // Open gitHub
+        function openGitHub() {
+            shell.openExternal("https://github.com/CNIC-Proteomics/MetabolomicsWorkflow");
+        }
+    </script>
+    
+</body>
+</html>

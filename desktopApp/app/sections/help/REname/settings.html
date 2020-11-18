@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPuMA</title>
+    <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/body.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" href="../index.html">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span>REname</span>
+        </div>
+    </div>
+
+    <div id="sectionSel">
+        <a id="fSel" href="./function.html">Function</a>
+        <a id="Ssel" href="./settings.html" class="active">Settings</a>
+    </div>
+
+    <div id="mainContent">
+        <div id="parameters">
+            <h2>Settings</h2>
+            <p>
+                <ul class="list">
+                    <li><b>Separator</b>: Regular expression that matches the character string used to separate compound names in the same row.</li>
+                    <li><b>AminoAcidSeparator</b>: The table with the putative identifications may contain peptides. TurboPutative is capable of 
+                        processing them as long as the amino acids that make it up are expressed in the three-letter nomeclature 
+                        (e.g. Arg, Pro, Ala...). In the AminoAcidSeparator parameter, it must be specified a regular expression that
+                        mathces the character that separates two amino acids. For example, in the peptide "Arg Pro Ala", amino acids are 
+                        separated by a whitespace character ('\s').</li>
+                    <li><b>RemoveRow</b>: Regular expression that matches the name of the rows to be removed from the table.</li>
+                    <li><b>OutputName</b>: Name of the output file. By default, the name of the output file will be that of the 
+                        input file with prefix "REnamed_"</li>
+                    
+                    <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
+                </ul>
+            </p>
+        </div>
+    
+    </div>
+
+    <script>
+    
+    const { shell } = require('electron');
+
+    function goTo(url) {
+        shell.openExternal(url);
+    }
+    
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurboPutative</title>
+    <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/body.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" href="../index.html">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span>Tagger</span>
+        </div>
+    </div>
+
+    <div id="sectionSel">
+        <a id="fSel" href="./function.html">Function</a>
+        <a id="Ssel" href="./settings.html" class="active">Settings</a>
+    </div>
+
+    <div id="mainContent">
+
+        <div id="parameters">
+            <h2>Settings</h2>
+            <p>
+            <h3>Labels</h3>
+                <ul class="list">
+                    <li><b>Food</b>: Mark if you want to tag the compounds that appear in food_database.tsv.</li>
+                    
+                    <li><b>Drug</b>: Mark if you want to tag the compounds that appear in drug_database.tsv.</li>
+
+                    <li><b>Microbial Compound</b>: "In-house" list of microbial origin compound.</li>
+
+                    <li><b>Natural Product</b>: Mark if you want to tag the compounds that appear in natural_product_database.tsv.</li>
+                    <li><b>Halogenated</b>: Mark if you want to tag the compounds that match with the regular expression specified in 
+                        <b>HalogenatedRegex</b> parameter.</li>                
+                </ul>
+                <h3 style="margin-top:5%;">Settings</h3>
+                <ul class="list">
+                    <li><b>OutputName</b>: Name of the output file. By default, the name of the output file will be that of the 
+                        input file with "Tagged_"</li>
+                    <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
+                </ul>
+            
+            </p>
+        </div>
+    
+    </div>
+
+    <script>
+    
+    const { shell } = require('electron');
+
+    function goTo(url) {
+        shell.openExternal(url);
+    }
+    
+    </script>
+
+</body>
+
+</html>

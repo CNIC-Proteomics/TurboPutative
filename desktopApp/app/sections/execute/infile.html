@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input File</title>
+    <link href="./assets/css/changeButton.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/body.css" rel="stylesheet">
+    <link href="../../assets/css/header.css" rel="stylesheet">
+    <link href="../../assets/css/title.css" rel="stylesheet">
+    <link href="../../assets/css/footer.css" rel="stylesheet">
+    <style>
+        /* MAIN CONTENT */
+        #container h3 {
+            margin-top: 7%;
+            text-align: center;
+            color:white; 
+            font-size: 1.5em; 
+            font-weight: 300; 
+            font-family: Arial;
+        }
+
+        #file {
+            margin-top: 5%;
+            text-align: center;
+        }
+
+        #file input {
+            color: lightgray;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" href="./moduleSelector.html">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span></span>
+        </div>
+        <div id="subtitle">
+            <span></span>
+        </div>
+    </div>
+
+    <div id="container">
+        <h3>Upload Input File</h3>
+        <div id="file">
+            <input type="file" id="infile" name="name">
+        </div>
+    </div>
+
+    <div id="nextContainer">
+        <div id="selectBtn" style="visibility: hidden; width:100px; margin: auto; padding: 0px; text-align: center;">
+            <a class="change next" onclick="next()">&raquo;</a>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div id="footText">
+            <p>Spanish National Center for Cardiovascular Research</p>
+            <p>Cardiovascular Proteomics and Metabolomics Unit</p>
+            <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        const { ipcRenderer } = require('electron');
+        var workflow;
+        
+        // Add event: Show next when uploading file
+        const infileElem = document.getElementById("infile");
+        infileElem.addEventListener("change", () => {
+            // Add infile information to workflow object
+            fileElemObj = document.getElementById('infile').files[0];
+            workflow.files.infile.name = fileElemObj.name
+            workflow.files.infile.path = fileElemObj.path            
+
+            // Show next button
+            document.getElementById("selectBtn").style.visibility = "visible"
+        })
+
+        // Move to next window
+        function next() {
+            // Send workflow object to main
+            ipcRenderer.send('select-modules', workflow);
+        }
+
+        // Handle events
+        ipcRenderer.on('send-workflow', (e, receivedWorkflow) => {
+            // Save received workflow and add one to next attribute
+            workflow = receivedWorkflow;
+            workflow.next += 1;
+        })
+
+        ipcRenderer.on('send-workflow-from-next', (e, receivedWorkflow) => {
+            workflow = receivedWorkflow;
+            workflow.next -= 1; // Get this page from the next
+        })
+    </script>
+    
+</body>
+</html>

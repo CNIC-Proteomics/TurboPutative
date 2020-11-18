@@ -1,0 +1,14 @@
+#header{
+    color: #ffffff; 
+    font-family: 'Lato', sans-serif; 
+    text-align: center;
+    margin-top: 3%;
+    user-select: none;
+}
+
+#title {
+    font-size: 60px; 
+    font-weight: 300; 
+    padding: 0;
+    padding-top: 10px;
+}

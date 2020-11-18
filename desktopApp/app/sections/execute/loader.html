@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../assets/css/body.css" rel="stylesheet">
+    <link href="../../assets/css/header.css" rel="stylesheet">
+    <link href="../../assets/css/title.css" rel="stylesheet">
+    <link href="../../assets/css/footer.css" rel="stylesheet">
+    <title>Running workflow</title>
+    <style>
+        /* MAIN CONTENT */
+        #container h3 {
+            margin-top: 7%;
+            text-align: center;
+            color:white; 
+            font-size: 1.5em; 
+            font-weight: 300; 
+            font-family: Arial;
+        }
+
+        #status {
+            margin-top: 3%;
+            text-align: center;
+            color:white; 
+            font-size: 0.8em; 
+            font-weight: 300; 
+            font-family: Arial;
+        }
+
+        #loader {
+            margin: auto;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid darkred;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <div id="title">
+            <span></span>
+        </div>
+        <div id="subtitle">
+            <span></span>
+        </div>
+    </div>
+
+    <div id="container">
+        <h3>Running workflow</h3>
+        <div id="loader"></div>
+        <div id="status">Preparing workflow</div>
+    </div>
+
+    <div id="footer">
+        <div id="footText">
+            <p>Spanish National Center for Cardiovascular Research</p>
+            <p>Cardiovascular Proteomics and Metabolomics Unit</p>
+            <p>C/ Melchor Fernández Almagro, 3. 28029 Madrid</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        const { ipcRenderer } = require("electron");
+        var workflow;
+
+        // Ask main process about workflow status
+        setInterval(() => {
+            ipcRenderer.send('workflow-status', workflow);
+        }, 2000);
+        
+
+        // Handle events
+        ipcRenderer.on('send-workflow', (e, receivedWorkflow) => {
+            // Receive workflow from main
+            console.log(receivedWorkflow);
+            workflow = receivedWorkflow;
+        })
+
+        ipcRenderer.on('workflow-status-answer', (e, status) => {
+            if (status) document.getElementById("status").innerHTML = status;
+        })
+
+    </script>
+    
+</body>
+</html>

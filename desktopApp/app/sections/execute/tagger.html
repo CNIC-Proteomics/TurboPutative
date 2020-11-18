@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tagger Form</title>
+    <link href="../../assets/css/body.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/run.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/tooltip.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/changeButton.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/header.css" rel="stylesheet" type="text/css">
+    <style>
+        /* SETTINGS CONTAINER */
+        #settings {
+            margin: 5% 3% 5% 3%;
+        }
+
+        #settings::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* CHECKBOX */ 
+        #tags {
+            margin:auto;
+            width: 50%;
+        }
+
+        #tags h3 {
+            text-align: center;
+        }
+
+        .cbContainer {
+            display: block;
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 24px;
+            margin-left: 30%;
+            cursor: pointer;
+            font-size: 18px;
+            user-select: none;
+            color: lightgray;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Hide the browser's default checkbox */
+        .cbContainer input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+        position: absolute;
+        top: 0;
+        left: 1%;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .cbContainer:hover input ~ .checkmark {
+        background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .cbContainer input:checked ~ .checkmark {
+        background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .cbContainer input:checked ~ .checkmark:after {
+        display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .cbContainer .checkmark:after {
+        left: 6.5px;
+        top: 3px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+        }
+
+        /* PARAMS */
+        #moreCont {
+            margin-top: 5%;
+        }
+
+        #moreCont button {
+            display: block;
+            margin: auto;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #params {
+            display: none;
+            padding-top: 25px;
+            width: 65%;
+            margin: auto;
+        }
+
+        #params h3 {
+            text-align: center;
+        }
+
+        .paramContainer {
+            margin-top: 3%;
+        }
+
+        #params label {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            font-weight: 300;
+            color: white;
+        }
+
+        #params input {
+            width: 100%;
+            height: 30px;
+            padding: 8px 8px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        #params input:focus {
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" onclick="goBack()">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span>Tagger</span>
+        </div>
+    </div>
+
+    <div id="settings" style="max-width: 700px; margin: auto;">
+        <div id="tags">
+            <h3 style="color:white; font-size: 1.5em; font-weight: 300; font-family: Arial;">Tag Selection</h3>
+            <div>
+                <label class="cbContainer">Select all
+                    <input class="cbTag" type="checkbox" id="all" name="all" value="true">
+                    <span class="checkmark"></span>                
+                </label>
+
+                <label class="cbContainer">Food
+                    <input class="cbTag" type="checkbox" id="food" name="food" value="true">
+                    <span class="checkmark"></span>                
+                </label>
+
+                <label class="cbContainer">Drug
+                    <input class="cbTag" type="checkbox" id="drug" name="drug" value="true">
+                    <span class="checkmark"></span>                
+                </label>
+
+                <label class="cbContainer">Natural Product
+                    <input class="cbTag" type="checkbox" id="naturalProduct" name="naturalProduct" value="true">
+                    <span class="checkmark"></span>                
+                </label>
+                <!--
+                <label class="cbContainer">Microbial Compound
+                    <input class="cbTag" type="checkbox" id="microbialCompound" name="microbialCompound" value="true">
+                    <span class="checkmark"></span>                
+                </label>
+                -->
+                <label class="cbContainer">Halogenated
+                    <input class="cbTag" type="checkbox" id="halogenated" name="halogenated" value="true">
+                    <span class="checkmark"></span>                
+                </label>
+
+                <label class="cbContainer">Peptide
+                    <input class="cbTag" type="checkbox" id="peptide" name="peptide" value="true">
+                    <span class="checkmark"></span>                
+                </label>
+            </div>
+        </div>
+
+        <div id="moreCont">
+        <button type="button" id="more" onclick="showMore()">Advanced</button>
+        </div>
+
+
+        <div id="params">
+
+            <h3 style="color:white; font-size: 1.5em; font-weight: 300; font-family: Arial;">Parameters</h3>
+
+            <div class="paramContainer">
+                <!-- <label for="halogenatedRegex">Halogenated Regex</label> -->
+                <label class="tooltip" for="halogenatedRegex">HalogenatedRegex <span class="icon">&#9432</span>
+                    <span class="tooltipText">Regular expression that matches the name of halogenated compounds</span>
+                </label>
+                <input type="text" id="halogenatedRegex" name="halogenatedRegex">
+            </div>
+
+            <div class="paramContainer">
+                <label class="tooltip" for="peptideRegex">PeptideRegex <span class="icon">&#9432</span>
+                    <span class="tooltipText">Regular expression that matches the name of peptides</span>
+                </label>
+                <input type="text" id="peptideRegex" name="peptideRegex">
+            </div>
+
+            <div class="paramContainer">
+                <label for="outputName">Output Name</label>
+                <input type="text" id="outputName" name="outputName">
+            </div>
+
+            <div class="paramContainer">
+                <label for="outputColumns">Output Columns</label>
+                <input type="text" id="outputColumns" name="outputColumns">
+            </div>
+
+        </div>
+
+        <div id="nextContainer">
+            <div id="selectBtn" style="width:200px; margin: auto; padding: 0px; text-align: center;">
+                <a class="change next" onclick="next()">&raquo;</a>
+            </div>
+            <div id="run">
+                <button id="runBtn" type="button" name="submit" onclick="run()">RUN</button>
+            </div>
+        </div>
+        <div class="errorMsg" id="errorNext"></div>
+
+    </div>
+
+    <script>
+
+        // Global variables
+        const { ipcRenderer } = require('electron');
+        var workflow;
+
+        document.getElementById("halogenatedRegex").value = "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)";
+        document.getElementById("peptideRegex").value = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\\s,]){3,}$";
+
+        // Show advanced parameters
+        var moreCont = 0;
+        function showMore() {
+            var paramElem = document.getElementById('params');
+            paramElem.style.display = (moreCont == 0) ? "block" : "none";
+            moreCont = (moreCont == 0) ? 1 : 0;
+        }
+
+        // Add click event to checkbox
+        const checkbox = document.getElementsByClassName("cbTag");
+
+            // When Select all is clicked, select all...
+        const allElem = document.getElementById("all");
+        allElem.addEventListener("change", () => {
+            var allChecked = allElem.checked;
+            for (i=1; i<checkbox.length; i++) {
+                checkbox[i].checked = allChecked;
+            }
+        })
+
+            // When a checkbox is clicked, check if all are in false
+        for (i=0; i<checkbox.length; i++) {
+            checkbox[i].addEventListener("change", () => {
+                document.getElementById('errorNext').style.display = 'none';
+                showNext();
+            })
+        }
+
+
+        // Click next
+        function next() {
+            
+            // if (controlSelection() == 1) return 1;
+
+            // Build tagger.ini
+            var iniPromise = new Promise(iniMaker)
+
+            // When tagger.ini is built, send
+            iniPromise.then((iniString) => {
+                console.log(iniString);
+                workflow.ini.Tagger = iniString;
+                ipcRenderer.send("select-modules", workflow);
+            });
+        }
+
+        // Click run
+        function run() {
+            // if (controlSelection() == 1) return 1;
+
+            // Build tagger.ini
+            var iniPromise = new Promise(iniMaker)
+
+            // When tagger.ini is built, send
+            iniPromise.then((iniString) => {
+                console.log(iniString);
+                workflow.ini.Tagger = iniString;
+                ipcRenderer.send("run-workflow", workflow);
+            });
+        }
+
+        // Click go back
+        function goBack() {
+            ipcRenderer.send("go-back", workflow);
+        }
+
+        // Handle events
+        ipcRenderer.on('send-workflow', (e, receivedWorkflow) => {
+            // Save received workflow and add one to next attribute
+            workflow = receivedWorkflow;
+            workflow.next += 1;
+            iniReader(); // Refill
+            showNext(); // Show next if if there is a checked
+
+            // If this is the last module, hidde next button and show run button
+            if (workflow.next == (workflow.modules.length)) {
+                document.getElementById('selectBtn').style.display = "none";
+                document.getElementById('run').style.display = "block";
+            }
+        })
+
+        ipcRenderer.on('send-workflow-from-next', (e, receivedWorkflow) => {
+            // Refill all fiedls with iniString
+            workflow = receivedWorkflow;
+            workflow.next -= 1
+            iniReader();
+            showNext(); // Show next if if there is a checked
+        });
+
+
+        // Local functions
+        function showNext() {
+            // Loop over every input, and if one is checked, show next button
+            for (i=0; i<checkbox.length; i++) {
+                console.log(checkbox[i].checked, i);
+                if (checkbox[i].checked) {
+                    document.getElementById('nextContainer').style.visibility = 'visible';
+                    return 0
+                }
+            }
+
+            document.getElementById('nextContainer').style.visibility = 'hidden';
+        }
+
+
+        function iniMaker(resolve, reject) {
+            var iniContent;
+            const outputNameElem = document.getElementById('outputName');
+
+            var outputName = outputNameElem.value == "" ? `${workflow.next}_tagged_${workflow.files.infile.name}` : outputNameElem.value;
+
+            iniContent = "[TagSelection]"
+            iniContent += "###";
+            iniContent += "Food = " + document.getElementById('food').checked;
+            iniContent += "###";
+            iniContent += "Drug = " + document.getElementById('drug').checked;
+            iniContent += "###";
+            // iniContent += "MicrobialCompound = " + document.getElementById('microbialCompound').checked;
+            // iniContent += "###";
+            iniContent += "Halogenated = " + document.getElementById('halogenated').checked;
+            iniContent += "###";
+            iniContent += "NaturalProduct = " + document.getElementById('naturalProduct').checked;
+            iniContent += "###";
+            iniContent += "Peptide = " + document.getElementById('peptide').checked;
+            iniContent += "###";
+
+            iniContent += "[Parameters]";
+            iniContent += "###";
+            iniContent += "OutputName = " + outputName;
+            iniContent += "###";
+            iniContent += "OutputColumns = " + document.getElementById('outputColumns').value;
+            iniContent += "###";
+            iniContent += "HalogenatedRegex = " + document.getElementById('halogenatedRegex').value;
+            iniContent += "###";
+            iniContent += "PeptideRegex = " + document.getElementById('peptideRegex').value;
+            iniContent += "###";
+            iniContent = iniContent.replace(/###/g, "\n");
+
+            resolve(iniContent);
+        }
+
+        function iniReader () {
+            // If ini is not defined leave the function...
+            if (!Object.keys(workflow.ini).includes('Tagger')) return -1
+
+            var iniString = workflow.ini.Tagger;
+            
+            document.getElementById("food").checked = iniString.match(/\nFood = (true|false)\n/)[1] == "true"? true : false;
+            document.getElementById('drug').checked = iniString.match(/\Drug = (true|false)\n/)[1] == "true"? true : false;
+            document.getElementById('microbialCompound').checked = iniString.match(/\nMicrobialCompound = (true|false)\n/)[1] == "true"? true : false;
+            document.getElementById('halogenated').checked = iniString.match(/\nHalogenated = (true|false)\n/)[1] == "true"? true : false;
+            document.getElementById('naturalProduct').checked = iniString.match(/\nNaturalProduct = (true|false)\n/)[1] == "true"? true : false;
+            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
+            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
+            document.getElementById('halogenatedRegex').value = iniString.match(/\nHalogenatedRegex = ([^\n]*)\n/)[1];
+        }
+
+    </script>
+    
+</body>
+</html>

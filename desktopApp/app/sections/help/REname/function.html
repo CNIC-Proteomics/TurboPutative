@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurboPutative</title>
+    <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/body.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" href="../index.html">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span>REname</span>
+        </div>
+    </div>
+
+    <div id="sectionSel">
+        <a id="fSel" href="./function.html" class="active">Function</a>
+        <a id="Ssel" href="./settings.html">Settings</a>
+    </div>
+
+    <div id="mainContent">
+        
+        <div id="intro">
+            <h2>What is REname?</h2>
+            <p>
+                REname (<u>R</u>egular <u>E</u>xpressions processing of compound <u>name</u>s) 
+                parses the name of the candidate metabolites 
+                to eliminate the information related to the isomer (or convert all the acid forms into salt), and combine 
+                the rows of the table with isomeric metabolites assigned to the same "feature". The processing of the name 
+                of the compounds is done using the <span class="link" onclick="goTo('https://github.com/lifs-tools/goslin')">Goslin</span> 
+                library in the case of lipids, and a system of regular expressions for the rest of metabolites.
+            </p>
+        </div>
+   
+    </div>
+
+    <script>
+    
+    const { shell } = require('electron');
+
+    function goTo(url) {
+        shell.openExternal(url);
+    }
+    
+    </script>
+
+</body>
+
+</html>

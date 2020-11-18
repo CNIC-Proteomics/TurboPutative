@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurboPutative</title>
+    <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/body.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="previousContainer">
+        <a class="change previous" href="../index.html">&laquo;</a>
+    </div>
+
+    <div id="header">
+        <div id="title">
+            <span>RowMerger</span>
+        </div>
+    </div>
+
+    <div id="sectionSel">
+        <a id="fSel" href="./function.html" class="active">Function</a>
+        <a id="Ssel" href="./settings.html">Settings</a>
+    </div>
+
+    <div id="mainContent">
+        
+        <div id="intro">
+            <h2>What is RowMerger?</h2>
+            <p>
+                The RowMerger tool allows you to simplify the table with the putative annotations, 
+                combining those rows that have the same value for certain columns. The user can select 
+                the columns that will be taken into account for merging, as well as the columns whose 
+                values will be kept in the resulting rows.
+            </p>
+        </div>
+        
+    </div>
+
+    <script>
+    
+    const { shell } = require('electron');
+
+    function goTo(url) {
+        shell.openExternal(url);
+    }
+    
+    </script>
+
+</body>
+
+</html>

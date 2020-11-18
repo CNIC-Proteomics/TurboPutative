@@ -1,0 +1,7 @@
+#title span:after {
+    content: "TurboPutative";
+}
+
+#subtitle span:after {
+    content: "Processing of Putative Annotations for Metabolomic Analysis";
+}
