@@ -1,0 +1,11 @@
+# Python Interpreter #
+######################
+desktopApp/app/src/python/*
+
+# desktop application node_modules #
+####################################
+desktopApp/node_modules/*
+
+# web application node_modules #
+################################
+webApp/node_modules/*
