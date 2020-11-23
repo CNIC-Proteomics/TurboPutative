@@ -5,6 +5,7 @@
 # Description: Bash script used to extract drugs from hmdb database
 # Usage example: bash hmdb_drug_extractor.sh hmdb_metabolites.zip
 
+SRC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Get file name from command line
 HMDB_FILE=$1
@@ -74,6 +75,6 @@ zcat $HMDB_FILE | awk '
 
     ' > hmdb_drug_tmp.tsv
 
-cat <(echo -e "Name\tHMDB_ID") <(echo "$(cat hmdb_drug_tmp.tsv | sort | uniq)") > hmdb_drug_prueba.tsv
+cat <(echo -e "Name\tHMDB_ID") <(echo "$(cat hmdb_drug_tmp.tsv | sort | uniq)") > "$SRC_HOME/pre_hmdb_drug.tsv"
 
 rm hmdb_drug_tmp.tsv

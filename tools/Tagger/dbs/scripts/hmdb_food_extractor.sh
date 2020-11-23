@@ -5,6 +5,7 @@
 # Description: Script used to extract food from HMDB database
 # Usage example: bash hmdb_food_extractor.sh hmdb_metabolites.zip
 
+SRC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Get file name from command line
 HMDB_FILE=$1
@@ -68,6 +69,6 @@ zcat $HMDB_FILE | awk '
     
     ' > hmdb_food_tmp.tsv
 
-cat <(echo -e "Name\tHMDB_ID") <(echo "$(cat hmdb_food_tmp.tsv | sort | uniq)") > hmdb_food.tsv
+cat <(echo -e "Name\tHMDB_ID") <(echo "$(cat hmdb_food_tmp.tsv | sort | uniq)") > "$SRC_HOME/pre_hmdb_food.tsv"
 
 rm hmdb_food_tmp.tsv

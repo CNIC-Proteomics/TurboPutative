@@ -28,6 +28,6 @@ webApp/src/public/results/*
 ############
 releases/*
 
-# __pycache__ #
-###############
-*/__pycache__/*
+# hmdb database #
+#################
+tools/Tagger/dbs/hmdb_metabolites.zip
