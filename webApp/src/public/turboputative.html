@@ -295,11 +295,12 @@
                         <input type="checkbox" id="Drug" name="Drug" value="True">
                         <label for="Drug"> Drug</label>
                     </div>
+                    <!--
                     <div class="check">
                         <input type="checkbox" id="NaturalProduct" name="NaturalProduct" value="True">
                         <label for="NaturalProduct"> Natural Product</label>                         
                     </div>
-                    <!--
+                    
                     <div class="check">
                         <input type="checkbox" id="MicrobialCompound" name="MicrobialCompound" value="True">
                         <label for="MicrobialCompound"> Microbial Compound</label><br>
@@ -641,7 +642,7 @@
             if (document.getElementById("workflow").value.search('1') != -1 &&
                 !document.getElementById('Food').checked &&
                 !document.getElementById('Drug').checked &&
-                !document.getElementById('NaturalProduct').checked &&
+                /*!document.getElementById('NaturalProduct').checked &&*/
                 !document.getElementById('Halogenated').checked &&
                 !document.getElementById('Peptide').checked /*&&
                 !document.getElementById('MicrobialCompound').checked*/) {

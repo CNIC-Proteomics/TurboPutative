@@ -1,11 +1,33 @@
-# Python Interpreter #
+# python environment #
 ######################
-desktopApp/app/src/python/*
+desktopApp/env/*
+
+# electron #
+######################
+desktopApp/electron-*/*
 
 # desktop application node_modules #
 ####################################
 desktopApp/node_modules/*
 
+# desktopApp jobs #
+###################
+desktopApp/app/jobs/*
+
+
 # web application node_modules #
 ################################
 webApp/node_modules/*
+
+
+# webApp jobs #
+###############
+webApp/src/public/results/*
+
+# releases #
+############
+releases/*
+
+# __pycache__ #
+###############
+*/__pycache__/*

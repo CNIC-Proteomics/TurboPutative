@@ -5,8 +5,13 @@ SET SRC_HOME=%~dp0
 SET SRC_HOME=%SRC_HOME:"=%
 SET SRC_HOME=%SRC_HOME:~0,-1%
 
+:: CHECK PYTHON ENVIRONMENT
+IF NOT EXIST "%SRC_HOME%\env" (
+    CMD /C " "%SRC_HOME%\install\install_win64.bat" "
+)
+
 :: ELECTRON DIRECTORY
-SET SRC_ELECTRON=%SRC_HOME%\node_modules\electron\dist\electron.exe
+SET SRC_ELECTRON=%SRC_HOME%\electron-v11.0.1-win32-x64\electron.exe
 
 :: APP DIRECTORY
 SET SRC_APP=%SRC_HOME%\app

@@ -6,7 +6,8 @@ SET SRC_HOME=%SRC_HOME:"=%
 SET SRC_HOME=%SRC_HOME:~0, -1%
 
 :: PYTHON EXE
-SET PYTHON="%SRC_HOME%\python\python.3.6.7\tools\python.exe"
+REM SET PYTHON="%SRC_HOME%\python\python.3.6.7\tools\python.exe"
+SET PYTHON=%SRC_HOME%\..\..\env\Scripts\python.exe
 
 :: INPUT VARIABLES
 SET WORKFLOW=%~1

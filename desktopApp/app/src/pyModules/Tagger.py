@@ -547,8 +547,8 @@ def main(args):
     if re.search('(?i)true', config_param['TagSelection']['Drug']):
         df = drugTagger(df, n_cores)
     
-    if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
-        df = npTagger(df, n_cores)
+    # if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
+    #    df = npTagger(df, n_cores)
 
     if re.search('(?i)true', config_param['TagSelection']['Halogenated']):
         df = halogenatedTagger(df, n_cores)

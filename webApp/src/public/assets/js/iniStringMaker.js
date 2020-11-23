@@ -26,7 +26,7 @@ function iniTagger() {
     TaggerJSON['Drug'] = "";
     // TaggerJSON['MicrobialCompound'] = "";
     TaggerJSON['Halogenated'] = "";
-    TaggerJSON['NaturalProduct'] = "";
+    // TaggerJSON['NaturalProduct'] = "";
     TaggerJSON['Peptide'] = "";
 
     if(document.getElementById("Food").checked == true) {
@@ -47,9 +47,11 @@ function iniTagger() {
         TaggerJSON['Halogenated'] = "True";
     }
 
+    /*
     if(document.getElementById("NaturalProduct").checked == true) {
         TaggerJSON['NaturalProduct'] = "True";
     }
+    */
 
     if(document.getElementById("Peptide").checked == true) {
         TaggerJSON['Peptide'] = "True";
@@ -66,8 +68,8 @@ function iniTagger() {
     // iniContent += "###";
     iniContent += "Halogenated = " + TaggerJSON['Halogenated'];
     iniContent += "###";
-    iniContent += "NaturalProduct = " + TaggerJSON['NaturalProduct'];
-    iniContent += "###";
+    // iniContent += "NaturalProduct = " + TaggerJSON['NaturalProduct'];
+    // iniContent += "###";
     iniContent += "Peptide = " + TaggerJSON['Peptide'];
     iniContent += "###";
 
