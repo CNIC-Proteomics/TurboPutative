@@ -13,6 +13,7 @@ __status__ = "Development"
 
 # Import modules
 import sys
+import os
 import csv
 import traceback
 import requests
@@ -108,6 +109,8 @@ def main():
 
     fileName = sys.argv[1]
 
+    scriptDir = os.path.dirname(os.path.realpath(__file__))
+
     # Get list of lists with [[name1, id1], [name2, id2]...]
     compoundList = tsvReader(fileName)
 
@@ -117,7 +120,7 @@ def main():
     # Write table.tsv
     df = pd.DataFrame(allSynonyms, columns=['Name', 'HMDB_ID'])
     df.drop_duplicates(inplace=True)
-    df.to_csv("allSynonyms.tsv", sep='\t', index=False)
+    df.to_csv(os.path.join(scriptDir,"allSynonyms.tsv"), sep='\t', index=False)
 
 
 if __name__ == "__main__":

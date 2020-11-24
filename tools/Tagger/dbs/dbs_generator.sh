@@ -38,3 +38,6 @@ echo "** Getting food synonyms"
 python "$SRC_HOME/scripts/getAllSynonyms.py" "$SRC_HOME/scripts/pre_hmdb_food_diterpenoids.tsv"
 rm -f "$SRC_HOME/food_database.tsv"
 mv "$SRC_HOME/scripts/allSynonyms.tsv" "$SRC_HOME/food_database.tsv"
+
+# remove pre files
+rm -f  "$SRC_HOME/scripts/pre_hmdb_drug.tsv"  "$SRC_HOME/scripts/pre_hmdb_food_diterpenoids.tsv"
