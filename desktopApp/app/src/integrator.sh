@@ -4,7 +4,11 @@
 SRC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # PYTHON ENGINE
-PYTHON="$SRC_HOME/python/bin/python3"
+# PYTHON="$SRC_HOME/python/bin/python3"
+PYTHON="$SRC_HOME/../../env/bin/python"
+#PYTHON=python
+
+PY_MODULES="$SRC_HOME/pyModules"
 
 # INPUT VARIABLES
 WORKFLOW="$1"
@@ -30,7 +34,7 @@ do
     if [ $MOD_NUM == '1' ]
     then
         echo Running Tagger >> "$JOB_DIR/WF.log"
-        $PYTHON "$PWD/app/PPUMA/pyModules/Tagger.py" -i "$INFILE" -c "$JOB_DIR/Tagger.ini" -od "$JOB_DIR" -cpu $CPU
+        $PYTHON "$PY_MODULES/Tagger.py" -i "$INFILE" -c "$JOB_DIR/Tagger.ini" -od "$JOB_DIR" -cpu $CPU
         
         # Handle errors
         STATUS_CODE=$?
@@ -46,7 +50,7 @@ do
     if [ $MOD_NUM == '2' ]
     then
         echo Running REname >> "$JOB_DIR/WF.log"
-        $PYTHON "$PWD/app/PPUMA/pyModules/Mod.py" -i "$INFILE" -pr "$JOB_DIR/REname.ini"  -od "$JOB_DIR" -re "$JOB_DIR/regex.ini"  -cpu $CPU
+        $PYTHON "$PY_MODULES/REname.py" -i "$INFILE" -pr "$JOB_DIR/REname.ini"  -od "$JOB_DIR" -re "$JOB_DIR/regex.ini"  -cpu $CPU
 
         # Handle errors
         STATUS_CODE=$?
@@ -62,7 +66,7 @@ do
     if [ $MOD_NUM == '3' ]
     then
         echo Running RowMerger >> "$JOB_DIR/WF.log"
-        $PYTHON "$PWD/app/PPUMA/pyModules/Table.py" -i "$INFILE" -c "$JOB_DIR/rowMerger.ini" -od "$JOB_DIR"
+        $PYTHON "$PY_MODULES/RowMerger.py" -i "$INFILE" -c "$JOB_DIR/rowMerger.ini" -od "$JOB_DIR"
 
         # Handle errors
         STATUS_CODE=$?
@@ -77,7 +81,7 @@ do
     if [ $MOD_NUM == '4' ]
     then
         echo Running TableMerger >> "$JOB_DIR/WF.log"
-        $PYTHON "$PWD/app/PPUMA/pyModules/FeatureInfo.py" -id "$INFILE" -c "$JOB_DIR/tableMerger.ini" -if "$FEATURE_INFO_INFILE" -od "$JOB_DIR"
+        $PYTHON "$PY_MODULES/TableMerger.py" -id "$INFILE" -c "$JOB_DIR/tableMerger.ini" -if "$FEATURE_INFO_INFILE" -od "$JOB_DIR"
 
         # Handle errors
         STATUS_CODE=$?

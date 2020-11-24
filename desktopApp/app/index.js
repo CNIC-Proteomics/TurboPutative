@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const { spawn, spawnSync, exec } = require('child_process');
+const { spawn, spawnSync, execSync } = require('child_process');
 const { finished } = require('stream');
 
 // Global variables
@@ -64,6 +64,8 @@ app.on('window-all-closed', () => {
 
             if (process.platform == "win32") {
                 spawnSync("TASKKILL", ["/F", "/T", "/PID", batch.pid]);
+            } else if (process.platform == "linux") {
+                app.exit(99)
             }
         }
     }
@@ -107,7 +109,7 @@ ipcMain.on('go-back', (e, workflow) => {
 ipcMain.on('run-workflow', (e, workflow) => {
     // Run workflow and send waiting page
 
-    console.log(workflow);
+    // console.log(workflow);
     var loadURL = win.loadURL(loader);
 
     // Define workflow jobID
@@ -182,7 +184,7 @@ ipcMain.on('see-results', (e, workflow) => {
         });
 
         bash.stderr.on(`data`, (data) => {
-            console.error(`stderr: ${data}`);
+            console.error(`stdout: ${data}`);
         });
 
         bash.on('close', (code) => {
@@ -250,8 +252,8 @@ function runWorkflow (osType, modulesString, infile_user, workflowPath, infile_f
         batch = spawn('CMD', ['/C', script, modulesString, infile_user, workflowPath, infile_feature_info, nCores]);
     }
 
-    console.log(script);
-    console.log("PID: ", batch.pid);
+    // console.log(script);
+    // console.log("PID: ", batch.pid);
 
     batch.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
