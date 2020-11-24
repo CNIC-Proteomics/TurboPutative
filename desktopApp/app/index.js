@@ -10,6 +10,7 @@ const nCores = Number((os.cpus().length*0.5).toFixed(0)); // Number of cores use
 
 var win; // Windows openned (the only one)
 var batch; // Process spawned when running workflow
+var killed = false; // Variable used to know if user killed running process
 
 const index = path.join('file://', __dirname, 'index.html');
 const moduleSelector = path.join('file://', __dirname, 'sections', 'execute', 'moduleSelector.html');
@@ -63,6 +64,7 @@ app.on('window-all-closed', () => {
             // if batch.exitCode is null, spawned process is still running. In that case, kill the process
 
             if (process.platform == "win32") {
+                killed = true;
                 spawnSync("TASKKILL", ["/F", "/T", "/PID", batch.pid]);
             } else if (process.platform == "linux") {
                 app.exit(99)
@@ -279,7 +281,8 @@ function runWorkflow (osType, modulesString, infile_user, workflowPath, infile_f
                 e.reply('send-jobID', workflow);
             });
 
-        } else {
+        } else if (!killed) {
+
             // Else, an error occurred
             var statusCode = code.toString();
 
