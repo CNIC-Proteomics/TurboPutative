@@ -6,7 +6,7 @@ SET SRC_HOME=%SRC_HOME:"=%
 SET SRC_HOME=%SRC_HOME:~0,-1%
 
 :: CHECK PYTHON ENVIRONMENT
-IF NOT EXIST "%SRC_HOME%\env" (
+IF NOT EXIST "%SRC_HOME%\env\log.info" (
     CMD /C " "%SRC_HOME%\install\install_win64.bat" "
 )
 

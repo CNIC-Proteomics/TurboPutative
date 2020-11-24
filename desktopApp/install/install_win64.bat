@@ -16,7 +16,7 @@ SETLOCAL EnableDelayedExpansion
 
 :: CHECK IF env FOLDER EXISTS
 :CHECK_ENV
-IF EXIST "%SRC_ENV%" (
+IF EXIST "%SRC_ENV%\log.info" (
     
     GOTO ENV_CREATED
 
@@ -79,6 +79,7 @@ FOR /F "useback delims=. tokens=1,2" %%I IN (`%PYTHON% --version`) DO (
 )
 
 ECHO ** Creating virtual environment
+RMDIR /S /Q "%SRC_ENV%" > nul 2>&1
 CMD /C " "%PYTHON%" -m venv "%SRC_ENV%" "
 
 IF ERRORLEVEL 1 GOTO END
@@ -97,6 +98,10 @@ CMD /C " "%SRC_SCRIPTS%\pip.exe" install numpy pandas xlrd xlwt "
 
 IF ERRORLEVEL 1 GOTO END
 
+FOR /F "useback" %%i in (`date /t`) do (
+    ECHO %%i - INFO: Python Virtual Environment for TurboPutative created > "%SRC_ENV%\log.info"
+)
+
 GOTO ENV_CREATED
 
 
@@ -107,5 +112,5 @@ GOTO END
 
 
 :END
-ECHO ** Installation process finished. Press ENTER to close...
+ECHO ** Installation process finished
 PAUSE
