@@ -1,6 +1,6 @@
 # TurboPutative
 
-### Tabla de Contenidos
+## Tabla de Contenidos
 
 * [Organización del Código Fuente](#Organización-del-Código-Fuente)
     * [Carpeta tools](#Carpeta-tools)
@@ -10,12 +10,12 @@
 
 ---
 
-### Organización del Código Fuente
+## Organización del Código Fuente
 
 El código fuente del proyecto se organiza en tres carpetas principales contenidas en el directorio raíz: **desktopApp**, **webApp** y **tools**. La carpeta **desktopApp** contiene los ficheros y el código correspondiente a la aplicación de escritorio en Windows y en Linux. La carpeta **webApp** contiene los ficheros y el código de la aplicación web. Finalmente, la carpeta **tools** contiene algunas herramientas y otros ficheros utilizados para el desarrollo de TurboPutative. A continuación, explicamos en detalle el contenido de estos directorios.
 
 
-##### Carpeta tools
+### Carpeta tools
 
 La carpeta **tools** contiene un fichero *errorCode.json* que asigna una determinada información a algunos de los posibles códigos de error generados por el programa, a saber: el módulo que generó el error, descripción del error y su código asociado. Esta información será utilizada por la aplicación de escritorio y el servidor web para informar debidamente al usuario en caso de que se produjera un error en el flujo de trabajo. 
 
@@ -26,7 +26,7 @@ En la carpeta de REname es posible encontrar el fichero con las expresiones regu
 En la carpeta de Tagger hay una subcarpeta denominada dbs, que contiene las listas de nutrientes y fármacos (food_databse.tsv y drug_database.tsv) utilizadas por Tagger para realizar la clasificación de los compuestos. Asimismo, esta carpeta contiene un conjunto de scripts en Bash y Python que permiten generar estas listas a partir del fichero XML con todos los metabolitos de HMDB, descargado de [Human Metabolome Database: Downloads (hmdb.ca)](http://www.hmdb.ca/downloads). Además, se obtienen todos los sinónimos de los compuestos extraídos mediante acceso programático a PubChem (getAllSynonyms.py, dentro de la carpeta “scripts”).
 
 
-##### Carpeta desktopApp
+### Carpeta desktopApp
 
 La carpeta **desktopApp** contiene los ficheros *package.json* y *package-lock.json*, que permiten instalar los paquetes y las dependencias de Node.js requeridos para el desarrollo y la ejecución de la aplicación de escritorio. Para más información, consultar [npm-install | npm Docs (npmjs.com)](https://docs.npmjs.com/cli/v6/commands/npm-install).
 
@@ -42,9 +42,9 @@ La carpeta **app** contiene la aplicación que se ejecutará con Electron emplea
 En la carpeta **pyModule** de src se encuentran los scripts en Python correspondientes a cada uno de los módulos. Además, también podemos encontrar el directorio **pygoslin**, que contiene el paquete [Goslin](https://github.com/lifs-tools/goslin) utilizado por el módulo REname de TurboPutative. Los ficheros integrator.bat (versión de Windows) e integrator.sh (versión de Linux) integran los cuatro módulos de Python. Así, el fichero *index.js* que mencionamos anteriormente ejecutará el fichero integrator, que a su vez lanzará cada uno de los scripts de Python en el orden apropiado y siguiendo las instrucciones definidas por el usuario. La carpeta Data de src contiene los ficheros utilizados por cada uno de los módulos, mientras que la carpeta config contiene ejemplos de ficheros de configuración en formato .INI desde los cuales los scripts podrán leer los parámetros. Sin embargo, estos no serán los ficheros de configuración utilizados por los scripts, ya que cada vez que el usuario inicie un flujo de trabajo se crearán unos ficheros .INI con los nuevos parámetros en la carpeta jobs correspondiente. Estos ficheros de configuración serán los leídos por los scripts de Python.
 
 
-##### Carpeta webApp
+### Carpeta webApp
 
-La carpeta webApp contiene los ficheros package.json y package-lock.json, necesarios para instalar los paquetes y las dependencias de Node.js necesarias para el desarrollo y la activación del servidor. Asimismo, en el interior de webApp podemos encontrar el directorio **src**, que contiene los distintos ficheros y el código utilizado por la aplicación web. En las líneas siguientes explicamos con detalle el contenido de src.
+La carpeta **webApp** contiene los ficheros *package.json* y *package-lock.json*, necesarios para instalar los paquetes y las dependencias de Node.js necesarias para el desarrollo y la activación del servidor. Asimismo, en el interior de webApp podemos encontrar el directorio **src**, que contiene los distintos ficheros y el código utilizado por la aplicación web. En las líneas siguientes explicamos con detalle el contenido de src.
 
 El fichero *index.js* de src es el archivo principal de la aplicación web, desde el cual se inicia el servidor y se escuchan las conexiones. En la carpeta routes se encuentra el fichero *route.js*, en el que se específica la gestión de los direccionamientos. Es en *route.js* donde se establece cómo debe responder la aplicación a una solicitud de cliente con un punto de acceso (URI) y un método de solicitud HTTP determinados. Así, la solicitud con punto de acceso “/turboputative.html” y método POST conduce a la ejecución del flujo de trabajo de acuerdo con los parámetros definidos por el usuario. Las funciones utilizadas por *route.js* para iniciar la ejecución del flujo de trabajo son requeridas desde el fichero workflowExecution.js, que también se encuentra en el interior de la carpeta routes.
 
@@ -56,7 +56,7 @@ Finalmente, la carpeta **partial**, de src, contiene los documentos HTML que sir
 
 ---
 
-### Manual de Instalación
+## Manual de Instalación
 Los diferentes lanzamientos de la aplicación se pueden descargar desde GitHub. Así, la aplicación de escritorio está disponible para **Windows** (TurboPutative-x.x.x-win32-x64.zip) y para **Linux** (TurboPutative-x.x.x-linux-x64.zip). En ambos casos será necesario tener instalado **Python 3.6 o una versión superior** para poder utilizar la aplicación ([Download Python | Python.org](https://www.python.org/downloads/)).
 
 Para empezar a utilizar la versión de **Windows** es necesario ejecutar el fichero TurboPutative.bat. La primera vez que se ejecute se iniciará la creación del entorno virtual de Python con las librerías requeridas (Numpy, Pandas, xlrd y xlwt). En caso de no encontrar Python en el PATH del sistema (o si este no es Python 3.6 o una versión superior), se pedirá al usuario que introduzca la dirección completa hacia un ejecutor de Python válido. El entorno virtual se creará en la carpeta env del directorio raíz. A continuación, se podrá iniciar la aplicación de escritorio ejecutando TurboPutative.bat.
