@@ -1,5 +1,6 @@
+<div style="text-align:justify">
+
 ## TurboPutative
----
 
 #### Organización del Código Fuente
 
@@ -14,23 +15,23 @@ La carpeta tools contiene cuatro directorios correspondientes a cada uno de los 
 
 En la carpeta de REname es posible encontrar el fichero con las expresiones regulares (regex.ini) utilizadas por el script para procesar el nombre de los compuestos.
 
-En la carpeta de Tagger hay una subcarpeta denominada dbs, que contiene las listas de nutrientes y fármacos (food_databse.tsv y drug_database.tsv) utilizadas por Tagger para realizar la clasificación de los compuestos. Asimismo, esta carpeta contiene un conjunto de scripts en Bash y Python que permiten generar estas listas a partir del fichero XML con todos los metabolitos de HMDB, descargado de (Human Metabolome Database: Downloads (hmdb.ca))[http://www.hmdb.ca/downloads]. Además, se obtienen todos los sinónimos de los compuestos extraídos mediante acceso programático a PubChem (getAllSynonyms.py, dentro de la carpeta “scripts”).
+En la carpeta de Tagger hay una subcarpeta denominada dbs, que contiene las listas de nutrientes y fármacos (food_databse.tsv y drug_database.tsv) utilizadas por Tagger para realizar la clasificación de los compuestos. Asimismo, esta carpeta contiene un conjunto de scripts en Bash y Python que permiten generar estas listas a partir del fichero XML con todos los metabolitos de HMDB, descargado de [Human Metabolome Database: Downloads (hmdb.ca)](http://www.hmdb.ca/downloads). Además, se obtienen todos los sinónimos de los compuestos extraídos mediante acceso programático a PubChem (getAllSynonyms.py, dentro de la carpeta “scripts”).
 
 
 ##### Carpeta desktopApp
 
-La carpeta desktopApp contiene los ficheros package.json y package-lock.json, que permiten instalar los paquetes y las dependencias de Node.js requeridos para el desarrollo y la ejecución de la aplicación de escritorio. Para más información, consultar (npm-install | npm Docs (npmjs.com))[https://docs.npmjs.com/cli/v6/commands/npm-install]. 
+La carpeta desktopApp contiene los ficheros package.json y package-lock.json, que permiten instalar los paquetes y las dependencias de Node.js requeridos para el desarrollo y la ejecución de la aplicación de escritorio. Para más información, consultar [npm-install | npm Docs (npmjs.com)](https://docs.npmjs.com/cli/v6/commands/npm-install).
 
-Los ficheros TurboPutative.bat y TurboPutative.sh permiten iniciar la ejecución de la aplicación en Windows y Linux, respectivamente. La carpeta install contiene los ficheros install_win32.bat y install_linux.sh, que permiten crear un entorno virtual de Python desde el que se ejecutarán los módulos .py de la aplicación. Para más información, consultar (12. Virtual Environments and Packages — Python 3.6.12 documentation)[https://docs.python.org/3.6/tutorial/venv.html]. 
+Los ficheros TurboPutative.bat y TurboPutative.sh permiten iniciar la ejecución de la aplicación en Windows y Linux, respectivamente. La carpeta install contiene los ficheros install_win32.bat y install_linux.sh, que permiten crear un entorno virtual de Python desde el que se ejecutarán los módulos .py de la aplicación. Para más información, consultar [12. Virtual Environments and Packages — Python 3.6.12 documentation](https://docs.python.org/3.6/tutorial/venv.html). 
 
-La carpeta app contiene la aplicación que se ejecutará con Electron empleando los binarios precompilados (ver Manual distribution en (Application Distribution | Electron (electronjs.org))[https://www.electronjs.org/docs/tutorial/application-distribution]. En el interior de app se encuentra el fichero index.js, correspondiente al proceso principal y desde el que se abrirá la interfaz gráfica de usuario. Además, en el interior de “app” podemos encontrar cuatro directorios: 
+La carpeta app contiene la aplicación que se ejecutará con Electron empleando los binarios precompilados (ver Manual distribution en [Application Distribution | Electron (electronjs.org)](https://www.electronjs.org/docs/tutorial/application-distribution). En el interior de app se encuentra el fichero index.js, correspondiente al proceso principal y desde el que se abrirá la interfaz gráfica de usuario. Además, en el interior de “app” podemos encontrar cuatro directorios: 
 
 -	assets: La carpeta assets contiene las hojas de estilo en cascada (CSS), imágenes y otros ficheros utilizados para el desarrollo de la interfaz de la aplicación. 
 -	sections: La carpeta sections contiene los ficheros HTML (además de los ficheros CSS y JS asociados) de las dos principales secciones de la aplicación: “help” y “execute”. La sección “help” permite al usuario consultar la documentación del programa, mientras que desde la sección “execute” es posible diseñar un flujo de trabajo personalizado. 
 -	jobs: La carpeta “jobs" contiene los directorios con los resultados de los flujos de trabajo ejecutados por el usuario. 
 -	src: La carpeta “src” contiene el código y los ficheros necesarios para la ejecución del flujo de trabajo. En las siguientes líneas describimos con más detalle el contenido de este directorio.
 
-En la carpeta pyModule de src se encuentran los scripts en Python correspondientes a cada uno de los módulos. Además, también podemos encontrar el directorio pygoslin, que contiene el paquete (Goslin)[https://github.com/lifs-tools/goslin] utilizado por el módulo REname de TurboPutative. Los ficheros integrator.bat (versión de Windows) e integrator.sh (versión de Linux) integran los cuatro módulos de Python. Así, el fichero index.js que mencionamos anteriormente ejecutará el fichero integrator, que a su vez lanzará cada uno de los scripts de Python en el orden apropiado y siguiendo las instrucciones definidas por el usuario. La carpeta Data de src contiene los ficheros utilizados por cada uno de los módulos, mientras que la carpeta config contiene ejemplos de ficheros de configuración en formato .INI desde los cuales los scripts podrán leer los parámetros. Sin embargo, estos no serán los ficheros de configuración utilizados por los scripts, ya que cada vez que el usuario inicie un flujo de trabajo se crearán unos ficheros .INI con los nuevos parámetros en la carpeta jobs correspondiente. Estos ficheros de configuración serán los leídos por los scripts de Python.
+En la carpeta pyModule de src se encuentran los scripts en Python correspondientes a cada uno de los módulos. Además, también podemos encontrar el directorio pygoslin, que contiene el paquete [Goslin](https://github.com/lifs-tools/goslin) utilizado por el módulo REname de TurboPutative. Los ficheros integrator.bat (versión de Windows) e integrator.sh (versión de Linux) integran los cuatro módulos de Python. Así, el fichero index.js que mencionamos anteriormente ejecutará el fichero integrator, que a su vez lanzará cada uno de los scripts de Python en el orden apropiado y siguiendo las instrucciones definidas por el usuario. La carpeta Data de src contiene los ficheros utilizados por cada uno de los módulos, mientras que la carpeta config contiene ejemplos de ficheros de configuración en formato .INI desde los cuales los scripts podrán leer los parámetros. Sin embargo, estos no serán los ficheros de configuración utilizados por los scripts, ya que cada vez que el usuario inicie un flujo de trabajo se crearán unos ficheros .INI con los nuevos parámetros en la carpeta jobs correspondiente. Estos ficheros de configuración serán los leídos por los scripts de Python.
 
 
 ##### Carpeta webApp
@@ -45,8 +46,17 @@ El directorio public, de src, contiene los ficheros estáticos del servidor. En 
 
 Finalmente, la carpeta partial, de src, contiene los documentos HTML que sirven de plantilla para el servidor. Así, el fichero putativejob.html permite generar la página de carga que aparece tras lanzar el flujo de trabajo, mientras que el fichero executionError.html permite generar las páginas de error que se envían al usuario en caso de que se produjera un problema en la ejecución del flujo de trabajo. 
 
-
+---
 
 #### Manual de Instalación
+Los diferentes lanzamientos de la aplicación se pueden descargar desde GitHub. Así, la aplicación de escritorio está disponible para Windows (TurboPutative-x.x.x-win32-x64.zip) y para Linux (TurboPutative-x.x.x-linux-x64.zip). En ambos casos será necesario tener instalado Python 3.6 o una versión superior para poder utilizar la aplicación ([Download Python | Python.org](https://www.python.org/downloads/)).
 
+Para empezar a utilizar la versión de Windows es necesario ejecutar el fichero TurboPutative.bat. La primera vez que se ejecute se iniciará la creación del entorno virtual de Python con las librerías requeridas (Numpy, Pandas, xlrd y xlwt). En caso de no encontrar Python en el PATH del sistema (o si este no es Python 3.6 o una versión superior), se pedirá al usuario que introduzca la dirección completa hacia un ejecutor de Python válido. El entorno virtual se creará en la carpeta env del directorio raíz. A continuación, se podrá iniciar la aplicación de escritorio ejecutando TurboPutative.bat.
 
+Para utilizar TurboPutative en Linux es necesario ejecutar desde una terminal el fichero TurboPutative.sh (o utilizar el intérprete de Bash: bash TurboPutative.sh). La primera vez que se ejecute se creará el entorno virtual de Python, de un modo similar al descrito para la versión de Windows. Tras la creación del entorno virtual se podrá usar la aplicación de escritorio ejecutando TurboPutative.sh.
+
+Finalmente, es posible descargar el código fuente del servidor en TurboPutative-x.x.x-webServer.zip. Para iniciar el servidor web como localhost es necesario utilizar Linux y tener instalado en el equipo Node.js y su gestor de paquetes npm (Node.js). Tras descomprimir el fichero .zip descargado, se debe ejecutar con la terminal y desde la carpeta raíz el comando npm install, para descargar los paquetes y dependencias requeridos. Para iniciar el servidor se debe ejecutar con la terminal y también desde la carpeta raíz del proyecto el comando npm start. 
+
+A continuación, el servidor local escuchará las conexiones en el puerto 8080, y se podrán enviar solicitudes introduciendo en el navegador <http://localhost:8080/>. 
+
+</div>
