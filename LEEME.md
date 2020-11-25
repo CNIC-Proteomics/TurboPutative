@@ -2,11 +2,11 @@
 
 ### Tabla de Contenidos
 
-1. [Organización del Código Fuente](#1-Organización-del-Código-Fuente)
-    1. [Carpeta tools](#11-Carpeta-tools)
-    2. [Carpeta desktopApp](#12-Carpeta-desktopApp)
-    3. [Carpeta webApp](#13-Carpeta-webApp)
-2. [Manual de Instalación](#2-Manual-de-Instalación)
+* [1. Organización del Código Fuente](#1-Organización-del-Código-Fuente)
+    * [1.1. Carpeta tools](#11-Carpeta-tools)
+    * [1.2. Carpeta desktopApp](#12-Carpeta-desktopApp)
+    * [1.3. Carpeta webApp](#13-Carpeta-webApp)
+* [Manual de Instalación](#2-Manual-de-Instalación)
 
 ---
 
