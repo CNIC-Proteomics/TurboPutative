@@ -12,7 +12,8 @@ desktopApp/node_modules/*
 
 # desktopApp jobs #
 ###################
-desktopApp/app/jobs/*
+desktopApp/app/jobs/*/*
+#!desktopApp/app/jobs/README.md
 
 
 # web application node_modules #
@@ -22,7 +23,7 @@ webApp/node_modules/*
 
 # webApp jobs #
 ###############
-webApp/src/public/results/*
+webApp/src/public/results/*/*
 
 # releases #
 ############
