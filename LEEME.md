@@ -6,7 +6,6 @@
     * [Carpeta tools](#Carpeta-tools)
     * [Carpeta desktopApp](#Carpeta-desktopApp)
     * [Carpeta webApp](#Carpeta-webApp)
-
 * [Manual de Instalación](#Manual-de-Instalación)
 
 ---
