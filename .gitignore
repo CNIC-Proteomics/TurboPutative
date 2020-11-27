@@ -32,3 +32,10 @@ releases/*
 # hmdb database #
 #################
 tools/Tagger/dbs/hmdb_metabolites.zip
+
+# goslin __pycache__ #
+######################
+desktopApp/app/src/pyModules/pygoslin/tests/__pycache__/*
+desktopApp/app/src/pyModules/pygoslin/parser/__pycache__/*
+desktopApp/app/src/pyModules/pygoslin/__pycache__/*
+desktopApp/app/src/pyModules/pygoslin/domain/__pycache__/*

@@ -94,7 +94,7 @@ IF ERRORLEVEL 1 GOTO END
 
 REM INSTALAR NUMPY y PANDAS
 ECHO ** Installing modules
-CMD /C " "%SRC_SCRIPTS%\pip.exe" install numpy pandas xlrd xlwt "
+CMD /C " "%SRC_SCRIPTS%\pip.exe" install numpy pandas xlrd xlwt openpyxl cython"
 
 IF ERRORLEVEL 1 GOTO END
 

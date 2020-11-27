@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const { spawn, spawnSync, execSync } = require('child_process');
+const { spawn, spawnSync, exec } = require('child_process');
 const { finished } = require('stream');
 
 // Global variables

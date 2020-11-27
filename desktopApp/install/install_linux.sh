@@ -84,7 +84,7 @@ function createVENV {
     fi
 
     echo "** Installing modules"
-    "$PIP_ENV" install numpy pandas xlrd xlwt --no-warn-script-location
+    "$PIP_ENV" install numpy pandas xlrd xlwt openpyxl cython --no-warn-script-location
     if ! [ $? -eq 0 ]
     then
         echo "** ERROR: An error occurred while installing modules"
