@@ -43,5 +43,4 @@ desktopApp/app/src/pyModules/pygoslin/domain/__pycache__/*
 # goslin library #
 ##################
 desktopApp/app/src/pyModules/pygoslin_library/*
-desktopApp/app/src/pyModules/pygoslin_library.zip
 webApp/src/tools/pyModules/pygoslin/*
