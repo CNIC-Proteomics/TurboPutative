@@ -44,4 +44,4 @@ desktopApp/app/src/pyModules/pygoslin/domain/__pycache__/*
 ##################
 desktopApp/app/src/pyModules/pygoslin_win/*
 desktopApp/app/src/pyModules/pygoslin_linux/*
-webApp/src/tools/pyModules/pygoslin_linux/*
+webApp/src/tools/pyModules/pygoslin/*
