@@ -568,7 +568,20 @@ class Parser:
         self.parser_event_handler.content = None
         
         # call parser core function written in cython for performance boost
-        dp_table = parser_core(text_to_parse, self.NTtoNT, self.TtoNT, self.left_pair, self.right_pair) if pyx_support else self.parser_pure(text_to_parse)
+        # rbarreror: Use compiled function if pyx_support
+        if pyx_support:
+
+            # rbarreror: Handle possible error in compiled parser_core (to protect execution against possible incompatibilities).
+            try:
+                dp_table = parser_core(text_to_parse, self.NTtoNT, self.TtoNT, self.left_pair, self.right_pair)
+            except:
+                dp_table = self.parser_pure(text_to_parse)
+
+        else:
+            # rbarreror: else, use parser_pure
+            dp_table = self.parser_pure(text_to_parse)
+
+        # dp_table = parser_core(text_to_parse, self.NTtoNT, self.TtoNT, self.left_pair, self.right_pair) if pyx_support else self.parser_pure(text_to_parse)
         if dp_table == None: return
         
         
@@ -584,7 +597,7 @@ class Parser:
             
             
             
-            
+       
     # re-implementation of Cocke-Younger-Kasami algorithm
     def parser_pure(self, text_to_parse):
         n = len(text_to_parse)
@@ -630,6 +643,7 @@ class Parser:
                 if DPij: Ksj.add(i)
 
         return DP
+    
            
            
 class SumFormulaParser(Parser):

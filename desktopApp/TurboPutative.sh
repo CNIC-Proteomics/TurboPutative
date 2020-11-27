@@ -12,6 +12,9 @@ fi
 # Electron path
 ELECTRON="$SRC_HOME/electron-v11.0.3-linux-x64/electron"
 
+# Enable execution of Electron
+chmod u+x "$ELECTRON"
+
 # Execute electron with app
 "$ELECTRON" "$SRC_HOME/app"
 
