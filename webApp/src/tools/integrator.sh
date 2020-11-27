@@ -19,7 +19,7 @@ do
 
     if [ $MOD_NUM == '1' ]
     then
-        python "$PWD/src/Tools/pyModules/Tagger.py" -i "$INFILE" -c "$JOB_DIR/Tagger.ini" -od "$JOB_DIR"
+        python "$PWD/src/tools/pyModules/Tagger.py" -i "$INFILE" -c "$JOB_DIR/Tagger.ini" -od "$JOB_DIR"
         
         # Handle errors
         STATUS_CODE=$?
@@ -35,7 +35,7 @@ do
 
     if [ $MOD_NUM == '2' ]
     then
-        python "$PWD/src/Tools/pyModules/REname.py" -i "$INFILE" -pr "$JOB_DIR/REname.ini"  -od "$JOB_DIR" -re "$JOB_DIR/regex.ini"
+        python "$PWD/src/tools/pyModules/REname.py" -i "$INFILE" -pr "$JOB_DIR/REname.ini"  -od "$JOB_DIR" -re "$JOB_DIR/regex.ini"
 
         # Handle errors
         STATUS_CODE=$?
@@ -51,7 +51,7 @@ do
 
     if [ $MOD_NUM == '3' ]
     then
-        python "$PWD/src/Tools/pyModules/RowMerger.py" -i "$INFILE" -c "$JOB_DIR/RowMerger.ini" -od "$JOB_DIR"
+        python "$PWD/src/tools/pyModules/RowMerger.py" -i "$INFILE" -c "$JOB_DIR/RowMerger.ini" -od "$JOB_DIR"
 
         # Handle errors
         STATUS_CODE=$?
@@ -66,7 +66,7 @@ do
 
     if [ $MOD_NUM == '4' ]
     then
-        python "$PWD/src/Tools/pyModules/TableMerger.py" -id "$INFILE" -c "$JOB_DIR/TableMerger.ini" -if "$FEATURE_INFO_INFILE" -od "$JOB_DIR"
+        python "$PWD/src/tools/pyModules/TableMerger.py" -id "$INFILE" -c "$JOB_DIR/TableMerger.ini" -if "$FEATURE_INFO_INFILE" -od "$JOB_DIR"
 
         # Handle errors
         STATUS_CODE=$?
