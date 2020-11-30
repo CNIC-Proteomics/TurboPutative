@@ -44,3 +44,7 @@ desktopApp/app/src/pyModules/pygoslin/domain/__pycache__/*
 ##################
 desktopApp/app/src/pyModules/pygoslin_library/*
 webApp/src/tools/pyModules/pygoslin/*
+
+# Jupyter Notebook scripts #
+############################
+/tools/Tagger/dbs/scripts/*.ipynb
