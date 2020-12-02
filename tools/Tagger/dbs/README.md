@@ -1,0 +1,3 @@
+## dbs
+
+dbs folder contains the nutrient and drug lists (food_databse.tsv and drug_database.tsv) used by Tagger to perform the classification of compounds. Also, this folder contains a set of Bash and Python scripts that allow generating these lists from the XML file with all the HMDB metabolites, downloaded from [Human Metabolome Database](http://www.hmdb.ca/downloads). In addition, all the synonyms of the extracted compounds are obtained through programmatic access to PubChem (getAllSynonyms.py, inside the scripts folder).

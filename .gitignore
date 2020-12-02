@@ -47,4 +47,5 @@ webApp/src/tools/pyModules/pygoslin/*
 
 # Jupyter Notebook scripts #
 ############################
-/tools/Tagger/dbs/scripts/*.ipynb
+/tools/Tagger/dbs/scripts/DataBaseGenerator.ipynb
+/tools/Tagger/dbs/scripts/getAllSynonyms.ipynb

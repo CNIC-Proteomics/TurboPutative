@@ -1,0 +1,5 @@
+## src
+
+pyModule folder contains the Python scripts corresponding to each of the modules. The files *integrator.bat* (Windows version) and *integrator.sh* (Linux version) integrate the four Python modules. Thus, the *index.js* file of /desktopApp/app/ will execute the integrator file, which in turn will launch each of the Python scripts in the proper order and following the instructions defined by the user. 
+
+The **Data** folder contains the files used by each of the modules, while the **config** folder contains examples of configuration files in INI format from which the scripts can read the parameters. However, these will not be the configuration files used by the modules, since each time the user starts a workflow, INI files will be created with the new parameters in the corresponding /desktopApp/app/jobs/ folder. These configuration files will be the ones read by the Python scripts.
