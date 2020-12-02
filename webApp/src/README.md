@@ -4,7 +4,7 @@
 
 - **routes**: routes folder contains route.js file, which specifies the management of the routes, and workflowExecution.js file, which contains different functions used to launch the workflow.
 
-- **tools**: The tools folder of src contains the code necessary for the execution of the workflow.
+- **tools**: The tools folder contains the code necessary for the execution of the workflow.
 
 - **public**: The public directory contains the static files of the server.
 
