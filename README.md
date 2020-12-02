@@ -13,3 +13,5 @@ Finally, it is possible to download the **server source code** at TurboPutative-
 ## Source Code Organization
 
 The source code content is organized in three main folders contained in the root directory: **desktopApp**, **webApp** and **tools**. The desktopApp folder contains the files and code for the desktop application on Windows and Linux. The webApp folder contains the files and code for the web application. Finally, the tools folder contains some tools and other files used for TurboPutative development.
+
+The different subfolders contain **README.md** files that explain the content and distribution of the code
