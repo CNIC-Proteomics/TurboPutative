@@ -1,0 +1,69 @@
+/*#TaggerParamContent {
+    display: none;
+}
+*/
+
+.cbContainer {
+    display: block;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 16px;
+    margin-left: 46%;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    color: rgba(0,0,0,0.8);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hide the browser's default checkbox */
+.cbContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 1%;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.cbContainer:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.cbContainer input:checked ~ .checkmark {
+    background-color: rgba(139,0,0,0.9);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.cbContainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.cbContainer .checkmark:after {
+    left: 6.5px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}

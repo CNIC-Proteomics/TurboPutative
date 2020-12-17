@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Execute</title>
+    <link rel="stylesheet" href="/assets/css/ubiquitous/body.css">
+    <link rel="stylesheet" href="/assets/css/ubiquitous/header.css">
+    <link rel="stylesheet" href="/assets/css/ubiquitous/navBar.css">
+    <link rel="stylesheet" href="/assets/css/execute/execute.css">
+    <link rel="stylesheet" href="/assets/css/execute/buttons.css">
+    <link rel="stylesheet" href="/assets/css/ubiquitous/footer.css">
+    <link rel="stylesheet" href="/assets/css/execute/selectedModules.css">
+    <link rel="stylesheet" href="/assets/css/execute/infile.css">
+    <link rel="stylesheet" href="/assets/css/execute/tagger.css">
+    <link rel="stylesheet" href="/assets/css/execute/REname.css">
+    <link rel="stylesheet" href="/assets/css/execute/parameters.css">
+    <link rel="stylesheet" href="/assets/css/execute/tooltips.css">
+</head>
+<body>
+
+    <div id="content">
+    
+    <!-- INSERT PARTIAL: ubiquitous/header.html -->
+
+        <div id="mainContent">
+
+            <div id="selectorContent">
+
+                <div class="subSubTitle" style="padding: 20px 0 15px 0;">Select modules in order of execution</div>
+
+                <div id="buttonsContent">
+
+                    <div id="TaggerContent" class="moduleButtonContent">
+                        <div class="moduleButton">Tagger</div>
+                    </div>
+
+                    <div id="REnameContent" class="moduleButtonContent">
+                        <div class="moduleButton">REname</div>
+                    </div>
+
+                    <div id="RowMergerContent" class="moduleButtonContent">
+                        <div class="moduleButton">RowMerger</div>                
+                    </div>
+
+                    <div id="TableMergerContent" class="moduleButtonContent">
+                        <div class="moduleButton">TableMerger</div>
+                    </div>
+                
+                </div>
+
+                <div id="selectedContent">
+
+                    <div id="moduleSelectionContent">
+                        <!-- span elements are inserted when clicking buttons -->
+                    </div>
+
+                    <div class="nextContent">
+                        <div class=nextSubContent>
+                            <div class="previous" style="padding: 4px 8px 1px 10px; font-size: 1.5em;">&#8634;</div>
+                            <div class="next">&raquo;</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- INSERT PARTIAL: execute/infile.html -->
+
+            <!-- INSERT PARTIAL: execute/tagger.html -->
+
+            <!-- INSERT PARTIAL: execute/REname.html -->
+
+            <!-- INSERT PARTIAL: execute/rowMerger.html -->
+
+            <!-- INSERT PARTIAL: execute/tableMerger.html -->
+
+        </div>
+
+    <!-- INSERT PARTIAL: ubiquitous/footer.html -->
+
+    </div>
+</body>
+<script>
+    document.querySelector("#Execute").style.backgroundColor = '#333333';
+</script>
+<script type="text/javascript" src="/assets/js/settings.js"></script>
+<script type="text/javascript" src="/assets/js/selectModules.js"></script>
+<script type="text/javascript" src="/assets/js/buttons.js"></script>
+<script type="text/javascript" src="/assets/js/tagger.js"></script>
+<script type="text/javascript" src="/assets/js/regexINIFormat.js"></script>
+<script type="text/javascript" src="/assets/js/sendJob.js"></script>
+</html>

@@ -1,0 +1,41 @@
+#mainContent {
+    border: 2px solid rgba(139,0,0,1);
+    background-color: rgba(255,255,255,0.7);
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    color: rgba(0,0,0,0.8)
+}
+
+#descriptionContent {
+    float: left;
+    width: 80%;
+    
+}
+
+#subTitle {
+    padding: 10px;
+    font-size: 1.7em;
+}
+
+#msg {
+    text-align: justify;
+    padding: 10px 0 0 10px;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+#imgContent {
+    float: right;
+    width: 20%;
+}
+
+#imgContent img {
+    display: inline-block;
+    line-height: 1.5;
+}
+
+#mainContent {
+    content: "";
+    clear: both;
+    display: table;
+}

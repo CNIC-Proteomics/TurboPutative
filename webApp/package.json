@@ -1,17 +1,20 @@
 {
-  "name": "Web",
+  "name": "turboputative-web-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node .\\src",
+    "dev": "nodemon .\\src\\index.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Rafael Barrero Rodriguez",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "formidable": "^1.2.2"
+    "formidable": "^1.2.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

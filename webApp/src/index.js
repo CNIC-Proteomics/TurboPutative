@@ -1,29 +1,25 @@
-const path = require('path');
+// Import modules
 const express = require('express');
-const app = express();
+const morgan = require('morgan');
+const path = require('path');
 
+// Global variables
+var app = express();
 
-// const { table } = require('console');
-
-// settings
+// Settings
 app.set('port', 8080);
 
+// Middlewares
+app.use(morgan('combined'));
 
-// routes
-app.use(require('./routes/routes.js'));
+// Routes
+app.use(require(path.join(__dirname, "routes/index.js")));
+app.use(require(path.join(__dirname, "routes/execute.js")));
 
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-// set static files to be used
-app.use(express.static(path.join(__dirname, "public")));
-
-
-// 404 Not found
-app.use((req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'notFound.html'));
-})
-
-
-// listening the server
-app.listen(app.get('port'), function () {
-    console.log('Server listening at port ', app.get('port'));
+// Start listening
+app.listen(app.get('port'), () => {
+    console.log('TurboPutative web application listening on port', app.get('port'));
 })

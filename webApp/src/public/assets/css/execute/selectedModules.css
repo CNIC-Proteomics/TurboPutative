@@ -1,0 +1,27 @@
+#selectedContent {
+    display: none;
+    margin-top: 30px;
+    /*height: 150px;*/
+}
+
+#moduleSelectionContent {
+    text-align: center;
+    padding: 10px;
+}
+
+.selectedModule {
+    display: inline-block;
+    padding: 8px;
+    background-color: rgba(139,0,0, 0.7);
+    border: 2px solid rgba(139,0,0, 1);
+    border-radius: 8px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(255,255,255,1);
+}
+
+.rarr {
+    display: inline-block;
+    padding: 0 4px;
+    font-size: 1.5em;
+}

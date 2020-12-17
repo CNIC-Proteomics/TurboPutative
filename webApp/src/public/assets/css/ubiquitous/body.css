@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #dddddd;
+    background-image: url("/images/background4.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+    overflow: auto;
+}
+
+#content {
+    margin: auto;
+    margin-top: 30px;
+    width: 1300px;
+}
+
+.errorMsg {
+    display: none;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.downloadLink {
+    font-family: Arial, Helvetica, sans-serif;
+}

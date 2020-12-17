@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Loading</title>
+    <link rel="stylesheet" href="/assets/css/ubiquitous/body.css">
+    <link rel="stylesheet" href="/assets/css/ubiquitous/header.css">
+    <link rel="stylesheet" href="/assets/css/ubiquitous/navBar.css">
+    <link rel="stylesheet" href="/assets/css/ubiquitous/footer.css">
+    <link rel="stylesheet" href="/assets/css/execute/loading.css">
+    <link rel="stylesheet" href="/assets/css/ubiquitous/table.css">
+</head>
+<body>
+
+    <div id="content">
+
+        <!-- INSERT PARTIAL: ubiquitous/header.html -->
+
+        <div id="mainContent">
+
+            <div id="subTitle">Workflow results</div>
+
+            <div id="someContent">
+
+                <div id="img1" class="imgContent">
+                    <div>
+                        <img src="/images/icon.ico" alt="Metabolomics" width="130" height="auto">
+                    </div>
+                </div>
+
+                <div id="tableDataContent">
+                    <table id="tableData" style="line-height: 1.5;">
+                        <tr>
+                            <td class="field">Request ID</td>
+                            <td class="data" id="jobID">/* INSERT VALUE: workflowID */</td>
+                        </tr>
+                        <tr>
+                            <td class="field">Status</td>
+                            <td class="data" id="jobStatus">/* INSERT VALUE: status */</td>
+                        </tr>
+                        <tr>
+                            <td class="field">Execution time</td>
+                            <td class="data" id="jobTime">/* INSERT VALUE: execTime */</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="img2" class="imgContent">
+                    <div>
+                        <img src="/images/icon.ico" alt="Metabolomics" width="130" height="auto">
+                    </div>
+                </div>
+
+            </div>
+            
+            <div id="msg">This page will be reloaded automatically every 10 seconds until workflow is finished</div>
+
+            <!-- INSERT VALUE: partialButton -->
+
+        </div>
+
+        <!-- INSERT PARTIAL: ubiquitous/footer.html -->
+
+    </div>
+
+    <!-- INSERT VALUE: reload.js -->
+</body>
+</html>

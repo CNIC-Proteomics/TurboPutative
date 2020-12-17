@@ -1,0 +1,118 @@
+#mainContent {
+    background-color: rgba(255,255,255,0.4);
+    border: 2px solid rgba(139,0,0,1);
+    /*height: 270px;*/
+    padding: 10px;
+}
+
+#subTitle {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    font-weight: 300;
+    color: rgba(0,0,0,0.8);
+    padding: 6px;
+    /*border: 1px solid black*/
+}
+
+#tableDataContent {
+    float: left;
+    width: 34%;
+
+    /*border: 1px solid black;*/
+    padding: 10px 0 0 0;
+    margin: auto;
+}
+
+#img1 {
+    float: left;
+    width: 33%;
+}
+
+#img1 img {
+    position: relative;
+    left: 0px;
+
+    animation: rotation1 35s infinite linear;
+}
+
+@keyframes rotation1 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+}
+
+#img2 {
+    float: left;
+    width: 33%;
+
+    animation: rotation2 35s infinite linear;
+}
+
+@keyframes rotation2 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-359deg);
+    }
+}
+
+#img2 img {
+    position: relative;
+    right: 0px;
+}
+
+.imgContent img {
+    display: block;
+    margin: auto;
+}
+
+#someContent::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#msg {
+    padding: 6px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    color: rgba(0,0,0,0.8);
+    /*border:1px solid black;*/
+}
+
+/* Download results */
+#downloadButtonContent {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+#downloadButtonContent a {
+    margin: auto;
+    display: block;
+    padding: 10px;
+    width: 200px;
+
+    text-decoration: none;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+    color: rgba(255,255,255,0.7);
+
+    border: 2px solid rgba(139,0,0,1);
+    background-color: rgba(139,0,0,0.5);
+    border-radius: 6px;
+    transition: transform 0.2s;
+}
+
+#downloadButtonContent a:hover {
+    transform: scale(1.1,1.1);
+    background-color: rgba(139,0,0,0.7);
+    color: rgba(255,255,255,0.9);
+    transition: 0.2s;
+}

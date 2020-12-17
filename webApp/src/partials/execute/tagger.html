@@ -1,0 +1,72 @@
+<div id="TaggerParamContent"  style="display: none">
+
+    <div class="subTitle" style="padding-bottom: 10px;">Tagger Parameters</div>
+
+    <div class="subSubTitle">Tag Selection</div>
+
+    <div id="tagSelectionContent">
+        <label class="cbContainer">Select all
+            <input class="cbTag" type="checkbox" id="allTags" value="true">
+            <span class="checkmark"></span>                
+        </label>
+
+        <label class="cbContainer">Food
+            <input class="cbTag" type="checkbox" id="food" value="true">
+            <span class="checkmark"></span>                
+        </label>
+
+        <label class="cbContainer">Drug
+            <input class="cbTag" type="checkbox" id="drug" value="true">
+            <span class="checkmark"></span>                
+        </label>
+
+        <label class="cbContainer">Halogenated
+            <input class="cbTag" type="checkbox" id="halogenated" value="true">
+            <span class="checkmark"></span>                
+        </label>
+
+        <label class="cbContainer">Peptide
+            <input class="cbTag" type="checkbox" id="peptide" value="true">
+            <span class="checkmark"></span>                
+        </label>
+    </div>
+
+    <div class="moreCont">
+        <button type="button" id="more" onclick="clickAdvance('#TaggerParamContent .hidden')">Advanced</button>
+    </div>
+
+    <div class="paramContent hidden" style="display: none;">
+
+        <div class="subSubTitle" style="padding: 20px 0 0 0;">Parameters</div>
+
+        <div class="paramContainer">
+            <label class="tooltip" for="halogenatedRegex">HalogenatedRegex <span class="icon">&#9432</span>
+                <span class="tooltipText">Regular expression that matches the name of halogenated compounds</span>
+            </label>
+            <input type="text" id="halogenatedRegex">
+            <script>document.querySelector("#halogenatedRegex").value = "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)";</script>
+        </div>
+
+        <div class="paramContainer">
+            <label class="tooltip" for="peptideRegex">PeptideRegex <span class="icon">&#9432</span>
+                <span class="tooltipText">Regular expression that matches the name of peptides</span>
+            </label>
+            <input type="text" id="peptideRegex">
+            <script>document.querySelector("#peptideRegex").value = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\\s,]){3,}$";</script>
+        </div>
+
+        <div class="paramContainer">
+            <label for="outputNameTagger">Output Name</label>
+            <input type="text" id="outputNameTagger">
+        </div>
+
+        <div class="paramContainer">
+            <label for="outputColumnsTagger" placeholder="Optional">Output Columns</label>
+            <input type="text" id="outputColumnsTagger" placeholder="Optional">
+        </div>
+
+    </div>
+
+    <!-- INSERT PARTIAL: execute/_buttons.html -->
+
+</div>

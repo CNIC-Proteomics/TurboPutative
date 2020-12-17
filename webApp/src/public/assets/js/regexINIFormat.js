@@ -1,10 +1,10 @@
 // Global variables
-var INIformat = 0; // 0 if format is correct; 1 otherwise
-var lineError = 0; // Line with error format 
+//var INIformat = 0; // 0 if format is correct; 1 otherwise
+//var lineError = 0; // Line with error format 
 
 // Event added when user uploads regex file
-document.getElementById('regexINI').addEventListener('change', function() { 
-  
+document.querySelector('#regexFile').addEventListener('change', function() { 
+
     var fr = new FileReader();
 
     // When file is uploaded, execute function to assert that format is correct
@@ -17,12 +17,15 @@ document.getElementById('regexINI').addEventListener('change', function() {
 
 // Function to assert ini format from string
 function assertINIFormat(iniString) {
-    
+
+    var INIformat = 0; // 0 if format is correct; 1 otherwise
+    var lineError = 0; // Line with error format 
+
     // Split string in lines !!!BE CAREFUL WITH NATURAL \n!!!!1
     var lines = iniString.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
 
     // Define regular expressions used to assert the format
-    var comment = /^#/;
+    var comment = /^\s*#/;
     var nothing = /^\s*$/;
     var section = /^\[\w+\]\s*$/;
     var param = /^\w+\s=\s.*$/;
@@ -64,9 +67,10 @@ function assertINIFormat(iniString) {
 
     if (INIformat == 0){
         console.log("Format is correct");
+        document.querySelector("#regexErrorMsg").style.display = "none";
     } else {
-        document.getElementById("errorINIFormat").style.display = "block";
-        document.getElementById("errorINIFormat").innerHTML = `Format  error at line ${lineError}`;
+        document.querySelector("#regexErrorMsg").style.display = "block";
+        document.querySelector("#regexErrorMsg").innerHTML = `Format  error at line ${lineError}`;
         console.log(`Format error at line ${line}`);
     }
 }

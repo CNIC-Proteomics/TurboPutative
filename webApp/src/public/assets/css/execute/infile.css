@@ -1,0 +1,28 @@
+#infileContent {
+    display: none;
+    padding: 10px 3% 20px 3%;
+    text-align: center;
+}
+
+#inputFileContent {
+    margin: auto;
+    padding: 20px;
+    width: 600px;
+}
+
+#infile {
+    display: block;
+    float: left;
+    cursor: pointer;
+}
+
+#inputFileContent a {
+    display: block;
+    float: right;
+}
+
+#inputFileContent {
+    content: "";
+    clear: both;
+    display: table;
+}

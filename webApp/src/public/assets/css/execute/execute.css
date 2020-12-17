@@ -1,0 +1,71 @@
+#mainContent {
+    background-image: url("/images/background2.jpg");
+    border: 2px solid rgb(139,0,0);
+}
+
+#selectorContent {
+    padding: 0px 3% 20px 3%;
+    /*border: 2px solid rgb(139,0,0);*/
+    /*background-color: rgba(139,0,0, 0.5);*/
+    /*background-image: url("/images/background2.jpg");*/
+}
+
+.subTitle {
+    text-align: center;
+    color: rgba(0,0,0,0.8);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.8em;
+    padding: 30px;
+}
+
+.subSubTitle {
+    text-align: center;
+    color: rgba(0,0,0,0.8);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    padding: 5px 30px 15px 30px;
+}
+
+/* BUTTONS */
+.moduleButtonContent {
+    float: left;
+    /*padding: 3px;*/
+    width: 25%;
+    /*border: 2px solid rgb(139,0,0);*/
+}
+
+.moduleButton {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.4em;
+    padding-top: 20px;
+    overflow: hidden;
+    color: rgba(255,255,255,0.8);
+    
+    width: 95%;
+    max-width: 200px;
+    height: 70px;
+    margin: auto;
+    
+    border: 2px solid rgb(139,0,0);
+    border-radius: 6px;
+    background-color: rgba(139,0,0, 0.6);
+
+    user-select: none;
+    cursor: pointer;
+    transition: transform 0.5s;
+
+}
+
+.moduleButton:hover {
+    
+    transform: scale(1.2, 1.2);
+    background-color: rgba(139,0,0, 1);
+    color: rgba(255,255,255,1);
+}
+
+#buttonsContent::after {
+    content: "";
+    clear: both;
+    display: table;
+}

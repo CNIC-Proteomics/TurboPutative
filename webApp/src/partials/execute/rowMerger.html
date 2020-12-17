@@ -1,0 +1,43 @@
+<div id="RowMergerParamContent" style="display: none">
+
+    <div class="subTitle" style="padding-bottom: 10px;">RowMerger Parameters</div>
+
+    <div class="paramContent">
+        <div class="paramContainer" style="width: 825px;">
+            <label class="tooltip" for="comparedCol">Compared columns (Index/Name) <span class="icon">&#9432</span>
+                <span class="tooltipText" style="top:-20%;">Name of columns compared among rows</span>
+            </label>
+            <input type="text" id="comparedCol" value="Experimental mass, Adduct, mz Error (ppm), Molecular Weight">
+        </div>
+
+        <div class="paramContainer" style="width: 825px;">
+            <label class="tooltip" for="conservedCol">Conserved columns (Index/Name) <span class="icon">&#9432</span>
+                <span class="tooltipText">Name of columns whose value will be conserved after row merge</span>
+            </label>
+            <input type="text" id="conservedCol" value="Identifier, Name">
+        </div>
+    </div>
+
+
+    <div class="moreCont">
+        <button type="button" id="more" onclick="clickAdvance('#RowMergerParamContent .hidden')">Advanced</button>
+    </div>
+    
+
+    <div class="paramContent hidden" style="display: none;">
+
+        <div class="paramContainer" style="width: 650px;">
+            <label for="outputNameRowMerger">Output Name</label>
+            <input type="text" id="outputNameRowMerger" placeholder="Optional">
+        </div>
+
+        <div class="paramContainer" style="width: 650px;">
+            <label for="outputColumnsRowMerger">Output Columns</label>
+            <input type="text" id="outputColumnsRowMerger" placeholder="Optional">
+        </div>
+
+    </div>
+
+    <!-- INSERT PARTIAL: execute/_buttons.html -->
+
+</div>

@@ -1,0 +1,113 @@
+/* Description box */
+#description {
+    float: left;
+    width: 40%;
+    /*width: 500px;*/
+    height: 230px;
+    padding: 10px;
+    border: 2px solid darkred;
+    border-radius: 6px;
+    background-image: url("/images/description.jpg");
+    background-size: cover;
+    overflow: auto;
+}
+
+#description #descTitle {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: rgba(0,0,0,0.8)
+}
+
+#description #descContent {
+    margin-top: 10px;
+    text-align: justify;
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* */
+
+/* image box */
+#img {
+    float: left;
+    width: 15%;
+    height: 230px;
+    line-height: 230px;
+    margin-left: 2.5%;
+    overflow: hidden;
+    text-align: center;
+}
+
+#img img {
+    display: inline-block;
+    margin: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    animation: rotation 20s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+}
+/* */
+
+/* Try box */
+#try  {
+    float: right;
+    width: 40%;
+    height: 230px;
+    padding: 10px;
+    border: 2px solid darkred;
+    border-radius: 6px;
+    background-image: url("/images/try.jpg");
+    background-size: cover;
+}
+
+#try #tryButton {
+    margin-top: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+#tryButton a {
+    margin: auto;
+    display: block;
+    background: rgba(139,0,0,0.8);
+    border: 2px solid darkred;
+    border-radius: 6px;
+    /*width: 25%;*/
+    max-width: 150px;
+    padding: 15px 30px;
+    text-decoration: none;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+    font-weight: 300;
+    transition: all 0.5s;
+}
+
+#tryButton a:hover {
+    /*background-color: rgba(139,0,0,0.8);*/
+    transform: scale(1.2,1.2);
+}
+/* */
+
+#mainContent::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.subtitle {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: rgba(0,0,0,0.8)
+}

@@ -1,0 +1,20 @@
+<div id="infileContent">
+
+    <div class="subTitle">Select input file (.xls or .xlsx) containing putative annotations</div>
+
+    <div id="inputFileContent">
+    
+        <input type="file" id="infile" name="infile" form="workflowForm"
+        accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+
+        <a class="downloadLink" href="/assets/files/MS_experiment.xls" download="MS_exeperiment.xls">Download Example File</a>
+    
+    </div>
+
+    <!-- INSERT PARTIAL: execute/_buttons.html -->
+
+    <script>
+        document.querySelector("#infileContent .next").style.display = "none";
+    </script>
+
+</div>

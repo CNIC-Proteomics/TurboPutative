@@ -1,0 +1,52 @@
+.paramContainer {
+    margin: auto;
+    padding: 25px 0 5px 0;
+    width: 700px;
+}
+
+.paramContent label {
+    display: block;
+    float: left;
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.8);
+}
+
+.paramContent input {
+    width: 500px;
+    padding: 6px;
+    display: block;
+    float: right;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.paramContainer::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.paramContent input:focus {
+    outline: none;
+}
+
+/* Show Advance Parameters */
+.moreCont {
+    margin-top: 5px;
+    padding: 10px 0 0px 0;
+}
+
+.moreCont button {
+    display: block;
+    margin: auto;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/**/
