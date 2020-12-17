@@ -44,7 +44,9 @@ desktopApp/app/src/pyModules/pygoslin/domain/__pycache__/*
 ##################
 desktopApp/app/src/pyModules/pygoslin/*
 desktopApp/app/src/pyModules/pygoslin_library/*
-webApp/src/tools/pyModules/pygoslin/*
+webApp/src/TurboPutative/pyModules/pygoslinn/*
+webApp/src/TurboPutative/pyModules/pygoslinn_library/*
+webApp/src/TurboPutative/pyModules/pygoslinn_library.zip
 
 # Jupyter Notebook scripts #
 ############################
