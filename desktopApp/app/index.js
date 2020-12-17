@@ -6,7 +6,8 @@ const { spawn, spawnSync, exec } = require('child_process');
 const { finished } = require('stream');
 
 // Global variables
-const nCores = Number((os.cpus().length*0.5).toFixed(0)); // Number of cores used
+// const nCores = Number((os.cpus().length*0.4).toFixed(0)); // Number of cores used
+const nCores = 1;
 
 var win; // Windows openned (the only one)
 var batch; // Process spawned when running workflow

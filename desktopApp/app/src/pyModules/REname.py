@@ -250,6 +250,10 @@ def synonymsSubstitution(df, name_col_index, synonyms_dict, regex_sep, n_cores):
 
     """
 
+    # SUBSTIUTE WITHOUT PARALLEL PROCESS (AVOID MEMORY ERROR)
+    df_processed = subProcessSynonym(df, name_col_index, synonyms_dict, regex_sep)
+
+    '''
     # Split dataframe so that each is processed by one core
     df_split = np.array_split(df, n_cores)
 
@@ -259,6 +263,7 @@ def synonymsSubstitution(df, name_col_index, synonyms_dict, regex_sep, n_cores):
     with Pool(n_cores) as p:
         result = p.starmap(subProcessSynonym, subprocess_args)
         df_processed = pd.concat(result)
+    '''
     
     return df_processed
 
@@ -1216,7 +1221,11 @@ def main(args):
     logging.info(f'Synonyms substitution prior to parsing')
     df_processed = synonymsSubstitution(df, name_col_index, synonyms_dict, regex_sep, n_cores)
 
+    # PARSE WITH GOSLIN WITHOUT PARALLEL PROCESS (AVOID MEMORY ERROR)
+    logging.info(f'Parsing lipid names using Goslin')
+    df_processed = subProcessFuncLipid(df_processed, name_col_index, regex_sep, lipid_list)
     
+    '''
     # Split dataframe so that each is processed by one core
     df_split = np.array_split(df_processed, n_cores)
 
@@ -1224,14 +1233,20 @@ def main(args):
     subprocess_args = [(df_i, name_col_index, regex_sep, lipid_list) for df_i in df_split]
 
     with Pool(n_cores) as p:
-        logging.info(f'Parsing lipid names using Goslin')
+        # logging.info(f'Parsing lipid names using Goslin')
         result = p.starmap(subProcessFuncLipid, subprocess_args)
         df_processed = pd.concat(result)
+    '''
 
     # Fuse rows with the same value for the selected columns
     logging.info(f'Collapsing rows after lipid processing')
     df_processed = fuseTable(df_processed, name_col_index)
     
+    # APPLY REGULAR EXPRESSION WITHOUT PARALLEL PROCESS (AVOID MEMORY ERROR)
+    logging.info(f'Applying regular expression from {os.path.basename(args.regex)} and sorting peptide aminoacids alphabetically')
+    df_processed = subProcessFuncRegex(df_processed, name_col_index, regex_sep, aa_sep, config_regex)
+
+    '''
     # Split dataframe so that each one is processed by one core
     df_split = np.array_split(df_processed, n_cores)
 
@@ -1239,7 +1254,7 @@ def main(args):
     subprocess_args = [(df_i, name_col_index, regex_sep, aa_sep, config_regex) for df_i in df_split]
 
     with Pool(n_cores) as p: 
-        logging.info(f'Applying regular expression from {os.path.basename(args.regex)} and sorting peptide aminoacids alphabetically')
+        # logging.info(f'Applying regular expression from {os.path.basename(args.regex)} and sorting peptide aminoacids alphabetically')
         
         # User may send regular expressions, so we must handle possible errors
         try:
@@ -1256,6 +1271,7 @@ def main(args):
             sys.exit(23) # Status code for Regular expressions
 
         df_processed = pd.concat(result)
+    '''
 
     # Synonym substitution after to parsing
     logging.info(f'Synonyms substitution after parsing')
@@ -1279,7 +1295,7 @@ def main(args):
 
 if __name__ == '__main__':
     
-    multiprocessing.freeze_support()
+    # multiprocessing.freeze_support()
 
     # parse arguments
     parser = argparse.ArgumentParser(

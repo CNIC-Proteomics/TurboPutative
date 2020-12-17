@@ -42,6 +42,7 @@ desktopApp/app/src/pyModules/pygoslin/domain/__pycache__/*
 
 # goslin library #
 ##################
+desktopApp/app/src/pyModules/pygoslin/*
 desktopApp/app/src/pyModules/pygoslin_library/*
 webApp/src/tools/pyModules/pygoslin/*
 
@@ -49,3 +50,8 @@ webApp/src/tools/pyModules/pygoslin/*
 ############################
 /tools/Tagger/dbs/scripts/DataBaseGenerator.ipynb
 /tools/Tagger/dbs/scripts/getAllSynonyms.ipynb
+
+# other files #
+###############
+/webApp_old.zip
+/desktopApp/env_fake/*

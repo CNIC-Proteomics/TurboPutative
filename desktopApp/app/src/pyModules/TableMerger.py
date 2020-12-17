@@ -285,11 +285,11 @@ def updateTable(merged_table, identification_table_unmatched_restored, feature_r
         _ = [new_row.update({col: [ident_row[col]]}) for col in identification_column_names]
         new_row['Experimental mass'] = [round_value]
 
-        if not any(merged_table.apply(isRow, axis=1, args=(new_row,))):
+        if not any(merged_table.apply(isRow, axis=1, args=(new_row,), result_type="reduce")):
             # Join if every element in any is False. Any return a False which is converted to True
             # If every element is False in any, then new_row is not contained in merged_table.
             merged_table = pd.concat([merged_table, pd.DataFrame(new_row)])
-    
+
     return merged_table
         
         

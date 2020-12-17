@@ -1,0 +1,21 @@
+12/14/2020 06:50:01 PM - INFO - start script: REname.py -i C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test9\identification.xlsx -re C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\src\config\configREname\regex.ini -pr C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\src\config\configREname\configREname.ini
+12/14/2020 06:50:01 PM - INFO - Using 1 cores
+12/14/2020 06:50:01 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test9\identification.xlsx
+12/14/2020 06:50:01 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test9\identification.xlsx was read
+12/14/2020 06:50:01 PM - INFO - Removing rows identified by RemoveRow parameter
+12/14/2020 06:50:01 PM - INFO - Synonyms substitution prior to parsing
+12/14/2020 06:50:01 PM - INFO - Parsing lipid names using Goslin
+12/14/2020 06:50:02 PM - INFO - Collapsing rows after lipid processing
+12/14/2020 06:50:02 PM - INFO - Applying regular expression from regex.ini and sorting peptide aminoacids alphabetically
+12/14/2020 06:50:02 PM - INFO - Synonyms substitution after parsing
+12/14/2020 06:50:02 PM - INFO - Collapsing rows after metabolite name parsing
+12/14/2020 06:50:02 PM - INFO - Peptides post-processing (replace alphabetically sorted name by one of the original names)
+12/14/2020 06:50:03 PM - INFO - Write Output Table: REnamed_identification.xlsx
+12/14/2020 06:50:03 PM - INFO - end script
+12/14/2020 06:52:24 PM - INFO - start script: REname.py -i C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test9\identification.xlsx -re C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\src\config\configREname\regex.ini -pr C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\src\config\configREname\configREname.ini
+12/14/2020 06:52:24 PM - INFO - Using 1 cores
+12/14/2020 06:52:24 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test9\identification.xlsx
+12/14/2020 06:52:24 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test9\identification.xlsx was read
+12/14/2020 06:52:24 PM - INFO - Removing rows identified by RemoveRow parameter
+12/14/2020 06:52:24 PM - INFO - Synonyms substitution prior to parsing
+12/14/2020 06:52:24 PM - INFO - Parsing lipid names using Goslin

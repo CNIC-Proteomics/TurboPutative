@@ -162,12 +162,16 @@ def foodTagger(df, n_cores):
     '''
     
     logging.info("Start food tagging")
-
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
     
     # Get numpy array with food compounds in database
     food_list = readFoodTable(args.foodList)
+
+    # Tagging without parallel processes (AVOID MEMORY ERROR)
+    df_out = foodTaggerBatch(df, food_list)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
         
     # Create list of tuples. Each tuple contains arguments received by foodTaggerBatch in each subprocess
     subprocess_args = [(df_i, food_list) for df_i in df_split]
@@ -177,7 +181,7 @@ def foodTagger(df, n_cores):
         logging.info("Tagging food compounds")
         result = p.starmap(foodTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished food tagging")
 
     return df_out
@@ -238,11 +242,15 @@ def drugTagger(df, n_cores):
 
     logging.info("Start drug tagging")
 
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
-
     # Get numpy array with drug list
     drug_list = readDrugTable(args.drugList)
+
+    # Tagging without parallel process (AVOID MEMORY ERROR)
+    df_out = drugTaggerBatch(df, drug_list)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
 
     # Create list with parameters received by each drugTaggerBatch function in each subprocess
     subprocess_args = [(df_i, drug_list) for df_i in df_split]
@@ -252,7 +260,7 @@ def drugTagger(df, n_cores):
         logging.info("Tagging drug compounds")
         result = p.starmap(drugTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished drug tagging")
 
     return df_out
@@ -365,11 +373,15 @@ def halogenatedTagger(df, n_cores):
 
     logging.info("Start halogenated compounds tagging")
 
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
-
     # Get string with the regular expression used to identify halogenated compounds
     halogen_regex = config_param.get('Parameters', 'HalogenatedRegex')
+
+    # Tagg without parallel process (AVOID MEMORY ERROR)
+    df_out = halogenatedTaggerBatch(df, halogen_regex)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
 
     # Create list with parameters received by halogenatedTaggerBatch in each subprocess
     subprocess_args = [(df_i, halogen_regex) for df_i in df_split]
@@ -379,7 +391,7 @@ def halogenatedTagger(df, n_cores):
         logging.info("Tagging halogenated compounds")
         result = p.starmap(halogenatedTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished halogenated compounds tagging")
 
     return df_out 
@@ -420,12 +432,16 @@ def peptideTagger(df, n_cores):
 
     logging.info("Start peptide compounds tagging")
 
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
-
     # Get string with the regular expression used to identify peptide compounds
     # peptide_regex = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\s,]){3,}$"
     peptide_regex = config_param.get('Parameters', 'PeptideRegex')
+
+    # Tag without parallel process (AVOID MEMORY ERROR)
+    df_out = peptideTaggerBatch(df, peptide_regex)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
 
     # Create list with parameters received by peptideTaggerBatch in each subprocess
     subprocess_args = [(df_i, peptide_regex) for df_i in df_split]
@@ -435,7 +451,7 @@ def peptideTagger(df, n_cores):
         logging.info("Tagging peptides")
         result = p.starmap(peptideTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished peptide tagging")
 
     return df_out    
@@ -563,7 +579,7 @@ def main(args):
 
 if __name__=="__main__":
 
-    multiprocessing.freeze_support()
+    # multiprocessing.freeze_support()
 
     # parse arguments
     parser = argparse.ArgumentParser(
