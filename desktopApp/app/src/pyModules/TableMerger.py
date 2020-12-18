@@ -45,6 +45,26 @@ class StringToFloat(Exception):
     pass
 
 
+def openFile(infile, row):
+    '''
+    '''
+
+    extension = os.path.splitext(infile)[1]
+
+    if extension == '.xls':
+        df = pd.read_excel(infile, header=row, engine="xlrd")
+
+    elif extension == '.xlsx':
+        df = pd.read_excel(infile, header=row, engine="openpyxl")
+
+    else: 
+        logging.info(f"ERROR: Cannot read file with {extension} extension")
+        sys.exit(52)
+
+
+    return df
+
+
 def readInfile(infile, row, feature_mass_name, file_type):
     '''
     Input:
@@ -64,12 +84,12 @@ def readInfile(infile, row, feature_mass_name, file_type):
     logging.info(log_str)
 
     try:
-        df = pd.read_excel(infile, header=row)
+        df = openFile(infile, row)
         
         # Column header is in 1st or 2nd row? Assert it by  mass column name
         while all([not (name in df.columns) for name in feature_mass_name]) and (row+1 < 2):
             row += 1
-            df = pd.read_excel(infile, header=row)
+            df = openFile(infile, row)
         
         # If header is not the n first rows...
         if all([not (name in df.columns) for name in feature_mass_name]):
@@ -82,7 +102,7 @@ def readInfile(infile, row, feature_mass_name, file_type):
             if file_type == 2:
         
                 # Read complete dataframe assuming that there is no header
-                df = pd.read_excel(infile, header=None)
+                df = openFile(infile, None)
 
                 # Assert that there are 3 columns...
                 if df.shape[1] != 3:
@@ -500,12 +520,13 @@ def getOutputFilename():
     '''
 
     filename = config_param.get('Parameters', 'OutputName')
-
+    filename = os.path.splitext(filename)[0] + '.xlsx'
+    
     if not filename:
         filename = 'Tmerged_' + os.path.basename(args.identification)
 
     if not os.path.splitext(filename)[1]:
-        filename += '.xls'
+        filename += '.xlsx'
     
     return filename
 

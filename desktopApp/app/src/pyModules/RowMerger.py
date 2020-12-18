@@ -34,6 +34,27 @@ import pdb
 class NoNameColumn(Exception):
     pass
 
+
+def openFile(infile, row):
+    '''
+    '''
+
+    extension = os.path.splitext(infile)[1]
+
+    if extension == '.xls':
+        df = pd.read_excel(infile, header=row, engine="xlrd")
+
+    elif extension == '.xlsx':
+        df = pd.read_excel(infile, header=row, engine="openpyxl")
+
+    else: 
+        logging.info(f"ERROR: Cannot read file with {extension} extension")
+        sys.exit(52)
+
+
+    return df
+
+
 def readInfile(infile, row):
     '''
     Input:
@@ -51,11 +72,11 @@ def readInfile(infile, row):
     logging.info(log_str)
 
     try:
-        df = pd.read_excel(infile, header=row)
+        df = openFile(infile, row)
         
         while ("Name" not in df.columns) and (row+1 < 2):
             row += 1
-            df = pd.read_excel(infile, header=row)
+            df = openFile(infile, row)
         
         if "Name" not in df.columns:
             raise NoNameColumn("ERROR: 'Name' column was not found")
@@ -279,12 +300,13 @@ def getOutputFilename():
     '''
 
     filename = config_param.get('Parameters', 'OutputName')
+    filename = os.path.splitext(filename)[0] + '.xlsx'
 
     if not filename:
         filename = 'RowMerged_' + os.path.basename(args.infile)
 
     if not os.path.splitext(filename)[1]:
-        filename += '.xls'
+        filename += '.xlsx'
     
     return filename
 
@@ -321,7 +343,7 @@ def writeDataFrame(df, path):
 
     # Handle errors in exception case
     try:
-        df.to_excel(output_file, index=False, columns=output_columns)
+        df.to_excel(output_file, index=False, columns=output_columns, engine="openpyxl")
     
     except:
         log_str = f'Error when writing {str(Path(output_file))}'

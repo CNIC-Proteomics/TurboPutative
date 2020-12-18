@@ -265,6 +265,71 @@ def drugTagger(df, n_cores):
 
     return df_out
 
+def readMicrobialTable(path):
+    '''
+    Input:
+        - path: String containing the path to the microbial database
+    
+    Output:
+        - microbial_list: String Numpy Array containing micrbial name extracted from the database
+    '''
+
+    logging.info(f"Reading Microbial Table: {path}")
+
+    # Import drug table as a pandas dataframe
+    df = pd.read_csv(path, header=0, sep="\t", dtype=str)
+
+    # Extract drug list name from df as a numpy array
+    microbial_list = np.array(df.iloc[:, 0])
+
+    return microbial_list
+
+
+def microbialTaggerBatch(df, microbial_list):
+    '''
+    Input:
+        - df: Pandas dataframe containing a batch of the whole infile dataframe
+        - microbial_list: String Numpy Array containing all drug compounds in the database
+    
+    Output:
+        - df: Pandas dataframe with the drug tag added in a new column
+    '''
+
+    # Get numpy array with compound in input table
+    compound_names = np.array(df.loc[:, 'Name']) 
+
+    # Tag corresponding compounds
+    microbial_tag = ["MC" if compound in microbial_list else "" for compound in compound_names]
+
+    # Add Drug tag column to the dataframe
+    name_column_index = getNameColumnIndex(df.columns)
+    df.insert(name_column_index+1, "Microbial", microbial_tag, True)
+    
+    return df
+
+
+def microbialTagger(df, n_cores):
+    '''
+    Input:
+        - df: Pandas dataframe containing the whole infile content
+        - n_cores: Integer indicating the number of cores used in the multiprocessing
+
+    Output: df_out: Pandas dataframe containing the whole infile content with the MC Tag 
+    added in a new column
+    '''
+
+    logging.info("Start microbial compound tagging")
+
+    # Get numpy array with microbial compound list
+    microbial_list = readMicrobialTable(args.microbialList)
+
+    # Tagging without parallel process (AVOID MEMORY ERROR)
+    df_out = microbialTaggerBatch(df, microbial_list)
+
+    logging.info("Finished microbial tagging")
+
+    return df_out
+
 
 def npTaggerBatch(df, np_list):
     '''
@@ -563,6 +628,9 @@ def main(args):
     if re.search('(?i)true', config_param['TagSelection']['Drug']):
         df = drugTagger(df, n_cores)
     
+    if re.search('(?i)true', config_param['TagSelection']['MicrobialCompound']):
+        df = microbialTagger(df, n_cores)
+
     # if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
     #    df = npTagger(df, n_cores)
 
@@ -595,7 +663,7 @@ if __name__=="__main__":
     default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configTagger', 'configTagger.ini')
     default_food_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'food_database.tsv')
     default_drug_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv')
-    # default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv', 'microbial_compound_database.tsv')
+    default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'microbial_database.tsv')
     default_natural_products_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'natural_product_database.tsv')
 
     # Parse arguments corresponding to path files
@@ -603,7 +671,7 @@ if __name__=="__main__":
     parser.add_argument('-c', '--config', help="Path to configTagger.ini file", type=str, default=default_config_path)
     parser.add_argument('-fL', '--foodList', help="Path to food compounds list", type=str, default=default_food_list_path)
     parser.add_argument('-dL', '--drugList', help="Path to drug compounds list", type=str, default=default_drug_list_path)
-    # parser.add_argument('-mL', '--microbialList', help="Path to microbial compounds list", type=str, default=default_microbial_compound_list_path)
+    parser.add_argument('-mL', '--microbialList', help="Path to microbial compounds list", type=str, default=default_microbial_compound_list_path)
     parser.add_argument('-npL', '--naturalList', help="Path to natural products list", type=str, default=default_natural_products_list_path)
 
     parser.add_argument('-o', '--output', help="Name of output table", type=str)

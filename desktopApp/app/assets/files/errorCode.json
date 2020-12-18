@@ -102,5 +102,19 @@
 		"module": "TableMerger",
 		"description": "An error occurred when writing output file.",
 		"code": "42"
-	}
+	},
+	"50": {
+		"module": "TableMerger",
+		"description": "File with feature information could not be copied",
+		"code": "50"
+	},
+	"51": {
+		"module": "search",
+		"description": "The requested job was not found",
+		"code": "51"
+	},
+	"52": {
+		"module": "workflow",
+		"description": "Input file extension error"
+	} 
 }

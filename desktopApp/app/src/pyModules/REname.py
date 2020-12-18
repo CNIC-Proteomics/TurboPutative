@@ -84,6 +84,26 @@ def readSynonyms(infile_path):
     return synonyms_dict_lower
 
 
+def openFile(infile, row):
+    '''
+    '''
+
+    extension = os.path.splitext(infile)[1]
+
+    if extension == '.xls':
+        df = pd.read_excel(infile, header=row, engine="xlrd")
+
+    elif extension == '.xlsx':
+        df = pd.read_excel(infile, header=row, engine="openpyxl")
+
+    else: 
+        logging.info(f"ERROR: Cannot read file with {extension} extension")
+        sys.exit(52)
+
+
+    return df
+
+
 def readInfile(infile, row):
     '''
     Input:
@@ -101,11 +121,11 @@ def readInfile(infile, row):
     logging.info(log_str)
 
     try:
-        df = pd.read_excel(infile, header=row)
+        df = openFile(infile, row)
         
         while ("Name" not in df.columns) and (row+1 < 2):
             row += 1
-            df = pd.read_excel(infile, header=row)
+            df = openFile(infile, row)
         
         if "Name" not in df.columns:
             raise NoNameColumn("ERROR: 'Name' column was not found")
@@ -1104,15 +1124,16 @@ def getOutFileName(infile):
     the output file name given by the user has extension. If not, .xls will be used.
     '''
 
-    outfile_name = config_param['Parameters']['OutputName']
+    filename = config_param['Parameters']['OutputName']
+    filename = os.path.splitext(filename)[0] + '.xlsx'
 
-    if not outfile_name:
-        outfile_name = 'REnamed_' + infile
+    if not filename:
+        filename = 'REnamed_' + infile
     
-    if not os.path.splitext(outfile_name)[1]:
-        outfile_name += '.xls'
+    if not os.path.splitext(filename)[1]:
+        filename += '.xlsx'
     
-    return outfile_name
+    return filename
 
 
 def getOutColumns(column_names):
@@ -1161,7 +1182,7 @@ def writeDataFrame(df, path):
     
     # Handle errors in exception case
     try:
-        df.to_excel(output_path_filename, index=False, columns=out_columns_name)
+        df.to_excel(output_path_filename, index=False, columns=out_columns_name, engine="openpyxl")
     
     except:
         log_str = f'Error when writing {str(Path(output_path_filename))}'

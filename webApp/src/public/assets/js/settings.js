@@ -18,6 +18,9 @@ var workflowObject = {
         this.ini.Tagger += "Drug = ";
         this.ini.Tagger += document.querySelector("#drug").checked;
         this.ini.Tagger += "####"
+        this.ini.Tagger += "MicrobialCompound = ";
+        this.ini.Tagger += document.querySelector("#microbial").checked;
+        this.ini.Tagger += "####"
         this.ini.Tagger += "Halogenated = ";
         this.ini.Tagger += document.querySelector("#halogenated").checked;
         this.ini.Tagger += "####"

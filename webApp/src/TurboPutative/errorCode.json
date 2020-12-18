@@ -112,5 +112,9 @@
 		"module": "search",
 		"description": "The requested job was not found",
 		"code": "51"
+	},
+	"52": {
+		"module": "workflow",
+		"description": "Input file extension error"
 	} 
 }

@@ -36,6 +36,25 @@ import pdb
 class NoNameColumn(Exception):
     pass
 
+def openFile(infile, row):
+    '''
+    '''
+
+    extension = os.path.splitext(infile)[1]
+
+    if extension == '.xls':
+        df = pd.read_excel(infile, header=row, engine="xlrd")
+
+    elif extension == '.xlsx':
+        df = pd.read_excel(infile, header=row, engine="openpyxl")
+
+    else: 
+        logging.info(f"ERROR: Cannot read file with {extension} extension")
+        sys.exit(52)
+
+
+    return df
+
 def readInfile(infile, row):
     '''
     Input:
@@ -47,17 +66,18 @@ def readInfile(infile, row):
 
     infile_base_name = re.escape(os.path.splitext(os.path.basename(infile))[0])
     file = [file for file in os.listdir(os.path.dirname(infile)) if re.search(f'^{infile_base_name}\.(?!.*\.)', file)][0]
+    
     infile = os.path.join(os.path.dirname(infile), file)
 
     log_str = f'Reading input file: {str(Path(infile))}'
     logging.info(log_str)
 
     try:
-        df = pd.read_excel(infile, header=row)
+        df = openFile(infile, row)
         
         while ("Name" not in df.columns) and (row+1 < 2):
             row += 1
-            df = pd.read_excel(infile, header=row)
+            df = openFile(infile, row)
         
         if "Name" not in df.columns:
             raise NoNameColumn("ERROR: 'Name' column was not found")
@@ -265,6 +285,71 @@ def drugTagger(df, n_cores):
 
     return df_out
 
+def readMicrobialTable(path):
+    '''
+    Input:
+        - path: String containing the path to the microbial database
+    
+    Output:
+        - microbial_list: String Numpy Array containing micrbial name extracted from the database
+    '''
+
+    logging.info(f"Reading Microbial Table: {path}")
+
+    # Import drug table as a pandas dataframe
+    df = pd.read_csv(path, header=0, sep="\t", dtype=str)
+
+    # Extract drug list name from df as a numpy array
+    microbial_list = np.array(df.iloc[:, 0])
+
+    return microbial_list
+
+
+def microbialTaggerBatch(df, microbial_list):
+    '''
+    Input:
+        - df: Pandas dataframe containing a batch of the whole infile dataframe
+        - microbial_list: String Numpy Array containing all drug compounds in the database
+    
+    Output:
+        - df: Pandas dataframe with the drug tag added in a new column
+    '''
+
+    # Get numpy array with compound in input table
+    compound_names = np.array(df.loc[:, 'Name']) 
+
+    # Tag corresponding compounds
+    microbial_tag = ["MC" if compound in microbial_list else "" for compound in compound_names]
+
+    # Add Drug tag column to the dataframe
+    name_column_index = getNameColumnIndex(df.columns)
+    df.insert(name_column_index+1, "Microbial", microbial_tag, True)
+    
+    return df
+
+
+def microbialTagger(df, n_cores):
+    '''
+    Input:
+        - df: Pandas dataframe containing the whole infile content
+        - n_cores: Integer indicating the number of cores used in the multiprocessing
+
+    Output: df_out: Pandas dataframe containing the whole infile content with the MC Tag 
+    added in a new column
+    '''
+
+    logging.info("Start microbial compound tagging")
+
+    # Get numpy array with microbial compound list
+    microbial_list = readMicrobialTable(args.microbialList)
+
+    # Tagging without parallel process (AVOID MEMORY ERROR)
+    df_out = microbialTaggerBatch(df, microbial_list)
+
+    logging.info("Finished microbial tagging")
+
+    return df_out
+
 
 def npTaggerBatch(df, np_list):
     '''
@@ -464,12 +549,13 @@ def getOutputFilename():
     '''
 
     filename = config_param.get('Parameters', 'OutputName')
+    filename = os.path.splitext(filename)[0] + '.xlsx'
 
     if not filename:
         filename = 'tagged_' + os.path.basename(args.infile)
 
     if not os.path.splitext(filename)[1]:
-        filename += '.xls'
+        filename += '.xlsx'
     
     return filename
 
@@ -522,7 +608,7 @@ def writeDataFrame(df, path):
 
     # Handle errors in exception case
     try:
-        df.to_excel(output_file, index=False, columns=output_columns)
+        df.to_excel(output_file, index=False, columns=output_columns, engine="openpyxl")
     
     except:
         log_str = f'Error when writing {str(Path(output_file))}'
@@ -563,6 +649,9 @@ def main(args):
     if re.search('(?i)true', config_param['TagSelection']['Drug']):
         df = drugTagger(df, n_cores)
     
+    if re.search('(?i)true', config_param['TagSelection']['MicrobialCompound']):
+        df = microbialTagger(df, n_cores)
+
     # if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
     #    df = npTagger(df, n_cores)
 
@@ -595,7 +684,7 @@ if __name__=="__main__":
     default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configTagger', 'configTagger.ini')
     default_food_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'food_database.tsv')
     default_drug_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv')
-    # default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv', 'microbial_compound_database.tsv')
+    default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'microbial_database.tsv')
     default_natural_products_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'natural_product_database.tsv')
 
     # Parse arguments corresponding to path files
@@ -603,7 +692,7 @@ if __name__=="__main__":
     parser.add_argument('-c', '--config', help="Path to configTagger.ini file", type=str, default=default_config_path)
     parser.add_argument('-fL', '--foodList', help="Path to food compounds list", type=str, default=default_food_list_path)
     parser.add_argument('-dL', '--drugList', help="Path to drug compounds list", type=str, default=default_drug_list_path)
-    # parser.add_argument('-mL', '--microbialList', help="Path to microbial compounds list", type=str, default=default_microbial_compound_list_path)
+    parser.add_argument('-mL', '--microbialList', help="Path to microbial compounds list", type=str, default=default_microbial_compound_list_path)
     parser.add_argument('-npL', '--naturalList', help="Path to natural products list", type=str, default=default_natural_products_list_path)
 
     parser.add_argument('-o', '--output', help="Name of output table", type=str)
