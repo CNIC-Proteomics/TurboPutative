@@ -55,10 +55,10 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 /tools/Tagger/dbs/scripts/getAllSynonyms.ipynb
 
 # Compilation files #
+/desktopApp/compilator.bat
 /desktopApp/build/*
 /desktopApp/*.spec
 /desktopApp/app/src/pyModules/compiledModules/*
-!/desktopApp/app/src/pyModules/compiledModules/compiledModules.zip
 
 # other files #
 ###############
