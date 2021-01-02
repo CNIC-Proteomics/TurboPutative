@@ -113,6 +113,16 @@ def readInfile(infile, row):
     return df
 
 
+def getFirstSynonym(compound):
+    '''
+    Input:
+        - compound: string containing compound name (may have synonyms)
+    Output:
+        - string with the first synonym (separator: ;\n or \n) to lower case
+    '''
+    return re.split(r'(;\n|\n)', compound)[0].strip().lower()
+
+
 def readFoodTable(path):
     '''
     Input:
@@ -156,10 +166,10 @@ def foodTaggerBatch(df, food_list):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds using food list
-    food_tag_from_db = ["Food" if compound in food_list else "" for compound in compound_names]
+    food_tag_from_db = ["" if pd.isna(compound) else "Food" if getFirstSynonym(compound) in food_list else "" for compound in compound_names]
 
     # Tag compounds that fits regular expression
-    food_tag_from_regex = ["Food" if re.search('^[Ee]nt-', compound) else "" for compound in compound_names]
+    food_tag_from_regex = ["" if pd.isna(compound) else "Food" if re.search(r'(?i)^ent-', compound) else "" for compound in compound_names]
 
     # Combine Food tags
     food_tag = ["Food" if "Food" in tag else "" for tag in zip(food_tag_from_db, food_tag_from_regex)]
@@ -241,7 +251,7 @@ def drugTaggerBatch(df, drug_list):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds
-    drug_tag = ["Drug" if compound in drug_list else "" for compound in compound_names]
+    drug_tag = ["" if pd.isna(compound) else "Drug" if getFirstSynonym(compound) in drug_list else "" for compound in compound_names]
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -319,7 +329,7 @@ def microbialTaggerBatch(df, microbial_list):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds
-    microbial_tag = ["MC" if compound in microbial_list else "" for compound in compound_names]
+    microbial_tag = ["" if pd.isna(compound) else "MC" if getFirstSynonym(compound) in microbial_list else "" for compound in compound_names]
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -365,7 +375,7 @@ def npTaggerBatch(df, np_list):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds
-    np_tag = ["NP" if compound in np_list else "" for compound in compound_names]
+    np_tag = ["" if pd.isna(compound) else "NP" if getFirstSynonym(compound) in np_list else "" for compound in compound_names]
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -433,11 +443,39 @@ def halogenatedTaggerBatch(df, halogen_regex):
         - df: Pandas dataframe with Halogenated tag added in a new column
     '''
 
-    # Get numpy array with compound in input table
-    compound_names = np.array(df.loc[:, 'Name']) 
+    # Extract compound names
+    compound_names = np.array(df.loc[:, 'Name'])
+
+    # Check if there is a column with molecular formula
+    formulaColumn = [colName for colName in df.columns if re.search(r"(?i)^formula$", colName)]
+
+    # Extract compound formula if possible
+    compound_formula = np.array(df.loc[:, formulaColumn[0]]) if len(formulaColumn) != 0 else []
+
 
     # Tag corresponding compounds
-    halogenated_tag = ["x" if re.search(halogen_regex, compound) else "" for compound in compound_names]
+    if len(formulaColumn) == 0:
+        # there is no formula column, so we look for regex in compound names
+        halogenated_tag = ["" if pd.isna(compound) else "x" if (re.search(halogen_regex, compound)) else "" for compound in compound_names]
+
+    else:
+        # there is formula column, so we look for regex in formula (and compound names if there is no formula)
+
+        halogenated_tag = []
+
+        for formula, compound in zip(compound_formula, compound_names):
+
+            if not pd.isna(formula):
+                # formula is not nan
+                halogenated_tag.append('x') if re.search(r'(F|Cl|Br|I)(?![a-z])', formula) else halogenated_tag.append("")
+            
+            elif not pd.isna(compound):
+                # formula is nan but compound is not
+                halogenated_tag.append('x') if re.search(halogen_regex, compound) else halogenated_tag.append("")
+            
+            else:
+                # formula and compound are nan
+                halogenated_tag.append("")
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -496,7 +534,7 @@ def peptideTaggerBatch(df, peptide_regex):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds
-    peptide_tag = ["Pep" if re.search(peptide_regex, compound) else "" for compound in compound_names]
+    peptide_tag = ["" if pd.isna(compound) else "Pep" if re.search(peptide_regex, compound) else "" for compound in compound_names]
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)

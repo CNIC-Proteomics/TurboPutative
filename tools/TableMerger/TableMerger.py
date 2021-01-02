@@ -45,6 +45,26 @@ class StringToFloat(Exception):
     pass
 
 
+def openFile(infile, row):
+    '''
+    '''
+
+    extension = os.path.splitext(infile)[1]
+
+    if extension == '.xls':
+        df = pd.read_excel(infile, header=row, engine="xlrd")
+
+    elif extension == '.xlsx':
+        df = pd.read_excel(infile, header=row, engine="openpyxl")
+
+    else: 
+        logging.info(f"ERROR: Cannot read file with {extension} extension")
+        sys.exit(52)
+
+
+    return df
+
+
 def readInfile(infile, row, feature_mass_name, file_type):
     '''
     Input:
@@ -64,12 +84,12 @@ def readInfile(infile, row, feature_mass_name, file_type):
     logging.info(log_str)
 
     try:
-        df = pd.read_excel(infile, header=row)
+        df = openFile(infile, row)
         
         # Column header is in 1st or 2nd row? Assert it by  mass column name
         while all([not (name in df.columns) for name in feature_mass_name]) and (row+1 < 2):
             row += 1
-            df = pd.read_excel(infile, header=row)
+            df = openFile(infile, row)
         
         # If header is not the n first rows...
         if all([not (name in df.columns) for name in feature_mass_name]):
@@ -82,7 +102,7 @@ def readInfile(infile, row, feature_mass_name, file_type):
             if file_type == 2:
         
                 # Read complete dataframe assuming that there is no header
-                df = pd.read_excel(infile, header=None)
+                df = openFile(infile, None)
 
                 # Assert that there are 3 columns...
                 if df.shape[1] != 3:
@@ -106,6 +126,10 @@ def readInfile(infile, row, feature_mass_name, file_type):
         
         # Make sure that all column names are string
         df.rename(columns={name: str(name) for name in df.columns}, inplace=True)
+
+        # If table with feature information contains a column called "Name", there will be conflict in merged table
+        if file_type == 2:
+            df.rename(columns={name: name if name != "Name" else "Name2" for name in df.columns}, inplace=True)
     
     except NoNameColumn:
         log_str = f'Error when reading {str(Path(infile))}'
@@ -285,11 +309,11 @@ def updateTable(merged_table, identification_table_unmatched_restored, feature_r
         _ = [new_row.update({col: [ident_row[col]]}) for col in identification_column_names]
         new_row['Experimental mass'] = [round_value]
 
-        if not any(merged_table.apply(isRow, axis=1, args=(new_row,))):
+        if not any(merged_table.apply(isRow, axis=1, args=(new_row,), result_type="reduce")):
             # Join if every element in any is False. Any return a False which is converted to True
             # If every element is False in any, then new_row is not contained in merged_table.
             merged_table = pd.concat([merged_table, pd.DataFrame(new_row)])
-    
+
     return merged_table
         
         
@@ -380,6 +404,7 @@ def greedyMerge(feature_table_unmatched_restored, identification_table_unmatched
     # Merge table to which new rows will be added
     all_column_names = feature_column_names + identification_column_names
     merged_table = pd.DataFrame({col: [] for col in all_column_names})
+    merged_table = merged_table.astype({"Name": "str"})
 
     # Loop over each non-matched row of feature table
     # Each row generate a pandas dataframe that we must concatenate
@@ -429,7 +454,7 @@ def reMatch(feature_table_original, identification_table_original, merged_table,
     identification_table_unmatched_restored = identification_table_unmatched.apply(massRestore, axis=1, args=(identification_table_original, n_digits))
 
     # Greedy ReMerge with unmatch rows
-    if len(feature_table_unmatched_restored) > 0 and len(identification_table_unmatched_restored) > 0:
+    if len(feature_table_unmatched_restored) > 0 or len(identification_table_unmatched_restored) > 0:
         sub_merged_unmatch = greedyMerge(feature_table_unmatched_restored, identification_table_unmatched_restored, n_digits, use_RT)
         sub_merged_match = pd.merge(feature_table, identification_table, how = 'inner', on = 'Experimental mass') if not use_RT \
             else pd.merge(feature_table, identification_table, how = 'inner', on = ['Experimental mass', 'RT [min]'])
@@ -500,12 +525,13 @@ def getOutputFilename():
     '''
 
     filename = config_param.get('Parameters', 'OutputName')
-
+    filename = os.path.splitext(filename)[0] + '.xlsx'
+    
     if not filename:
         filename = 'Tmerged_' + os.path.basename(args.identification)
 
     if not os.path.splitext(filename)[1]:
-        filename += '.xls'
+        filename += '.xlsx'
     
     return filename
 
@@ -605,7 +631,7 @@ if __name__=="__main__":
     )
 
     # Set default values
-    default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configFeatureInfo', 'configFeatureInfo.ini')
+    default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configTableMerger', 'configTableMerger.ini')
 
     # Parse arguments corresponding to path files
     parser.add_argument('-if', '--feature', help="Path to input file with feature information", type=str, required=True)

@@ -79,9 +79,29 @@ def readSynonyms(infile_path):
     with open(infile_path, 'r') as infile:
         synonyms_dict = json.load(infile)
     
-    synonyms_dict_lower = {re.sub(r'[-\s]', '', key.lower()):synonyms_dict[key] for key in synonyms_dict}
+    synonyms_dict_lower = {re.sub(r'[-\s()[\]{}]', '', key.lower()):synonyms_dict[key] for key in synonyms_dict}
 
     return synonyms_dict_lower
+
+
+def openFile(infile, row):
+    '''
+    '''
+
+    extension = os.path.splitext(infile)[1]
+
+    if extension == '.xls':
+        df = pd.read_excel(infile, header=row, engine="xlrd")
+
+    elif extension == '.xlsx':
+        df = pd.read_excel(infile, header=row, engine="openpyxl")
+
+    else: 
+        logging.info(f"ERROR: Cannot read file with {extension} extension")
+        sys.exit(52)
+
+
+    return df
 
 
 def readInfile(infile, row):
@@ -101,11 +121,11 @@ def readInfile(infile, row):
     logging.info(log_str)
 
     try:
-        df = pd.read_excel(infile, header=row)
+        df = openFile(infile, row)
         
         while ("Name" not in df.columns) and (row+1 < 2):
             row += 1
-            df = pd.read_excel(infile, header=row)
+            df = openFile(infile, row)
         
         if "Name" not in df.columns:
             raise NoNameColumn("ERROR: 'Name' column was not found")
@@ -221,8 +241,8 @@ def synonymSub(df_row, name_col_index, regex_sep, synonyms_dict):
     compound_list, separator = splitCompoundField(compound, regex_sep)
 
     # Substitute by the synonym, re-join and write in the row
-    compound_list = [synonyms_dict[re.sub(r'[-\s]', '', compound.lower())] \
-        if re.sub(r'[-\s]', '', compound.lower()) in synonyms_dict else compound for compound in compound_list]
+    compound_list = [synonyms_dict[re.sub(r'[-\s()[\]{}]', '', compound.lower())] \
+        if re.sub(r'[-\s()[\]{}]', '', compound.lower()) in synonyms_dict else compound for compound in compound_list]
 
     compound = separator.join(compound_list)
     
@@ -311,6 +331,7 @@ def parserCompound(compound_name, regex, replace, regex_sep):
     return parsed_compound_name
 
 
+"""
 def immunityExtractor(compound_name):
     '''
     Input:
@@ -364,7 +385,7 @@ def immunityRecoverer(compound_name, immune_list):
         re_immune = re.search(r'##(\d+)%%', compound_name[newStart:])
 
     return compound_name
-
+"""
 
 def parserTable(df_row, name_col_index, regex_sep, config_regex):
     '''
@@ -384,7 +405,13 @@ def parserTable(df_row, name_col_index, regex_sep, config_regex):
     compound_name = df_row.iat[name_col_index]
 
     # Parse compound name to "protect" part of the string with with immunity tag "##substring%%"
-    compound_name, immune_list = immunityExtractor(compound_name)
+    # compound_name, immune_list = immunityExtractor(compound_name)
+
+    if re.search('^###[^#]+###$', compound_name):
+        # if compound name has been processed by goslin, remove "###" tag and return it
+        df_row_out.iat[name_col_index] = compound_name[3:-3]
+        return df_row_out
+
 
     # Iterate over each regular expresion
     for regex_section in config_regex.sections():
@@ -396,7 +423,7 @@ def parserTable(df_row, name_col_index, regex_sep, config_regex):
         compound_name = parserCompound(compound_name, regex, replace, regex_sep)
     
     # Parse compound name to add the immune substrings extracted previously
-    compound_name = immunityRecoverer(compound_name, immune_list)
+    # compound_name = immunityRecoverer(compound_name, immune_list)
 
     df_row_out.iat[name_col_index] = compound_name
     
@@ -453,6 +480,9 @@ def lipidPreProcess(compound):
 
     # Remove 'i-' 'a-' information. There must be a '(' or '/' before it, and a number after it: TG(i-13:0/i-14:0/8:0)
     compound_out = re.sub(r'(?<=[\(/])[ia]-(?=\d)', '', compound_out)
+
+    # Remove synonym after \n (in some FAHFA compounds)
+    compound_out = re.sub(r'\n.*$', '', compound_out)
 
     return compound_out
 
@@ -545,6 +575,23 @@ def isGoslinLipid(compound_name, lipid_list):
     return np.any([lipidCandidate(compound_name, lipid) for lipid in lipid_list])
 
 
+def FAHFA_parser(FAHFA_reObject):
+    '''
+    Input:
+        - FAHFA_reObject: re object with the following structure:
+            group 1 == 'FAHFA'
+            group 2 == 'nC1:nDB1'
+            group 3 == 'nC2:nDB2'
+    Output: 
+        - String: 'FAHFA(nC1+nC2:cDB1+nDB2)'
+    '''
+    
+    # group 1 and 2 are "numberOfCarbon:numberOfDoubleBond". 
+    cAtom_dBond = [int(n1) + int(n2) for n1, n2 in zip(FAHFA_reObject.group(2).split(':'), FAHFA_reObject.group(3).split(':'))]
+    
+    return f"###{FAHFA_reObject.group(1)}({cAtom_dBond[0]}:{cAtom_dBond[1]})###"
+
+
 def hydroxylGeneratorList(compound):
     '''
     Input:
@@ -604,7 +651,7 @@ def getHydroxyl(compound):
     # We write it between ## and %% to tag it. By this way, they will not be processed
     # by regular expressions later. It is a "immunity" label
     else:
-        return "##(" + str(total_OH) + "OH)%%"
+        return "(" + str(total_OH) + "OH)"
 
 
 def getMethyl(compound):
@@ -659,6 +706,11 @@ def parserLipidCompound(compound, lipid_list):
     if not isGoslinLipid(compound, lipid_list):
         return compound
 
+    # Check if it is FAHFA. 'FAHFA(15:0-(18-O-22:0))' yields error due to '18-O-'.
+    FAHFA_reObject = re.search(r'^(FAHFA)\((\d+:\d+)-\(\d+-O-(\d+:\d+)\)\)', compound)
+    if FAHFA_reObject:
+        return FAHFA_parser(FAHFA_reObject)
+
     # Pre-process compound name so that it can be recognized by goslin
     pre_proc_compound = lipidPreProcess(compound)
 
@@ -683,6 +735,9 @@ def parserLipidCompound(compound, lipid_list):
         # Get FA bond type (plasmanyl/plasmenyl)
         fa_bond_type = getFaBondType(lipid)
 
+        # If bond type is P-, goslin removes P and add one double bond. We undo this...
+        n_double_bonds = (n_double_bonds - 1) if fa_bond_type == 'P-' else n_double_bonds
+
         # Get (OH) from lipid name to be maintained (done without Goslin): 
         # GlcCer(d14:1(4E)/22:0(2OH)) --> GlcCer(36:1(2OH))
         hydroxyl = getHydroxyl(compound)
@@ -692,7 +747,7 @@ def parserLipidCompound(compound, lipid_list):
         methyl = getMethyl(compound)
 
         # Build lipid name using extracted information
-        compound_out = head_group + '(' + fa_bond_type + str(n_carbon_atoms) + ':' + str(n_double_bonds) + methyl + hydroxyl + ')'
+        compound_out = '###' + head_group + '(' + fa_bond_type + str(n_carbon_atoms) + ':' + str(n_double_bonds) + methyl + hydroxyl + ')' '###'
 
         return compound_out
 
@@ -785,7 +840,7 @@ def sortIndexByName(df, name_col_index):
     row_index = df.index.values
 
     # Create a list of tuples, where each tuple contains the row index and the compound name (lower)
-    index_name_tuple_list = [(index, re.sub(r'[-\s]', '', name).lower()) for index, name in zip(row_index, compound_name)]
+    index_name_tuple_list = [(index, re.sub(r'[-\s()[\]{}]', '', name).lower()) for index, name in zip(row_index, compound_name)]
 
     # Sort tuples by second element, which is the compound name
     sorted_index_name_tuple_list = sorted(index_name_tuple_list, key=lambda x: x[1])
@@ -868,8 +923,8 @@ def compareCompoundName(compound_name_i, compound_name_j):
         - boolean: True if parsed are equal; False if they are different
     """
 
-    parsed_i = re.sub(r'[-\s]', '', compound_name_i).lower()
-    parsed_j = re.sub(r'[-\s]', '', compound_name_j).lower()
+    parsed_i = re.sub(r'[-\s()[\]{}]', '', compound_name_i).lower()
+    parsed_j = re.sub(r'[-\s()[\]{}]', '', compound_name_j).lower()
     
     return parsed_i == parsed_j
 
@@ -1032,6 +1087,9 @@ def fuseByInChIKey(df, name_col_index):
     if inchikey_colname.lower() not in [col.lower() for col in df.columns]:
         # If InChIKey column is not in dataframe, return
         return df
+    
+    # get column name contained in df
+    inchikey_colname = [col for col in df.columns if col.lower() == inchikey_colname.lower()][0]
 
     # Sort df indexes using InChIKey
     sorted_index_inchikey = sorted([[index, inchikey] for index, inchikey in zip(df.index.values, df.loc[:, inchikey_colname]) \
@@ -1048,9 +1106,9 @@ def fuseByInChIKey(df, name_col_index):
     conserved_columns_index = getColumnList(args.conserveCol, name_col_index, df.columns.to_numpy())
     tag_columns_names = getTagColumnNames(args.tagCol, df.columns)
     tag_columns_index = [index for index, col in enumerate(df.columns) if col in list(tag_columns_names)]
-    conserved_columns_index = np.concatenate((conserved_columns_index, tag_columns_index, [name_col_index])).astype(int)
+    # conserved_columns_index = np.concatenate((conserved_columns_index, tag_columns_index, [name_col_index])).astype(int)
+    conserved_columns_index = np.concatenate((conserved_columns_index, tag_columns_index)).astype(int)
     conserved_columns_names = df.columns[conserved_columns_index].to_list()
-
 
     removed_row_index = []
     for i, row_index_i in enumerate(sorted_index_inchikey):
@@ -1094,7 +1152,6 @@ def fuseByInChIKey(df, name_col_index):
     
     return df
 
-            
 
 
 def getOutFileName(infile):
@@ -1104,15 +1161,16 @@ def getOutFileName(infile):
     the output file name given by the user has extension. If not, .xls will be used.
     '''
 
-    outfile_name = config_param['Parameters']['OutputName']
+    filename = config_param['Parameters']['OutputName']
+    filename = os.path.splitext(filename)[0] + '.xlsx'
 
-    if not outfile_name:
-        outfile_name = 'REnamed_' + infile
+    if not filename:
+        filename = 'REnamed_' + infile
     
-    if not os.path.splitext(outfile_name)[1]:
-        outfile_name += '.xls'
+    if not os.path.splitext(filename)[1]:
+        filename += '.xlsx'
     
-    return outfile_name
+    return filename
 
 
 def getOutColumns(column_names):
@@ -1161,7 +1219,7 @@ def writeDataFrame(df, path):
     
     # Handle errors in exception case
     try:
-        df.to_excel(output_path_filename, index=False, columns=out_columns_name)
+        df.to_excel(output_path_filename, index=False, columns=out_columns_name, engine="openpyxl")
     
     except:
         log_str = f'Error when writing {str(Path(output_path_filename))}'

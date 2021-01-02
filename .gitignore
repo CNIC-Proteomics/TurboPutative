@@ -33,12 +33,13 @@ releases/*
 #################
 tools/Tagger/dbs/hmdb_metabolites.zip
 
-# goslin __pycache__ #
+# __pycache__ #
 ######################
 desktopApp/app/src/pyModules/pygoslin/tests/__pycache__/*
 desktopApp/app/src/pyModules/pygoslin/parser/__pycache__/*
 desktopApp/app/src/pyModules/pygoslin/__pycache__/*
 desktopApp/app/src/pyModules/pygoslin/domain/__pycache__/*
+desktopApp/app/src/pyModules/__pycache__/*
 
 # goslin library #
 ##################
@@ -52,6 +53,12 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 ############################
 /tools/Tagger/dbs/scripts/DataBaseGenerator.ipynb
 /tools/Tagger/dbs/scripts/getAllSynonyms.ipynb
+
+# Compilation files #
+/desktopApp/build/*
+/desktopApp/*.spec
+/desktopApp/app/src/pyModules/compiledModules/*
+!/desktopApp/app/src/pyModules/compiledModules/compiledModules.zip
 
 # other files #
 ###############

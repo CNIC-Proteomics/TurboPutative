@@ -36,6 +36,25 @@ import pdb
 class NoNameColumn(Exception):
     pass
 
+def openFile(infile, row):
+    '''
+    '''
+
+    extension = os.path.splitext(infile)[1]
+
+    if extension == '.xls':
+        df = pd.read_excel(infile, header=row, engine="xlrd")
+
+    elif extension == '.xlsx':
+        df = pd.read_excel(infile, header=row, engine="openpyxl")
+
+    else: 
+        logging.info(f"ERROR: Cannot read file with {extension} extension")
+        sys.exit(52)
+
+
+    return df
+
 def readInfile(infile, row):
     '''
     Input:
@@ -47,17 +66,18 @@ def readInfile(infile, row):
 
     infile_base_name = re.escape(os.path.splitext(os.path.basename(infile))[0])
     file = [file for file in os.listdir(os.path.dirname(infile)) if re.search(f'^{infile_base_name}\.(?!.*\.)', file)][0]
+    
     infile = os.path.join(os.path.dirname(infile), file)
 
     log_str = f'Reading input file: {str(Path(infile))}'
     logging.info(log_str)
 
     try:
-        df = pd.read_excel(infile, header=row)
+        df = openFile(infile, row)
         
         while ("Name" not in df.columns) and (row+1 < 2):
             row += 1
-            df = pd.read_excel(infile, header=row)
+            df = openFile(infile, row)
         
         if "Name" not in df.columns:
             raise NoNameColumn("ERROR: 'Name' column was not found")
@@ -91,6 +111,16 @@ def readInfile(infile, row):
     logging.info(log_str)
 
     return df
+
+
+def getFirstSynonym(compound):
+    '''
+    Input:
+        - compound: string containing compound name (may have synonyms)
+    Output:
+        - string with the first synonym (separator: ;\n or \n) to lower case
+    '''
+    return re.split(r'(;\n|\n)', compound)[0].strip().lower()
 
 
 def readFoodTable(path):
@@ -136,10 +166,10 @@ def foodTaggerBatch(df, food_list):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds using food list
-    food_tag_from_db = ["Food" if compound in food_list else "" for compound in compound_names]
+    food_tag_from_db = ["" if pd.isna(compound) else "Food" if getFirstSynonym(compound) in food_list else "" for compound in compound_names]
 
     # Tag compounds that fits regular expression
-    food_tag_from_regex = ["Food" if re.search('^[Ee]nt-', compound) else "" for compound in compound_names]
+    food_tag_from_regex = ["" if pd.isna(compound) else "Food" if re.search(r'(?i)^ent-', compound) else "" for compound in compound_names]
 
     # Combine Food tags
     food_tag = ["Food" if "Food" in tag else "" for tag in zip(food_tag_from_db, food_tag_from_regex)]
@@ -162,12 +192,16 @@ def foodTagger(df, n_cores):
     '''
     
     logging.info("Start food tagging")
-
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
     
     # Get numpy array with food compounds in database
     food_list = readFoodTable(args.foodList)
+
+    # Tagging without parallel processes (AVOID MEMORY ERROR)
+    df_out = foodTaggerBatch(df, food_list)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
         
     # Create list of tuples. Each tuple contains arguments received by foodTaggerBatch in each subprocess
     subprocess_args = [(df_i, food_list) for df_i in df_split]
@@ -177,7 +211,7 @@ def foodTagger(df, n_cores):
         logging.info("Tagging food compounds")
         result = p.starmap(foodTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished food tagging")
 
     return df_out
@@ -217,7 +251,7 @@ def drugTaggerBatch(df, drug_list):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds
-    drug_tag = ["Drug" if compound in drug_list else "" for compound in compound_names]
+    drug_tag = ["" if pd.isna(compound) else "Drug" if getFirstSynonym(compound) in drug_list else "" for compound in compound_names]
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -238,11 +272,15 @@ def drugTagger(df, n_cores):
 
     logging.info("Start drug tagging")
 
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
-
     # Get numpy array with drug list
     drug_list = readDrugTable(args.drugList)
+
+    # Tagging without parallel process (AVOID MEMORY ERROR)
+    df_out = drugTaggerBatch(df, drug_list)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
 
     # Create list with parameters received by each drugTaggerBatch function in each subprocess
     subprocess_args = [(df_i, drug_list) for df_i in df_split]
@@ -252,8 +290,73 @@ def drugTagger(df, n_cores):
         logging.info("Tagging drug compounds")
         result = p.starmap(drugTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished drug tagging")
+
+    return df_out
+
+def readMicrobialTable(path):
+    '''
+    Input:
+        - path: String containing the path to the microbial database
+    
+    Output:
+        - microbial_list: String Numpy Array containing micrbial name extracted from the database
+    '''
+
+    logging.info(f"Reading Microbial Table: {path}")
+
+    # Import drug table as a pandas dataframe
+    df = pd.read_csv(path, header=0, sep="\t", dtype=str)
+
+    # Extract drug list name from df as a numpy array
+    microbial_list = np.array(df.iloc[:, 0])
+
+    return microbial_list
+
+
+def microbialTaggerBatch(df, microbial_list):
+    '''
+    Input:
+        - df: Pandas dataframe containing a batch of the whole infile dataframe
+        - microbial_list: String Numpy Array containing all drug compounds in the database
+    
+    Output:
+        - df: Pandas dataframe with the drug tag added in a new column
+    '''
+
+    # Get numpy array with compound in input table
+    compound_names = np.array(df.loc[:, 'Name']) 
+
+    # Tag corresponding compounds
+    microbial_tag = ["" if pd.isna(compound) else "MC" if getFirstSynonym(compound) in microbial_list else "" for compound in compound_names]
+
+    # Add Drug tag column to the dataframe
+    name_column_index = getNameColumnIndex(df.columns)
+    df.insert(name_column_index+1, "Microbial", microbial_tag, True)
+    
+    return df
+
+
+def microbialTagger(df, n_cores):
+    '''
+    Input:
+        - df: Pandas dataframe containing the whole infile content
+        - n_cores: Integer indicating the number of cores used in the multiprocessing
+
+    Output: df_out: Pandas dataframe containing the whole infile content with the MC Tag 
+    added in a new column
+    '''
+
+    logging.info("Start microbial compound tagging")
+
+    # Get numpy array with microbial compound list
+    microbial_list = readMicrobialTable(args.microbialList)
+
+    # Tagging without parallel process (AVOID MEMORY ERROR)
+    df_out = microbialTaggerBatch(df, microbial_list)
+
+    logging.info("Finished microbial tagging")
 
     return df_out
 
@@ -272,7 +375,7 @@ def npTaggerBatch(df, np_list):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds
-    np_tag = ["NP" if compound in np_list else "" for compound in compound_names]
+    np_tag = ["" if pd.isna(compound) else "NP" if getFirstSynonym(compound) in np_list else "" for compound in compound_names]
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -340,11 +443,39 @@ def halogenatedTaggerBatch(df, halogen_regex):
         - df: Pandas dataframe with Halogenated tag added in a new column
     '''
 
-    # Get numpy array with compound in input table
-    compound_names = np.array(df.loc[:, 'Name']) 
+    # Extract compound names
+    compound_names = np.array(df.loc[:, 'Name'])
+
+    # Check if there is a column with molecular formula
+    formulaColumn = [colName for colName in df.columns if re.search(r"(?i)^formula$", colName)]
+
+    # Extract compound formula if possible
+    compound_formula = np.array(df.loc[:, formulaColumn[0]]) if len(formulaColumn) != 0 else []
+
 
     # Tag corresponding compounds
-    halogenated_tag = ["x" if re.search(halogen_regex, compound) else "" for compound in compound_names]
+    if len(formulaColumn) == 0:
+        # there is no formula column, so we look for regex in compound names
+        halogenated_tag = ["" if pd.isna(compound) else "x" if (re.search(halogen_regex, compound)) else "" for compound in compound_names]
+
+    else:
+        # there is formula column, so we look for regex in formula (and compound names if there is no formula)
+
+        halogenated_tag = []
+
+        for formula, compound in zip(compound_formula, compound_names):
+
+            if not pd.isna(formula):
+                # formula is not nan
+                halogenated_tag.append('x') if re.search(r'(F|Cl|Br|I)(?![a-z])', formula) else halogenated_tag.append("")
+            
+            elif not pd.isna(compound):
+                # formula is nan but compound is not
+                halogenated_tag.append('x') if re.search(halogen_regex, compound) else halogenated_tag.append("")
+            
+            else:
+                # formula and compound are nan
+                halogenated_tag.append("")
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -365,11 +496,15 @@ def halogenatedTagger(df, n_cores):
 
     logging.info("Start halogenated compounds tagging")
 
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
-
     # Get string with the regular expression used to identify halogenated compounds
     halogen_regex = config_param.get('Parameters', 'HalogenatedRegex')
+
+    # Tagg without parallel process (AVOID MEMORY ERROR)
+    df_out = halogenatedTaggerBatch(df, halogen_regex)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
 
     # Create list with parameters received by halogenatedTaggerBatch in each subprocess
     subprocess_args = [(df_i, halogen_regex) for df_i in df_split]
@@ -379,7 +514,7 @@ def halogenatedTagger(df, n_cores):
         logging.info("Tagging halogenated compounds")
         result = p.starmap(halogenatedTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished halogenated compounds tagging")
 
     return df_out 
@@ -399,7 +534,7 @@ def peptideTaggerBatch(df, peptide_regex):
     compound_names = np.array(df.loc[:, 'Name']) 
 
     # Tag corresponding compounds
-    peptide_tag = ["Pep" if re.search(peptide_regex, compound) else "" for compound in compound_names]
+    peptide_tag = ["" if pd.isna(compound) else "Pep" if re.search(peptide_regex, compound) else "" for compound in compound_names]
 
     # Add Drug tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
@@ -420,12 +555,16 @@ def peptideTagger(df, n_cores):
 
     logging.info("Start peptide compounds tagging")
 
-    # Split dataframe so that each batch is processed by one core
-    df_split = np.array_split(df, n_cores)
-
     # Get string with the regular expression used to identify peptide compounds
     # peptide_regex = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\s,]){3,}$"
     peptide_regex = config_param.get('Parameters', 'PeptideRegex')
+
+    # Tag without parallel process (AVOID MEMORY ERROR)
+    df_out = peptideTaggerBatch(df, peptide_regex)
+
+    '''
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
 
     # Create list with parameters received by peptideTaggerBatch in each subprocess
     subprocess_args = [(df_i, peptide_regex) for df_i in df_split]
@@ -435,7 +574,7 @@ def peptideTagger(df, n_cores):
         logging.info("Tagging peptides")
         result = p.starmap(peptideTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    
+    '''
     logging.info("Finished peptide tagging")
 
     return df_out    
@@ -448,12 +587,13 @@ def getOutputFilename():
     '''
 
     filename = config_param.get('Parameters', 'OutputName')
+    filename = os.path.splitext(filename)[0] + '.xlsx'
 
     if not filename:
         filename = 'tagged_' + os.path.basename(args.infile)
 
     if not os.path.splitext(filename)[1]:
-        filename += '.xls'
+        filename += '.xlsx'
     
     return filename
 
@@ -506,7 +646,7 @@ def writeDataFrame(df, path):
 
     # Handle errors in exception case
     try:
-        df.to_excel(output_file, index=False, columns=output_columns)
+        df.to_excel(output_file, index=False, columns=output_columns, engine="openpyxl")
     
     except:
         log_str = f'Error when writing {str(Path(output_file))}'
@@ -547,6 +687,9 @@ def main(args):
     if re.search('(?i)true', config_param['TagSelection']['Drug']):
         df = drugTagger(df, n_cores)
     
+    if re.search('(?i)true', config_param['TagSelection']['MicrobialCompound']):
+        df = microbialTagger(df, n_cores)
+
     # if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
     #    df = npTagger(df, n_cores)
 
@@ -563,7 +706,7 @@ def main(args):
 
 if __name__=="__main__":
 
-    multiprocessing.freeze_support()
+    # multiprocessing.freeze_support()
 
     # parse arguments
     parser = argparse.ArgumentParser(
@@ -579,7 +722,7 @@ if __name__=="__main__":
     default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configTagger', 'configTagger.ini')
     default_food_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'food_database.tsv')
     default_drug_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv')
-    # default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv', 'microbial_compound_database.tsv')
+    default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'microbial_database.tsv')
     default_natural_products_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'natural_product_database.tsv')
 
     # Parse arguments corresponding to path files
@@ -587,7 +730,7 @@ if __name__=="__main__":
     parser.add_argument('-c', '--config', help="Path to configTagger.ini file", type=str, default=default_config_path)
     parser.add_argument('-fL', '--foodList', help="Path to food compounds list", type=str, default=default_food_list_path)
     parser.add_argument('-dL', '--drugList', help="Path to drug compounds list", type=str, default=default_drug_list_path)
-    # parser.add_argument('-mL', '--microbialList', help="Path to microbial compounds list", type=str, default=default_microbial_compound_list_path)
+    parser.add_argument('-mL', '--microbialList', help="Path to microbial compounds list", type=str, default=default_microbial_compound_list_path)
     parser.add_argument('-npL', '--naturalList', help="Path to natural products list", type=str, default=default_natural_products_list_path)
 
     parser.add_argument('-o', '--output', help="Name of output table", type=str)

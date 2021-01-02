@@ -1,0 +1,79 @@
+12/21/2020 04:43:39 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:43:39 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 04:43:42 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 04:43:42 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:43:42 PM - INFO - Error when reading C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:43:42 PM - INFO - NoNameColumn: ERROR: None of the '['Apex m/z', 'Experimental mass', 'mz', 'm/z', 'MZ', 'M/Z', 'Mz', 'mZ']' possible column names was found
+12/21/2020 04:44:34 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:44:34 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 04:44:35 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 04:44:35 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:44:35 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 04:45:31 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:45:31 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 04:45:32 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 04:45:32 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:45:32 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 04:45:32 PM - INFO - Write Output Table: .xlsx.xlsx
+12/21/2020 04:45:32 PM - INFO - end script
+12/21/2020 04:46:18 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:46:18 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 04:46:18 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 04:46:18 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 04:46:18 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 04:46:18 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 04:46:18 PM - INFO - end script
+12/21/2020 05:02:12 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:02:12 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:02:13 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:02:13 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:02:13 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:02:13 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 05:02:13 PM - INFO - end script
+12/21/2020 05:03:05 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:03:05 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:03:05 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:03:05 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:03:05 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:03:05 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 05:03:05 PM - INFO - end script
+12/21/2020 05:03:32 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:03:32 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:03:32 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:03:32 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:03:32 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:21:31 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:21:31 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:21:32 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:21:32 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:21:32 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:21:32 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 05:21:32 PM - INFO - end script
+12/21/2020 05:30:17 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:30:17 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:30:17 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:30:17 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:30:17 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:30:17 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 05:30:17 PM - INFO - end script
+12/21/2020 05:30:44 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:30:44 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:30:44 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:30:44 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:30:44 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:30:44 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 05:30:44 PM - INFO - end script
+12/21/2020 05:31:19 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:31:19 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:31:20 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:31:20 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:31:20 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:31:20 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 05:31:20 PM - INFO - end script
+12/21/2020 05:32:03 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:32:03 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx
+12/21/2020 05:32:04 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\AdditionalInfo.xlsx was read
+12/21/2020 05:32:04 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx
+12/21/2020 05:32:04 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test12\Identification.xlsx was read
+12/21/2020 05:32:04 PM - INFO - Write Output Table: result.xlsx
+12/21/2020 05:32:04 PM - INFO - end script

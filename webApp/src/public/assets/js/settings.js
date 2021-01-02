@@ -55,7 +55,7 @@ var workflowObject = {
         this.ini.REname += document.querySelector("#removeRowRegex").value;
         this.ini.REname += "####";
         this.ini.REname += "Separator = ";
-        this.ini.REname += document.querySelector("#separator").value;
+        this.ini.REname += document.querySelector("#separator").value != "" ? document.querySelector("#separator").value: "\\s//\\s";
         this.ini.REname += "####";
         this.ini.REname += "AminoAcidSeparator = ";
         this.ini.REname += document.querySelector("#aaSeparator").value;

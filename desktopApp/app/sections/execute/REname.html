@@ -106,7 +106,7 @@
                     <label class="tooltip" for="separator">Compound separator <span class="icon">&#9432</span>
                         <span class="tooltipText">Regular expression that matches the character used to separate compound names in the same row</span>
                     </label>
-                    <input type="text" id="separator" name="separator" value="\s/\s">
+                    <input type="text" id="separator" name="separator" value="\s//\s">
                 </div>
 
                 <div class="paramContainer">
@@ -229,7 +229,8 @@
             iniContent += "###";
             iniContent += "OutputColumns = " + document.getElementById('outputColumns').value;
             iniContent += "###";
-            iniContent += "Separator = " + document.getElementById('separator').value;
+            iniContent += "Separator = "
+            iniContent += document.getElementById('separator').value == "" ? "\\s//\\s" : document.getElementById('separator').value;
             iniContent += "###";
             iniContent += "AminoAcidSeparator = " + document.getElementById('aaSeparator').value;
             iniContent += "###";

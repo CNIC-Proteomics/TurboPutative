@@ -126,6 +126,10 @@ def readInfile(infile, row, feature_mass_name, file_type):
         
         # Make sure that all column names are string
         df.rename(columns={name: str(name) for name in df.columns}, inplace=True)
+
+        # If table with feature information contains a column called "Name", there will be conflict in merged table
+        if file_type == 2:
+            df.rename(columns={name: name if name != "Name" else "Name2" for name in df.columns}, inplace=True)
     
     except NoNameColumn:
         log_str = f'Error when reading {str(Path(infile))}'
@@ -400,6 +404,7 @@ def greedyMerge(feature_table_unmatched_restored, identification_table_unmatched
     # Merge table to which new rows will be added
     all_column_names = feature_column_names + identification_column_names
     merged_table = pd.DataFrame({col: [] for col in all_column_names})
+    merged_table = merged_table.astype({"Name": "str"})
 
     # Loop over each non-matched row of feature table
     # Each row generate a pandas dataframe that we must concatenate
@@ -449,7 +454,7 @@ def reMatch(feature_table_original, identification_table_original, merged_table,
     identification_table_unmatched_restored = identification_table_unmatched.apply(massRestore, axis=1, args=(identification_table_original, n_digits))
 
     # Greedy ReMerge with unmatch rows
-    if len(feature_table_unmatched_restored) > 0 and len(identification_table_unmatched_restored) > 0:
+    if len(feature_table_unmatched_restored) > 0 or len(identification_table_unmatched_restored) > 0:
         sub_merged_unmatch = greedyMerge(feature_table_unmatched_restored, identification_table_unmatched_restored, n_digits, use_RT)
         sub_merged_match = pd.merge(feature_table, identification_table, how = 'inner', on = 'Experimental mass') if not use_RT \
             else pd.merge(feature_table, identification_table, how = 'inner', on = ['Experimental mass', 'RT [min]'])
@@ -626,7 +631,7 @@ if __name__=="__main__":
     )
 
     # Set default values
-    default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configFeatureInfo', 'configFeatureInfo.ini')
+    default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configTableMerger', 'configTableMerger.ini')
 
     # Parse arguments corresponding to path files
     parser.add_argument('-if', '--feature', help="Path to input file with feature information", type=str, required=True)

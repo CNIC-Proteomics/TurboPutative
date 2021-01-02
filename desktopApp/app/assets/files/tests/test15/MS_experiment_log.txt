@@ -1,0 +1,58 @@
+11/05/2020 05:50:55 PM - INFO - start script: REname.py -i ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 05:50:55 PM - INFO - Using 1 cores
+11/05/2020 05:50:55 PM - INFO - Reading input file: ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 05:50:56 PM - INFO - ..\..\assets\files\tests\test3\MS_experiment.xls was read
+11/05/2020 05:50:56 PM - INFO - Removing rows identified by RemoveRow parameter
+11/05/2020 05:50:56 PM - INFO - Synonyms substitution prior to parsing
+11/05/2020 05:50:58 PM - INFO - Parsing lipid names using Goslin
+11/05/2020 05:56:39 PM - INFO - Collapsing rows after lipid processing
+11/05/2020 05:58:41 PM - INFO - Applying regular expression from regex.ini and sorting peptide aminoacids alphabetically
+11/05/2020 06:03:58 PM - INFO - start script: REname.py -i ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:03:58 PM - INFO - Using 1 cores
+11/05/2020 06:03:58 PM - INFO - Reading input file: ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:03:59 PM - INFO - ..\..\assets\files\tests\test3\MS_experiment.xls was read
+11/05/2020 06:03:59 PM - INFO - Removing rows identified by RemoveRow parameter
+11/05/2020 06:03:59 PM - INFO - Synonyms substitution prior to parsing
+11/05/2020 06:04:01 PM - INFO - Parsing lipid names using Goslin
+11/05/2020 06:07:29 PM - INFO - Collapsing rows after lipid processing
+11/05/2020 06:07:40 PM - INFO - Applying regular expression from regex.ini and sorting peptide aminoacids alphabetically
+11/05/2020 06:10:15 PM - INFO - start script: REname.py -i ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:10:15 PM - INFO - Using 1 cores
+11/05/2020 06:10:15 PM - INFO - Reading input file: ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:10:15 PM - INFO - ..\..\assets\files\tests\test3\MS_experiment.xls was read
+11/05/2020 06:10:15 PM - INFO - Removing rows identified by RemoveRow parameter
+11/05/2020 06:10:15 PM - INFO - Synonyms substitution prior to parsing
+11/05/2020 06:10:17 PM - INFO - Applying regular expression from regex.ini and sorting peptide aminoacids alphabetically
+11/05/2020 06:11:33 PM - INFO - start script: REname.py -i ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:11:33 PM - INFO - Using 1 cores
+11/05/2020 06:11:33 PM - INFO - Reading input file: ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:11:34 PM - INFO - ..\..\assets\files\tests\test3\MS_experiment.xls was read
+11/05/2020 06:11:34 PM - INFO - Removing rows identified by RemoveRow parameter
+11/05/2020 06:11:34 PM - INFO - Synonyms substitution prior to parsing
+11/05/2020 06:11:36 PM - INFO - Applying regular expression from regex.ini and sorting peptide aminoacids alphabetically
+11/05/2020 06:12:46 PM - INFO - start script: REname.py -i ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:12:46 PM - INFO - Using 1 cores
+11/05/2020 06:12:46 PM - INFO - Reading input file: ..\..\assets\files\tests\test3\MS_experiment.xls
+11/05/2020 06:12:47 PM - INFO - ..\..\assets\files\tests\test3\MS_experiment.xls was read
+11/05/2020 06:12:47 PM - INFO - Removing rows identified by RemoveRow parameter
+11/05/2020 06:12:47 PM - INFO - Synonyms substitution prior to parsing
+11/05/2020 06:12:50 PM - INFO - Applying regular expression from regex.ini and sorting peptide aminoacids alphabetically
+12/17/2020 07:01:39 PM - INFO - start script: Tagger.py -i ../../assets/files/tests/test3/MS_experiment.xls
+12/17/2020 07:01:39 PM - INFO - Using 1 cores
+12/17/2020 07:01:39 PM - INFO - Reading input file: ..\..\assets\files\tests\test3\MS_experiment.xls
+12/17/2020 07:01:40 PM - INFO - ..\..\assets\files\tests\test3\MS_experiment.xls was read
+12/17/2020 07:01:40 PM - INFO - Start food tagging
+12/17/2020 07:01:40 PM - INFO - Reading Food Table: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\src\pyModules\..\Data\food_database.tsv
+12/17/2020 07:01:55 PM - INFO - Finished food tagging
+12/17/2020 07:01:55 PM - INFO - Start drug tagging
+12/17/2020 07:01:55 PM - INFO - Reading Drug Table: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\src\pyModules\..\Data\drug_database.tsv
+12/17/2020 07:02:15 PM - INFO - Finished drug tagging
+12/17/2020 07:02:15 PM - INFO - Start microbial compound tagging
+12/17/2020 07:02:15 PM - INFO - Reading Microbial Table: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\src\pyModules\..\Data\microbial_database.tsv
+12/17/2020 07:02:15 PM - INFO - Finished microbial tagging
+12/17/2020 07:02:15 PM - INFO - Start halogenated compounds tagging
+12/17/2020 07:02:15 PM - INFO - Finished halogenated compounds tagging
+12/17/2020 07:02:15 PM - INFO - Start peptide compounds tagging
+12/17/2020 07:02:15 PM - INFO - Finished peptide tagging
+12/17/2020 07:02:21 PM - INFO - Write Output Table: tagged_MS_experiment.xls
+12/17/2020 07:02:21 PM - INFO - end script
