@@ -75,7 +75,7 @@ do
             exit $STATUS_CODE
         fi
 
-        INFILE="$JOB_DIR/$(cat "$JOB_DIR/rowMerger.ini" | awk -F ' = ' '/^OutputName = / {print $2}')"
+        INFILE="$JOB_DIR/$(cat "$JOB_DIR/RowMerger.ini" | awk -F ' = ' '/^OutputName = / {print $2}')"
     fi
 
     if [ $MOD_NUM == '4' ]
@@ -91,13 +91,13 @@ do
             exit $STATUS_CODE
         fi
 
-        INFILE="$JOB_DIR/$(cat "$JOB_DIR/tableMerger.ini" | awk -F ' = ' '/^OutputName = / {print $2}')"
+        INFILE="$JOB_DIR/$(cat "$JOB_DIR/TableMerger.ini" | awk -F ' = ' '/^OutputName = / {print $2}')"
     fi
 
 done
 
 # Delete log and ini files
-rm "$JOB_DIR"/*.ini "$JOB_DIR"/*_log.txt "$JOB_DIR"/WF.log "$JOB_DIR"/log.info
+rm "$JOB_DIR"/*.ini "$JOB_DIR"/*_log.txt "$JOB_DIR"/WF.log
 
 INIT_PATH="$PWD"
 cd "$JOB_DIR"

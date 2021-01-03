@@ -6,14 +6,14 @@ const path = require('path');
 importPartials = function (html) {
 
     // get folders
-    let partialFolders = fs.readdirSync(path.join(__dirname, '../partials'), {withFileTypes:true});
+    let partialFolders = fs.readdirSync(path.join(__dirname, '../partials'), {withFileTypes:true}).reverse();
 
     partialFolders.forEach(folder => {
 
         if (folder.isDirectory()) {
 
             // get .html dirent from this partial folder
-            let partialNames = fs.readdirSync(path.join(__dirname, '../partials', folder.name), {withFileTypes:true});
+            let partialNames = fs.readdirSync(path.join(__dirname, '../partials', folder.name), {withFileTypes:true}).reverse();
 
             // check which partial should be added
             partialNames.forEach((file) => {

@@ -9,6 +9,7 @@ selectTags = function () {
         document.querySelector("#drug").checked = true;
         document.querySelector("#peptide").checked = true;
         document.querySelector("#halogenated").checked = true;
+        document.querySelector("#microbial").checked = true;
 
     } else {
 
@@ -16,6 +17,7 @@ selectTags = function () {
         document.querySelector("#drug").checked = false;
         document.querySelector("#peptide").checked = false;
         document.querySelector("#halogenated").checked = false;
+        document.querySelector("#microbial").checked = false;
 
     }
 }
@@ -34,3 +36,4 @@ document.querySelector("#food").addEventListener("change", deselectAll, false);
 document.querySelector("#drug").addEventListener("change", deselectAll, false);
 document.querySelector("#peptide").addEventListener("change", deselectAll, false);
 document.querySelector("#halogenated").addEventListener("change", deselectAll, false);
+document.querySelector("#microbial").addEventListener("change", deselectAll, false);

@@ -59,7 +59,7 @@ runWorkflow = function (fields, files, workflowID) {
         }
 
         // run workflow
-        let script = `bash ${path.join(__dirname, '../TurboPutative/integrator.sh')}`;
+        let script = `bash "${path.join(__dirname, '../TurboPutative/integrator.sh')}"`;
 
         let workflowParam = "";
         for (let i=0; i<parameters.modules.length; i++) {
@@ -86,7 +86,7 @@ runWorkflow = function (fields, files, workflowID) {
         let infileParam = path.join(jobFolder, files.infile.name);
         let featInfoFileParam = parameters.modules.includes("TableMerger") ? path.join(jobFolder, files.featInfoFile.name) : "";
 
-        let fullCommand = `${script} ${workflowParam} ${infileParam} ${jobFolder} ${featInfoFileParam}`;
+        let fullCommand = `${script} ${workflowParam} "${infileParam}" "${jobFolder}" "${featInfoFileParam}"`;
         console.log(`Executing workflow: ${fullCommand}`);
         exec(fullCommand, (error, stdout, stderr) => {
             if (error) {
