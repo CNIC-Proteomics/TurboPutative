@@ -37,9 +37,9 @@
                         mathces the character that separates two amino acids. For example, in the peptide "Arg Pro Ala", amino acids are 
                         separated by a whitespace character ('\s').</li>
                     <li><b>RemoveRow</b>: Regular expression that matches the name of the rows to be removed from the table.</li>
+                    <li><b>Regular Expressions file</b>: INI file containing regular expressions applied to compound names. Click to see default <a href="" onclick="showRegexINI()">regex.ini</a>.</li>
                     <li><b>OutputName</b>: Name of the output file. By default, the name of the output file will be that of the 
-                        input file with prefix "REnamed_"</li>
-                    
+                        input file with prefix "REnamed_"</li>                   
                     <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
                 </ul>
             </p>
@@ -50,6 +50,11 @@
     <script>
     
     const { shell } = require('electron');
+    const path = require('path');
+
+    function showRegexINI() {
+        shell.openPath(path.join(path.dirname(process.execPath), '../app/src/config/configREname'))
+    }
 
     function goTo(url) {
         shell.openExternal(url);

@@ -7,7 +7,7 @@ const path = require('path');
 var app = express();
 
 // Settings
-app.set('port', 8080);
+app.set('port', process.env.PORT || 8080);
 
 // Middlewares
 app.use(morgan('combined'));

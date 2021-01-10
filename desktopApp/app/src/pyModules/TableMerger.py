@@ -104,6 +104,9 @@ def readInfile(infile, row, feature_mass_name, file_type):
                 # Read complete dataframe assuming that there is no header
                 df = openFile(infile, None)
 
+                # Remove columns containing NA only
+                df.dropna(axis=1, how="all", inplace=True)
+
                 # Assert that there are 3 columns...
                 if df.shape[1] != 3:
                     raise IncorrectNumberOfColumns(f"ERROR: File with additional information must have 3 columns. It has {df.shape[1]} columns")

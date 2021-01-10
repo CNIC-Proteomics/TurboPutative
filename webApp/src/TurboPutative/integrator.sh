@@ -5,7 +5,7 @@ SRC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # PYTHON ENGINE
 # PYTHON="$SRC_HOME/python/bin/python3"
-PYTHON="python"
+PYTHON="python3"
 #PYTHON=python
 
 PY_MODULES="$SRC_HOME/pyModules"

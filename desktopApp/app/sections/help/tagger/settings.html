@@ -32,9 +32,11 @@
             <p>
             <h3>Labels</h3>
                 <ul class="list">
-                    <li><b>Food</b>: Mark if you want to tag the compounds that appear in food_database.tsv.</li>
+                    <li><b>Food</b>: Mark if you want to tag the compounds that appear in <a href="" onclick="openFolderTSV()">food_database.tsv</a>.</li>
                         
-                    <li><b>Drug</b>: Mark if you want to tag the compounds that appear in drug_database.tsv.</li>
+                    <li><b>Drug</b>: Mark if you want to tag the compounds that appear in <a href="" onclick="openFolderTSV()">drug_database.tsv</a>.</li>
+
+                    <li><b>Microbial</b>: Mark if you want to tag the compounds that appear in <a href="" onclick="openFolderTSV()">microbial_database.tsv</a>.</li>
 
                     <li><b>Halogenated</b>: Mark if you want to tag the compounds that match with the regular expression specified in 
                         <b>HalogenatedRegex</b> parameter.</li>
@@ -57,6 +59,11 @@
     <script>
     
     const { shell } = require('electron');
+    const path = require('path');
+
+    function openFolderTSV() {
+        shell.openPath(path.join(path.dirname(process.execPath), '../app/src/Data'));
+    }
 
     function goTo(url) {
         shell.openExternal(url);
