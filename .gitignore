@@ -1,6 +1,7 @@
 # python environment #
 ######################
 desktopApp/env/*
+desktopApp/env_good/*
 
 # electron #
 ######################
@@ -62,6 +63,7 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 
 # other files #
 ###############
+/build.bat
 /webApp_old.zip
 /desktopApp/env_fake/*
 /LEEME.md

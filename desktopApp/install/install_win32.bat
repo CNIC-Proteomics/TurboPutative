@@ -112,5 +112,11 @@ GOTO END
 
 
 :END
-ECHO ** Installation process finished
+IF ERRORLEVEL 1 (
+    ECHO ** Installation process finished: Python virtual environment could not be created
+) ELSE (
+    ECHO ** Installation process finished successfully
+)
+
 PAUSE
+EXIT %ERRORLEVEL%

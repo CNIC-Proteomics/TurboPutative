@@ -409,7 +409,8 @@
             document.getElementById('drug').checked = iniString.match(/\Drug = (true|false)\n/)[1] == "true"? true : false;
             document.getElementById('microbialCompound').checked = iniString.match(/\nMicrobialCompound = (true|false)\n/)[1] == "true"? true : false;
             document.getElementById('halogenated').checked = iniString.match(/\nHalogenated = (true|false)\n/)[1] == "true"? true : false;
-            document.getElementById('naturalProduct').checked = iniString.match(/\nNaturalProduct = (true|false)\n/)[1] == "true"? true : false;
+            document.getElementById('peptide').checked = iniString.match(/\nPeptide = (true|false)\n/)[1] == "true"? true : false;
+            // document.getElementById('naturalProduct').checked = iniString.match(/\nNaturalProduct = (true|false)\n/)[1] == "true"? true : false;
             document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
             document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
             document.getElementById('halogenatedRegex').value = iniString.match(/\nHalogenatedRegex = ([^\n]*)\n/)[1];

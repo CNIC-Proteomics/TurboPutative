@@ -47,7 +47,7 @@ function getPython {
     echo "** Python not found"
     read -p "** Enter full path to Python (or q to exit): " PYTHON
     
-    if [ $PYTHON -eq "q" ]
+    if [ $PYTHON == "q" ]
     then
         endInstall
 
@@ -110,13 +110,14 @@ function checkVENV {
 
 function envCreated {
     echo "** Python virtual environment created"
+    EXIT_CODE=0
     endInstall
 }
 
 
 function endInstall {
     echo "** Installation process finished"
-    exit
+    exit $EXIT_CODE
 }
 
 ##############
@@ -132,6 +133,9 @@ SRC_HOME="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 # Default python
 PYTHON="python"
+
+# Default exit code
+EXIT_CODE=1
 
 # Check if env folder already exists
 checkVENV
