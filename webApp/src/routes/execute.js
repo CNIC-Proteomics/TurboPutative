@@ -83,6 +83,7 @@ router.get('/execute/:id', (req, res) => {
             "/* INSERT VALUE: workflowID */": `${req.params.id}`,
             "/* INSERT VALUE: status */": "Finished",
             "<!-- INSERT VALUE: partialButton -->": "<!-- INSERT PARTIAL: execute/downloadButton.html -->",
+            "<!-- INSERT VALUE: reload.js -->": `<script type='text/javascript' src='${path.join('/assets/js/reload.js')}'></script>`,
             "/* INSERT VALUE: execTime */": execTime(fs.statSync(path.join(__dirname, '../public/jobs', req.params.id)).birthtimeMs,
                 fs.statSync(path.join(__dirname, '../public/jobs', req.params.id, 'TurboPutativeResults.zip')).birthtimeMs)
         });

@@ -59,7 +59,7 @@ do
             exit $STATUS_CODE
         fi
 
-        INFILE=$JOB_DIR/$(cat $JOB_DIR/REname.ini | awk -F ' = ' '/^OutputName = / {print $2}')
+        INFILE="$JOB_DIR/$(cat "$JOB_DIR/REname.ini" | awk -F ' = ' '/^OutputName = / {print $2}')"
     
     fi
 

@@ -5,17 +5,19 @@ SET SRC_HOME=%~dp0
 SET SRC_HOME=%SRC_HOME:"=%
 SET SRC_HOME=%SRC_HOME:~0,-1%
 
+SETLOCAL EnableDelayedExpansion
+
 :: CHECK PYTHON ENVIRONMENT
-IF NOT EXIST "%SRC_HOME%\env\log.info" (
-    CMD /C " "%SRC_HOME%\install\install_win32.bat" "
+IF NOT EXIST "!SRC_HOME!\env\log.info" (
+    CMD /C " "!SRC_HOME!\install\install_win32.bat" "
     IF ERRORLEVEL 1 EXIT
 )
 
 :: ELECTRON DIRECTORY
-SET SRC_ELECTRON=%SRC_HOME%\electron-v11.0.1-win32-x64\electron.exe
+SET SRC_ELECTRON=!SRC_HOME!\electron-v11.0.1-win32-x64\electron.exe
 
 :: APP DIRECTORY
-SET SRC_APP=%SRC_HOME%\app
+SET SRC_APP=!SRC_HOME!\app
 
 
 :: EXECUTE ELECTRON

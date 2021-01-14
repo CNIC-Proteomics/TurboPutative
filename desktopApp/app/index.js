@@ -248,11 +248,11 @@ function makeid(length) {
 function runWorkflow (osType, modulesString, infile_user, workflowPath, infile_feature_info, e, workflow) {
 
     if (osType == 'linux') {
-        script = path.join(__dirname, 'src', 'integrator.sh');
-        batch = spawn('bash', [script, modulesString, infile_user, workflowPath, infile_feature_info, nCores]);
+        script = path.join('src', 'integrator.sh');
+        batch = spawn('bash', [script, modulesString, infile_user, workflowPath, infile_feature_info, nCores], {cwd: __dirname});
     } else if (osType == 'win32') {
-        script = path.join(__dirname, 'src', 'integrator.bat');
-        batch = spawn('CMD', ['/C', script, modulesString, infile_user, workflowPath, infile_feature_info, nCores]);
+        script = path.join('src', 'integrator.bat');
+        batch = spawn('CMD', ['/C', script, modulesString, infile_user, workflowPath, infile_feature_info, nCores], {cwd: __dirname});
     }
 
     // console.log(script);
