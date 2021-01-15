@@ -5,10 +5,29 @@ SRC_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # PYTHON ENGINE
 # PYTHON="$SRC_HOME/python/bin/python3"
-PYTHON="$SRC_HOME/../../env/bin/python"
-#PYTHON=python
+# PYTHON="$SRC_HOME/../../env/bin/python"
+# PYTHON=python
 
-PY_MODULES="$SRC_HOME/pyModules"
+PY_MODULES="$SRC_HOME/pyModules/compiledModules"
+
+TAGGER="$PY_MODULES/Tagger/Tagger"
+find "$PY_MODULES/Tagger" -type 'f' -exec chmod +x {} \;
+
+RENAME="$PY_MODULES/REname/REname"
+find "$PY_MODULES/REname" -type 'f' -exec chmod +x {} \;
+
+ROWMERGER="$PY_MODULES/RowMerger/RowMerger"
+find "$PY_MODULES/RowMerger" -type 'f' -exec chmod +x {} \;
+
+TABLEMERGER="$PY_MODULES/TableMerger/TableMerger"
+find "$PY_MODULES/TableMerger" -type 'f' -exec chmod +x {} \;
+
+# Tagger files
+FOODLIST="$SRC_HOME/Data/food_database.tsv"
+DRUGLIST="$SRC_HOME/Data/drug_database.tsv"
+MICROBIALLIST="$SRC_HOME/Data/microbial_database.tsv"
+GOSLINLIST="$SRC_HOME/Data/goslinLipidList.csv"
+SYNONYMS="$SRC_HOME/Data/synonyms.json"
 
 # INPUT VARIABLES
 WORKFLOW="$1"
@@ -34,7 +53,7 @@ do
     if [ $MOD_NUM == '1' ]
     then
         echo Running Tagger >> "$JOB_DIR/WF.log"
-        "$PYTHON" "$PY_MODULES/Tagger.py" -i "$INFILE" -c "$JOB_DIR/Tagger.ini" -od "$JOB_DIR" -cpu $CPU
+        "$TAGGER" -i "$INFILE" -c "$JOB_DIR/Tagger.ini" -od "$JOB_DIR" -fL "$FOODLIST" -dL "$DRUGLIST" -mL "$MICROBIALLIST" -cpu $CPU
         
         # Handle errors
         STATUS_CODE=$?
@@ -50,7 +69,7 @@ do
     if [ $MOD_NUM == '2' ]
     then
         echo Running REname >> "$JOB_DIR/WF.log"
-        "$PYTHON" "$PY_MODULES/REname.py" -i "$INFILE" -pr "$JOB_DIR/REname.ini"  -od "$JOB_DIR" -re "$JOB_DIR/regex.ini"  -cpu $CPU
+        "$RENAME" -i "$INFILE" -pr "$JOB_DIR/REname.ini"  -od "$JOB_DIR" -re "$JOB_DIR/regex.ini" -ll "$GOSLINLIST" -js "$SYNONYMS" -cpu $CPU
 
         # Handle errors
         STATUS_CODE=$?
@@ -66,7 +85,7 @@ do
     if [ $MOD_NUM == '3' ]
     then
         echo Running RowMerger >> "$JOB_DIR/WF.log"
-        "$PYTHON" "$PY_MODULES/RowMerger.py" -i "$INFILE" -c "$JOB_DIR/rowMerger.ini" -od "$JOB_DIR"
+        "$ROWMERGER" -i "$INFILE" -c "$JOB_DIR/rowMerger.ini" -od "$JOB_DIR"
 
         # Handle errors
         STATUS_CODE=$?
@@ -81,7 +100,7 @@ do
     if [ $MOD_NUM == '4' ]
     then
         echo Running TableMerger >> "$JOB_DIR/WF.log"
-        "$PYTHON" "$PY_MODULES/TableMerger.py" -id "$INFILE" -c "$JOB_DIR/tableMerger.ini" -if "$FEATURE_INFO_INFILE" -od "$JOB_DIR"
+        "$TABLEMERGER" -id "$INFILE" -c "$JOB_DIR/tableMerger.ini" -if "$FEATURE_INFO_INFILE" -od "$JOB_DIR"
 
         # Handle errors
         STATUS_CODE=$?
