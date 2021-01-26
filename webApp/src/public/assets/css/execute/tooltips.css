@@ -11,7 +11,9 @@
     top: -50%;
     left: 105%;
     display: inline-block;
-    width: 300px;
+    /*width: 300px;*/
+    min-width: 300px;
+    width: auto;
     visibility: hidden;
     background-color: black;
     color: lightgray;
@@ -20,6 +22,7 @@
     padding: 5px 8px;
     font-size: 0.8em;
     z-index: 1;
+
 }
 
 .tooltip:hover .tooltipText {

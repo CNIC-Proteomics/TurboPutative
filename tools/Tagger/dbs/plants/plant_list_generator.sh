@@ -1,11 +1,11 @@
 # Author: Rafael Barrero Rodríguez
 # Date: 2021-01-21
-# Description: Generate database with all plant compounds from PlantCyc
+# Description: Generate list with all plant compounds from PlantCyc
 
 # Download all files from ftp
 wget ftp://ftp.plantcyc.org/Pathways/Data_dumps/PMN13_July2018/compounds/*
 
-for FILE in $(ls | grep -v -E "plant_database_generator.sh|files")
+for FILE in $(ls | grep -v -E "plant_list_generator.sh|files")
 do
     mv "$FILE" files/
 done
@@ -22,10 +22,10 @@ do
     ALL_COMPOUNDS="$(cat <(echo -e "$ALL_COMPOUNDS") <(paste <(echo -e "$FILE_COMPOUNDS") <(echo -e "$FILE_ID")))"
 done
 
-cat <(echo -e "Name\tPlantCyc_ID") <(sort <(echo -e "$ALL_COMPOUNDS") | sed /^[[:space:]]*$/d) | uniq > plant_pre_database.tsv
+cat <(echo -e "Name\tPlantCyc_ID") <(sort <(echo -e "$ALL_COMPOUNDS") | sed /^[[:space:]]*$/d) | uniq > plant_pre_list.tsv
 
 # Obtain plant compound synonyms 
-python ../scripts/getAllSynonyms.py plant_pre_database.tsv
-mv ../scripts/allSynonyms.tsv plant_pre2_database.tsv
-cat <(echo -e "Name\tPlantCyc_ID") <(tail -n+2 plant_pre2_database.tsv) > plant_pre3_database.tsv
-rm plant_pre2_database.tsv
+python ../scripts/getAllSynonyms.py plant_pre_list.tsv
+mv ../scripts/allSynonyms.tsv plant_pre2_list.tsv
+cat <(echo -e "Name\tPlantCyc_ID") <(tail -n+2 plant_pre2_list.tsv) > plant_pre3_list.tsv
+# rm plant_pre2_list.tsv

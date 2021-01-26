@@ -16,23 +16,27 @@
             </label>
             <input type="text" id="conservedCol" value="Identifier, Name">
         </div>
-    </div>
+    <!-- </div> -->
 
-
+    <!--
     <div class="moreCont">
         <button type="button" id="more" onclick="clickAdvance('#RowMergerParamContent .hidden')">Advanced</button>
     </div>
-    
+    -->
 
-    <div class="paramContent hidden" style="display: none;">
+    <!-- <div class="paramContent hidden" style="display: block;"> -->
 
-        <div class="paramContainer" style="width: 650px;">
-            <label for="outputNameRowMerger">Output Name</label>
+        <div class="paramContainer" comment="width: 650px;">
+            <label class="tooltip" for="outputNameRowMerger">Output Name <span class="icon">&#9432</span>
+                <span class="tooltipText" id="RowMergerONTTT" style="top:-10%;">Default: </span>
+            </label>
             <input type="text" id="outputNameRowMerger" placeholder="Optional">
         </div>
 
-        <div class="paramContainer" style="width: 650px;">
-            <label for="outputColumnsRowMerger">Output Columns</label>
+        <div class="paramContainer" comment="width: 650px;">
+            <label class="tooltip" for="outputColumnsRowMerger" placeholder="Optional">Output Columns <span class="icon">&#9432</span>
+                <span class="tooltipText" style="top:-10%;">Default: All columns will be saved</span>
+            </label>
             <input type="text" id="outputColumnsRowMerger" placeholder="Optional">
         </div>
 

@@ -12,10 +12,10 @@ SET RENAME=%SRC_HOME%\pyModules\compiledModules\REname\REname.exe
 SET ROWMERGER=%SRC_HOME%\pyModules\compiledModules\RowMerger\RowMerger.exe
 SET TABLEMERGER=%SRC_HOME%\pyModules\compiledModules\TableMerger\TableMerger.exe
 
-SET FOODLIST=%SRC_HOME%\Data\food_database.tsv
-SET DRUGLIST=%SRC_HOME%\Data\drug_database.tsv
-SET MICROBIALLIST=%SRC_HOME%\Data\microbial_database.tsv
-SET PLANTLIST=%SRC_HOME%\Data\plant_database.tsv
+SET FOODLIST=%SRC_HOME%\Data\food_list.tsv
+SET DRUGLIST=%SRC_HOME%\Data\drug_list.tsv
+SET MICROBIALLIST=%SRC_HOME%\Data\microbial_list.tsv
+SET PLANTLIST=%SRC_HOME%\Data\plant_list.tsv
 SET GOSLINLIST=%SRC_HOME%\Data\goslinLipidList.csv
 SET SYNONYMS=%SRC_HOME%\Data\synonyms.json
 

@@ -807,11 +807,11 @@ if __name__=="__main__":
 
     # Set default values
     default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configTagger', 'configTagger.ini')
-    default_food_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'food_database.tsv')
-    default_drug_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv')
-    default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'microbial_database.tsv')
-    default_natural_products_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'natural_product_database.tsv')
-    default_plant_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'plant_database.tsv')
+    default_food_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'food_list.tsv')
+    default_drug_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_list.tsv')
+    default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'microbial_list.tsv')
+    default_natural_products_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'natural_product_list.tsv')
+    default_plant_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'plant_list.tsv')
 
     # Parse arguments corresponding to path files
     parser.add_argument('-i', '--infile', help="Path to input file", type=str, required=True)

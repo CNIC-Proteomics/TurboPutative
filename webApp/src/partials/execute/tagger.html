@@ -46,29 +46,36 @@
 
         <div class="subSubTitle" style="padding: 20px 0 0 0;">Parameters</div>
 
-        <div class="paramContainer">
+        <div class="paramContainer" style="width:700px;">
             <label class="tooltip" for="halogenatedRegex">HalogenatedRegex <span class="icon">&#9432</span>
-                <span class="tooltipText">Regular expression that matches the name of halogenated compounds</span>
+                <span class="tooltipText" id="halogenatedRegexTTT" style="top:-90%;">Regular expression that matches the name of halogenated compounds</span>
+                <script>document.querySelector('#halogenatedRegexTTT').innerHTML += `. Default: ${defaultValues.halogenatedRegex}`</script>
             </label>
-            <input type="text" id="halogenatedRegex">
-            <script>document.querySelector("#halogenatedRegex").value = "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)";</script>
+            <input type="text" id="halogenatedRegex" placeholder="Optional">
+            <!-- <script>document.querySelector("#halogenatedRegex").value = "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)";</script> -->
         </div>
 
-        <div class="paramContainer">
+        <div class="paramContainer" style="width:700px;">
             <label class="tooltip" for="peptideRegex">PeptideRegex <span class="icon">&#9432</span>
-                <span class="tooltipText">Regular expression that matches the name of peptides</span>
+                <span class="tooltipText" id="peptideRegexTTT" style="top:-60%;">Regular expression that matches the name of peptides</span>
+                <script>document.querySelector('#peptideRegexTTT').innerHTML += `. Default: ${defaultValues.peptideRegex}`</script>
             </label>
-            <input type="text" id="peptideRegex">
-            <script>document.querySelector("#peptideRegex").value = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\\s,]){3,}$";</script>
+            <input type="text" id="peptideRegex" placeholder="Optional">
+            <!-- <script>document.querySelector("#peptideRegex").value = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\\s,]){3,}$";</script> -->
         </div>
 
-        <div class="paramContainer">
-            <label for="outputNameTagger">Output Name</label>
+        <div class="paramContainer" style="width:700px;">
+            <label class="tooltip" for="outputNameTagger">Output Name <span class="icon">&#9432</span>
+                <span class="tooltipText" id="TaggerONTTT" style="top:-10%;">Default: </span>
+            </label>
             <input type="text" id="outputNameTagger" placeholder="Optional">
+            
         </div>
 
-        <div class="paramContainer">
-            <label for="outputColumnsTagger" placeholder="Optional">Output Columns</label>
+        <div class="paramContainer" style="width:700px;">
+            <label class="tooltip" for="outputColumnsTagger" placeholder="Optional">Output Columns <span class="icon">&#9432</span>
+                <span class="tooltipText" style="top:-10%;">Default: All columns will be saved</span>
+            </label>
             <input type="text" id="outputColumnsTagger" placeholder="Optional">
         </div>
 

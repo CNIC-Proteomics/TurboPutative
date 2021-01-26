@@ -31,10 +31,10 @@ var workflowObject = {
         this.ini.Tagger += "[Parameters]";
         this.ini.Tagger += "####";
         this.ini.Tagger += "HalogenatedRegex = ";
-        this.ini.Tagger += document.querySelector("#halogenatedRegex").value;
+        this.ini.Tagger += document.querySelector("#halogenatedRegex").value == "" ? defaultValues.halogenatedRegex : document.querySelector("#halogenatedRegex").value;
         this.ini.Tagger += "####";
         this.ini.Tagger += "PeptideRegex = ";
-        this.ini.Tagger += document.querySelector("#peptideRegex").value;
+        this.ini.Tagger += document.querySelector("#peptideRegex").value == "" ? defaultValues.peptideRegex : document.querySelector("#peptideRegex").value;
         this.ini.Tagger += "####";
         this.ini.Tagger += "OutputColumns = "
         this.ini.Tagger += document.querySelector("#outputColumnsTagger").value;

@@ -1,48 +1,52 @@
 <div id="TableMergerParamContent" style="display: none">
 
-        <div class="subTitle" style="padding-bottom: 10px;">TableMerger Parameters</div>
-    
-        <div class="paramContent">
-            <div class="paramContainer" style="text-align: center; width: 900px;">
-                <label for="featInfoFile">File with feature information</label>
-                <a class="downloadLink" href="/assets/files/FeatureInfo.xlsx" download="FeatureInfo.xlsx" style="display:block; float:right">Download Example File</a>
-                <input type="file" id="featInfoFile" name="featInfoFile" form="workflowForm"
-                style="border: none; width:400px; padding:0;">
-            </div>
-            <script>
-                document.querySelector("#featInfoFile").addEventListener("change", () => {
-                    workflowObject.featInfoFile = true;
-                });
-            </script>
-        </div>
-    
-    
-        <div class="moreCont">
-            <button type="button" id="more" onclick="clickAdvance('#TableMergerParamContent .hidden')">Advanced</button>
-        </div>
-        
-    
-        <div class="paramContent hidden" style="display: none;">
-    
-            <div class="paramContainer">
-                <label class="tooltip" for="decimalPlaces">Decimal Places <span class="icon">&#9432</span>
-                    <span class="tooltipText">Number of decimal places to which the experimental mass of the features will be rounded to "merge"</span>
-                </label>
-                <input type="text" id="decimalPlaces" value="4">
-            </div>
+    <div class="subTitle" style="padding-bottom: 10px;">TableMerger Parameters</div>
 
-            <div class="paramContainer">
-                <label for="outputNameTableMerger">Output Name</label>
-                <input type="text" id="outputNameTableMerger" placeholder="Optional">
-            </div>
-
-            <div class="paramContainer">
-                <label for="outputColumnsTableMerger">Output Columns</label>
-                <input type="text" id="outputColumnsTableMerger" placeholder="Optional">
-            </div>
-    
+    <div class="paramContent">
+        <div class="paramContainer" style="text-align: center; width: 825px;">
+            <label for="featInfoFile">File with feature information</label>
+            <a class="downloadLink" href="/assets/files/FeatureInfo.xlsx" download="FeatureInfo.xlsx" style="display:block; float:right">Download Example File</a>
+            <input type="file" id="featInfoFile" name="featInfoFile" form="workflowForm"
+            style="border: none; width:400px; padding:0;">
         </div>
-    
-        <!-- INSERT PARTIAL: execute/0_buttons.html -->
-    
+        <script>
+            document.querySelector("#featInfoFile").addEventListener("change", () => {
+                workflowObject.featInfoFile = true;
+            });
+        </script>
+    <!-- </div> -->
+
+    <!--
+    <div class="moreCont">
+        <button type="button" id="more" onclick="clickAdvance('#TableMergerParamContent .hidden')">Advanced</button>
     </div>
+    -->
+
+    <!-- <div class="paramContent hidden" style="display: block;"> -->
+
+        <div class="paramContainer" style="width:700px;">
+            <label class="tooltip" for="decimalPlaces">Decimal Places <span class="icon">&#9432</span>
+                <span class="tooltipText">Number of decimal places to which the experimental mass of the features will be rounded to "merge"</span>
+            </label>
+            <input type="text" id="decimalPlaces" value="4">
+        </div>
+
+        <div class="paramContainer" style="width:700px;">
+            <label class="tooltip" for="outputNameTableMerger">Output Name <span class="icon">&#9432</span>
+                <span class="tooltipText" id="TableMergerONTTT" style="top:-10%;">Default: </span>
+            </label>
+            <input type="text" id="outputNameTableMerger" placeholder="Optional">
+        </div>
+
+        <div class="paramContainer" style="width:700px;">
+            <label class="tooltip" for="outputColumnsTableMerger" placeholder="Optional">Output Columns <span class="icon">&#9432</span>
+                <span class="tooltipText" style="top:-10%;">Default: All columns will be saved</span>
+            </label>
+            <input type="text" id="outputColumnsTableMerger" placeholder="Optional">
+        </div>
+
+    </div>
+
+    <!-- INSERT PARTIAL: execute/0_buttons.html -->
+
+</div>
