@@ -147,7 +147,7 @@ def addTaggerColumns(df_columns, compare_column):
     '''
 
     # List with columns that can be added by Tagger
-    candidate_tagger_columns = ['Food', 'Drug', 'NaturalProduct', 'Halogenated', 'Microbial', 'Peptide']
+    candidate_tagger_columns = ['Food', 'Drug', 'NaturalProduct', 'Halogenated', 'Microbial', 'Peptide', 'Plant']
 
     # Get columns added by tagger
     tagger_columns = [column for column in candidate_tagger_columns if column in df_columns]

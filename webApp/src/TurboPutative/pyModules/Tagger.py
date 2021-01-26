@@ -197,9 +197,8 @@ def foodTagger(df, n_cores):
     food_list = readFoodTable(args.foodList)
 
     # Tagging without parallel processes (AVOID MEMORY ERROR)
-    df_out = foodTaggerBatch(df, food_list)
+    # df_out = foodTaggerBatch(df, food_list)
 
-    '''
     # Split dataframe so that each batch is processed by one core
     df_split = np.array_split(df, n_cores)
         
@@ -211,7 +210,7 @@ def foodTagger(df, n_cores):
         logging.info("Tagging food compounds")
         result = p.starmap(foodTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    '''
+    
     logging.info("Finished food tagging")
 
     return df_out
@@ -276,9 +275,8 @@ def drugTagger(df, n_cores):
     drug_list = readDrugTable(args.drugList)
 
     # Tagging without parallel process (AVOID MEMORY ERROR)
-    df_out = drugTaggerBatch(df, drug_list)
+    # df_out = drugTaggerBatch(df, drug_list)
 
-    '''
     # Split dataframe so that each batch is processed by one core
     df_split = np.array_split(df, n_cores)
 
@@ -290,7 +288,7 @@ def drugTagger(df, n_cores):
         logging.info("Tagging drug compounds")
         result = p.starmap(drugTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    '''
+    
     logging.info("Finished drug tagging")
 
     return df_out
@@ -319,10 +317,10 @@ def microbialTaggerBatch(df, microbial_list):
     '''
     Input:
         - df: Pandas dataframe containing a batch of the whole infile dataframe
-        - microbial_list: String Numpy Array containing all drug compounds in the database
+        - microbial_list: String Numpy Array containing all microbial compounds in the database
     
     Output:
-        - df: Pandas dataframe with the drug tag added in a new column
+        - df: Pandas dataframe with the microbial tag added in a new column
     '''
 
     # Get numpy array with compound in input table
@@ -354,9 +352,96 @@ def microbialTagger(df, n_cores):
     microbial_list = readMicrobialTable(args.microbialList)
 
     # Tagging without parallel process (AVOID MEMORY ERROR)
-    df_out = microbialTaggerBatch(df, microbial_list)
+    # df_out = microbialTaggerBatch(df, microbial_list)
+
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
+
+    # Create list with parameters received by each drugTaggerBatch function in each subprocess
+    subprocess_args = [(df_i, microbial_list) for df_i in df_split]
+
+    with Pool(n_cores) as p:
+
+        logging.info("Tagging microbial compounds")
+        result = p.starmap(microbialTaggerBatch, subprocess_args)
+        df_out = pd.concat(result)
 
     logging.info("Finished microbial tagging")
+
+    return df_out
+
+
+def readPlantTable(path):
+    '''
+    Input:
+        - path: String containing the path to the plant database
+    
+    Output:
+        - plant_list: String Numpy Array containing plant name extracted from the database
+    '''
+
+    logging.info(f"Reading Plant Table: {path}")
+
+    # Import drug table as a pandas dataframe
+    df = pd.read_csv(path, header=0, sep="\t", dtype=str)
+
+    # Extract drug list name from df as a numpy array
+    plant_list = np.array(df.iloc[:, 0])
+
+    return plant_list
+
+
+def plantTaggerBatch(df, plant_list):
+    '''
+    Input:
+        - df: Pandas dataframe containing a batch of the whole infile dataframe
+        - plant_list: String Numpy Array containing all plant compounds in the database
+    
+    Output:
+        - df: Pandas dataframe with the plant tag added in a new column
+    '''
+
+    # Get numpy array with compound in input table
+    compound_names = np.array(df.loc[:, 'Name']) 
+
+    # Tag corresponding compounds
+    plant_tag = ["" if pd.isna(compound) else "Plant" if getFirstSynonym(compound) in plant_list else "" for compound in compound_names]
+
+    # Add Plant tag column to the dataframe
+    name_column_index = getNameColumnIndex(df.columns)
+    df.insert(name_column_index+1, "Plant", plant_tag, True)
+    
+    return df
+
+
+def plantTagger(df, n_cores):
+    '''
+    Input:
+        - df: Pandas dataframe containing the whole infile content
+        - n_cores: Integer indicating the number of cores used in the multiprocessing
+
+    Output: df_out: Pandas dataframe containing the whole infile content with the Plant Tag 
+    added in a new column
+    '''
+
+    logging.info("Start plant compound tagging")
+
+    # Get numpy array with microbial compound list
+    plant_list = readPlantTable(args.plantList)
+
+    # Split dataframe so that each batch is processed by one core
+    df_split = np.array_split(df, n_cores)
+
+    # Create list with parameters received by each drugTaggerBatch function in each subprocess
+    subprocess_args = [(df_i, plant_list) for df_i in df_split]
+
+    with Pool(n_cores) as p:
+
+        logging.info("Tagging plant compounds")
+        result = p.starmap(plantTaggerBatch, subprocess_args)
+        df_out = pd.concat(result)
+
+    logging.info("Finished plant tagging")
 
     return df_out
 
@@ -500,9 +585,8 @@ def halogenatedTagger(df, n_cores):
     halogen_regex = config_param.get('Parameters', 'HalogenatedRegex')
 
     # Tagg without parallel process (AVOID MEMORY ERROR)
-    df_out = halogenatedTaggerBatch(df, halogen_regex)
+    # df_out = halogenatedTaggerBatch(df, halogen_regex)
 
-    '''
     # Split dataframe so that each batch is processed by one core
     df_split = np.array_split(df, n_cores)
 
@@ -514,7 +598,7 @@ def halogenatedTagger(df, n_cores):
         logging.info("Tagging halogenated compounds")
         result = p.starmap(halogenatedTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    '''
+    
     logging.info("Finished halogenated compounds tagging")
 
     return df_out 
@@ -560,9 +644,9 @@ def peptideTagger(df, n_cores):
     peptide_regex = config_param.get('Parameters', 'PeptideRegex')
 
     # Tag without parallel process (AVOID MEMORY ERROR)
-    df_out = peptideTaggerBatch(df, peptide_regex)
+    # df_out = peptideTaggerBatch(df, peptide_regex)
 
-    '''
+    
     # Split dataframe so that each batch is processed by one core
     df_split = np.array_split(df, n_cores)
 
@@ -574,7 +658,7 @@ def peptideTagger(df, n_cores):
         logging.info("Tagging peptides")
         result = p.starmap(peptideTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
-    '''
+    
     logging.info("Finished peptide tagging")
 
     return df_out    
@@ -690,6 +774,9 @@ def main(args):
     if re.search('(?i)true', config_param['TagSelection']['MicrobialCompound']):
         df = microbialTagger(df, n_cores)
 
+    if re.search('(?i)true', config_param['TagSelection']['Plant']):
+        df = plantTagger(df, n_cores)
+
     # if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
     #    df = npTagger(df, n_cores)
 
@@ -706,7 +793,7 @@ def main(args):
 
 if __name__=="__main__":
 
-    # multiprocessing.freeze_support()
+    multiprocessing.freeze_support()
 
     # parse arguments
     parser = argparse.ArgumentParser(
@@ -720,10 +807,11 @@ if __name__=="__main__":
 
     # Set default values
     default_config_path = os.path.join(os.path.dirname(__file__), '..', 'config' , 'configTagger', 'configTagger.ini')
-    default_food_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'food_database.tsv')
-    default_drug_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_database.tsv')
-    default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'microbial_database.tsv')
-    default_natural_products_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'natural_product_database.tsv')
+    default_food_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'food_list.tsv')
+    default_drug_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'drug_list.tsv')
+    default_microbial_compound_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'microbial_list.tsv')
+    default_natural_products_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'natural_product_list.tsv')
+    default_plant_list_path = os.path.join(os.path.dirname(__file__), '..', 'Data', 'plant_list.tsv')
 
     # Parse arguments corresponding to path files
     parser.add_argument('-i', '--infile', help="Path to input file", type=str, required=True)
@@ -732,6 +820,7 @@ if __name__=="__main__":
     parser.add_argument('-dL', '--drugList', help="Path to drug compounds list", type=str, default=default_drug_list_path)
     parser.add_argument('-mL', '--microbialList', help="Path to microbial compounds list", type=str, default=default_microbial_compound_list_path)
     parser.add_argument('-npL', '--naturalList', help="Path to natural products list", type=str, default=default_natural_products_list_path)
+    parser.add_argument('-pL', '--plantList', help="Path to plant list", type=str, default=default_plant_list_path)
 
     parser.add_argument('-o', '--output', help="Name of output table", type=str)
     parser.add_argument('-od', '--outdir', help="Path to output dir", type=str, default=Path('.'))
@@ -746,6 +835,7 @@ if __name__=="__main__":
     parser.add_argument('-ha', '--halogenated', help="Add 'halogenated compound' tag to compounds", action='store_true')
     parser.add_argument('-np', '--natural', help="Add NP tag to compounds", action='store_true')
     parser.add_argument('-p', '--peptide', help="Add Peptide tag to compounds", action='store_true')
+    parser.add_argument('-pn', '--plant', help="Add Plant tag to compounds", action='store_true')
 
     parser.add_argument('-v', dest='verbose', action='store_true', help='Increase output verbosity')
     args = parser.parse_args()
@@ -769,6 +859,9 @@ if __name__=="__main__":
     
     if args.natural:
         config_param.set('TagSelection', 'NaturalProduct', str(args.natural))
+
+    if args.plant:
+        config_param.set('TagSelection', 'Plant', str(args.plant))
 
     if args.output:
         config_param.set('Parameters', 'OutputName', args.output)
