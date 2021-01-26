@@ -56,6 +56,7 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 /tools/Tagger/dbs/scripts/getAllSynonyms.ipynb
 
 # Compilation files #
+#####################
 /desktopApp/compilator.bat
 /desktopApp/build/*
 /desktopApp/*.spec
@@ -63,9 +64,14 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 /desktopApp/app/src/pyModules/build/*
 /desktopApp/app/src/pyModules/*.spec
 
+# Plant List #
+##############
+
+
 # other files #
 ###############
 /build.bat
 /webApp_old.zip
 /desktopApp/env_fake/*
 /LEEME.md
+
