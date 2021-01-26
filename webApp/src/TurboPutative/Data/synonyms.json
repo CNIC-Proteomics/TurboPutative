@@ -34,5 +34,9 @@
     "C8 Ceramide-1-phosphate": "CerP(d18:1/8:0)",
     "enantio-PAF C-16": "PAF C-16",
     "Dioleoyl-rac-glycerol": "DG(36:2)",
-    "Amino-deoxy-scyllo-inositol": "neo-Inosamine-2"
+    "Amino-deoxy-scyllo-inositol": "neo-Inosamine-2",
+    "Behenyl myristoleate": "Myristoleyl behenate",
+    "Oleyl stearate": "Stearyl oleate",
+    "Palmitoleyl arachidate": "Arachidyl palmitoleate",
+    "dihydroxy-nor-secovitamin D3": "dihydroxy-norvitamin D3"
 }

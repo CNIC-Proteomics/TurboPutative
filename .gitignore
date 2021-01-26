@@ -60,6 +60,8 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 /desktopApp/build/*
 /desktopApp/*.spec
 /desktopApp/app/src/pyModules/compiledModules/*
+/desktopApp/app/src/pyModules/build/*
+/desktopApp/app/src/pyModules/*.spec
 
 # other files #
 ###############

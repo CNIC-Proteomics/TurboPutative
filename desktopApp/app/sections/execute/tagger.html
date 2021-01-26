@@ -189,6 +189,11 @@
                     <input class="cbTag" type="checkbox" id="microbialCompound" name="microbialCompound" value="true">
                     <span class="checkmark"></span>                
                 </label>
+
+                <label class="cbContainer">Plant
+                    <input class="cbTag" type="checkbox" id="plant" name="plant" value="true">
+                    <span class="checkmark"></span>                
+                </label>
                 
                 <label class="cbContainer">Halogenated
                     <input class="cbTag" type="checkbox" id="halogenated" name="halogenated" value="true">
@@ -383,6 +388,8 @@
             // iniContent += "###";
             iniContent += "Peptide = " + document.getElementById('peptide').checked;
             iniContent += "###";
+            iniContent += "Plant = " + document.getElementById('plant').checked;
+            iniContent += "###";
 
             iniContent += "[Parameters]";
             iniContent += "###";
@@ -410,6 +417,7 @@
             document.getElementById('microbialCompound').checked = iniString.match(/\nMicrobialCompound = (true|false)\n/)[1] == "true"? true : false;
             document.getElementById('halogenated').checked = iniString.match(/\nHalogenated = (true|false)\n/)[1] == "true"? true : false;
             document.getElementById('peptide').checked = iniString.match(/\nPeptide = (true|false)\n/)[1] == "true"? true : false;
+            document.getElementById('plant').checked = iniString.match(/\nPlant = (true|false)\n/)[1] == "true"? true : false;
             // document.getElementById('naturalProduct').checked = iniString.match(/\nNaturalProduct = (true|false)\n/)[1] == "true"? true : false;
             document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
             document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
