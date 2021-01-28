@@ -1,7 +1,88 @@
 <div class="text" id="RowMergerText">
 
     <div class="subTitle">RowMerger</div>
-
-    <div class="description">Description...</div>
+    <br>
+    <div class="description">
+        <div class="descriptionText">
+            RowMerger is an entity comparer that allows combining information from different annotations according 
+            to criteria determined by the user. Therefore, this module allows grouping annotations assigned to the 
+            same feature in a single entry in the table with the possible identifications, thus facilitating the visualization 
+            of the data for the biological interpretation of the results.
+            <br>
+            <br>
+            To execute RowMerger, the user must specify which properties of the annotations (<i>i.e.</i> table columns) 
+            will be taken into account for the merge to take place. Likewise, it must be indicated which properties will 
+            be kept in the entry resulting from the merging of the annotations. By default, RowMerger will combine 
+            annotations that have the same experimental mass (Experimental mass), adduct (Adduct), error (mz Error (ppm)) 
+            and molecular weight (Molecular Weight), in such a way that the resulting entry will retain the identifier 
+            (Identifier) ​​and the name (Name) of all merged annotations.
+            <br>
+            <br>
+            RowMerger receives an input table, in <i>xls</i> or <i>xlsx</i> format, and outputs a processed matrix with the same structure.
+            <br>
+            <br>
+            <table class="msTable">
+                <tr>
+                    <th>Experimental mass</th>
+                    <th>Identifier</th>
+                    <th>Adduct</th>
+                    <th>Name</th>
+                </tr>
+                <tr>
+                    <td>83.0607</td>
+                    <td>154396</td>
+                    <td>M+H</td>
+                    <td>Methylimidazole</td>
+                </tr>
+                <tr>
+                    <td>83.0607</td>
+                    <td>61184</td>
+                    <td>M+H</td>
+                    <td>Fomepizole</td>
+                </tr>
+                <tr>
+                    <td>171.0628</td>
+                    <td>150549</td>
+                    <td>M+Na</td>
+                    <td>Paratose</td>
+                </tr>
+                <tr>
+                    <td>171.0628</td>
+                    <td>158202</td>
+                    <td>M+Na</td>
+                    <td>Abequose</td>
+                </tr>
+                <tr>
+                    <td>171.0628</td>
+                    <td>151197</td>
+                    <td>M+Na</td>
+                    <td>Tyvelose</td>
+                </tr>
+            </table>
+            <div class="downArrow">&darr;</div>
+            <table class="msTable">
+                <tr>
+                    <th>Experimental mass</th>
+                    <th>Identifier</th>
+                    <th>Adduct</th>
+                    <th>Name</th>
+                </tr>
+                <tr>
+                    <td>83.0607</td>
+                    <td>154396 // 61184</td>
+                    <td>M+H</td>
+                    <td>Methylimidazole // Fomepizole</td>
+                </tr>
+                <tr>
+                    <td>171.0628</td>
+                    <td>150549 // 158202 // 151197</td>
+                    <td>M+Na</td>
+                    <td>Paratose // Abequose // Tyvelose</td>
+                </tr>
+            </table>
+            <br>
+            <br>
+        </div>
+    </div>
     
 </div>

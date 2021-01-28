@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PPuMA</title>
     <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/table.css" rel="stylesheet" type="text/css">
     <link href="../../../assets/css/body.css" rel="stylesheet">
 </head>
 
@@ -28,39 +29,100 @@
     <div id="mainContent">
         <div id="parameters">
             <h2>Settings</h2>
-            <p>
-                <ul class="list">
-                    <li><b>Separator</b>: Regular expression that matches the character string used to separate compound names in the same row.</li>
-                    <li><b>AminoAcidSeparator</b>: The table with the putative identifications may contain peptides. TurboPutative is capable of 
-                        processing them as long as the amino acids that make it up are expressed in the three-letter nomeclature 
-                        (e.g. Arg, Pro, Ala...). In the AminoAcidSeparator parameter, it must be specified a regular expression that
-                        mathces the character that separates two amino acids. For example, in the peptide "Arg Pro Ala", amino acids are 
-                        separated by a whitespace character ('\s').</li>
-                    <li><b>RemoveRow</b>: Regular expression that matches the name of the rows to be removed from the table.</li>
-                    <li><b>Regular Expressions file</b>: INI file containing regular expressions applied to compound names. Click to see default <a href="" onclick="showRegexINI()">regex.ini</a>.</li>
-                    <li><b>OutputName</b>: Name of the output file. By default, the name of the output file will be that of the 
-                        input file with prefix "REnamed_"</li>                   
-                    <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
-                </ul>
-            </p>
+                <div class="descriptionText">
+                    REname must receive as input a table in <i>xls</i> or <i>xlsx</i> format. 
+                    It must have at least two columns with the mass of the extracted features (Experimental mass) 
+                    and the name of the annotated compounds (Name). The user can modify some parameters of 
+                    the module as we can see below.
+                
+
+                    <h2>Parameters</h2>
+                    
+                    <ul class="list">
+                        <li><b>Separator</b>: Regular expression that matches the character string used to separate compound names in the same row.
+                        Default value: "\s//\s".</li>
+                        <li><b>AminoAcidSeparator</b>: The table with the putative identifications may contain peptides. TurboPutative is capable of 
+                            processing them (amino acids must be expressed in the three-letter nomeclature, e.g. Arg, Pro, Ala...). 
+                            In the AminoAcidSeparator parameter, it must be specified a regular expression that
+                            mathces the character that separates two amino acids. For example, in the peptide "Arg Pro Ala", amino acids are 
+                            separated by a whitespace character ('\s').</li>
+                        <li><b>RemoveRow</b>: Regular expression that matches the name of the rows to be removed from the table.</li>
+                        <li><b>OutputName</b>: Name of the output file. By default, the name of the output file will be that of the 
+                            input file with prefix "REnamed_"</li>
+                        
+                        <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
+                    </ul>
+                    <br>
+                    <br>
+                    <table class="msTable">
+                        <tr>
+                            <th>Experimental mass</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr>
+                            <td>131.0582</td>
+                            <td>N-acetyl-L-Alanine</td>
+                        </tr>
+                        <tr>
+                            <td>131.0582</td>
+                            <td>N-Acetyl-beta-alanine</td>
+                        </tr>
+                        <tr>
+                            <td>217.1045</td>
+                            <td>(2R,3R)-heptane-1,2,3-triol</td>
+                        </tr>
+                        <tr>
+                            <td>217.1045</td>
+                            <td>heptane-1,2,3-triol</td>
+                        </tr>
+                        <tr>
+                            <td>311.1262</td>
+                            <td>6E,8E,14E-Hexadecatriene-10,12-diynoic acid</td>
+                        </tr>
+                        <tr>
+                            <td>311.1262</td>
+                            <td>6E,8E,14Z-Hexadecatriene-10,12-diynoic acid</td>
+                        </tr>
+                        <tr>
+                            <td>433.1408</td>
+                            <td>Trp Asp Asp</td>
+                        </tr>
+                        <tr>
+                            <td>433.1408</td>
+                            <td>Asp Asp Trp</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="downArrow">&darr;</div>
+                    
+                    <table class="msTable">
+                        <tr>
+                            <th>Experimental mass</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr>
+                            <td>131.0582</td>
+                            <td>acetyl-Alanine</td>
+                        </tr>
+                        <tr>
+                            <td>217.1045</td>
+                            <td>heptane-triol</td>
+                        </tr>
+                        <tr>
+                            <td>311.1262</td>
+                            <td>Hexadecatriene-diynoate</td>
+                        </tr>
+                        <tr>
+                            <td>433.1408</td>
+                            <td>Asp Asp Trp</td>
+                        </tr>
+                    </table>
+                </div>
+            <br>
+            <br>
         </div>
     
     </div>
-
-    <script>
-    
-    const { shell } = require('electron');
-    const path = require('path');
-
-    function showRegexINI() {
-        shell.openPath(path.join(path.dirname(process.execPath), '../app/src/config/configREname'))
-    }
-
-    function goTo(url) {
-        shell.openExternal(url);
-    }
-    
-    </script>
 
 </body>
 

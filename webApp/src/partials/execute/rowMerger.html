@@ -5,16 +5,18 @@
     <div class="paramContent">
         <div class="paramContainer" style="width: 825px;">
             <label class="tooltip" for="comparedCol">Compared columns (Index/Name) <span class="icon">&#9432</span>
-                <span class="tooltipText" style="top:-20%;">Name of columns compared among rows</span>
+                <span class="tooltipText" id="comparedColTTT" style="top:-20%;">Name of columns compared among rows</span>
+                <script>document.querySelector('#comparedColTTT').innerHTML += `. Default: ${defaultValues.RowMerger.comparedColumns}`</script>
             </label>
-            <input type="text" id="comparedCol" value="Experimental mass, Adduct, mz Error (ppm), Molecular Weight">
+            <input type="text" id="comparedCol" defaultValue="Experimental mass, Adduct, mz Error (ppm), Molecular Weight" placeholder="Optional">
         </div>
 
         <div class="paramContainer" style="width: 825px;">
             <label class="tooltip" for="conservedCol">Conserved columns (Index/Name) <span class="icon">&#9432</span>
-                <span class="tooltipText">Name of columns whose value will be conserved after row merge</span>
+                <span class="tooltipText" id="conservedColTTT">Name of columns whose value will be conserved after row merge</span>
+                <script>document.querySelector('#conservedColTTT').innerHTML += `. Default: ${defaultValues.RowMerger.conservedColumns}`</script>
             </label>
-            <input type="text" id="conservedCol" value="Identifier, Name">
+            <input type="text" id="conservedCol" defaultValue="Identifier, Name" placeholder="Optional">
         </div>
     <!-- </div> -->
 

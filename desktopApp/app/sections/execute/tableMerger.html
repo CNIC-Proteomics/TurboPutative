@@ -9,10 +9,11 @@
     <link href="./assets/css/tooltip.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/changeButton.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/header.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="assets/js/defaultValues.js"></script>
     <style>
         /* SETTINGS CONTAINER */
         #settings {
-            margin: 5% 3% 5% 3%;
+            /*margin: 5% 3% 5% 3%;*/
         }
 
         #settings::after {
@@ -93,27 +94,35 @@
                 <input type="file" id="featInfoFile" name="featInfoFile" style="display:block; width:auto; margin: auto; margin-top: 30px; border:none; color:lightgray;">
             </div>
             <br>
+
+            <!--
             <div id="moreCont">
                 <button type="button" id="more" onclick="showMore()">Advanced</button>
             </div>
+            -->
 
-            <div id="hiddenParams" style="display: none;">
+            <div id="hiddenParams">
 
                 <div class="paramContainer">
                     <label class="tooltip" for="decimalPlaces">Decimal Places <span class="icon">&#9432</span>
-                        <span class="tooltipText">Number of decimal places to which the experimental mass of the features will be rounded to "merge"</span>
+                        <span class="tooltipText" id="decimalPlacesTTT" style="top:-70%;">Number of decimal places to which the experimental mass of the features will be rounded to "merge"</span>
+                        <script>document.querySelector("#decimalPlacesTTT").innerHTML += `. Default: ${defaultValues.TableMerger.decimalPlaces}`</script>
                     </label>
-                    <input type="text" id="decimalPlaces" name="decimalPlaces" value="4">
+                    <input type="text" id="decimalPlaces" name="decimalPlaces" defaultValue="4" placeholder="Optional">
                 </div>
 
                 <div class="paramContainer">
-                    <label for="outputName">Output Name</label>
-                    <input type="text" id="outputName" name="outputName">
+                    <label class="tooltip" for="outputName">Output Name <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputNameTTT" style="top:-20%;"></span>
+                    </label>
+                    <input type="text" id="outputName" name="outputName" placeholder="Optional">
                 </div>
 
                 <div class="paramContainer">
-                    <label for="outputColumns">Output Columns</label>
-                    <input type="text" id="outputColumns" name="outputColumns">
+                    <label class="tooltip" for="outputColumns">Output Columns <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputColumnsTTT" style="top:-20%;">Default: All columns will be saved</span>
+                    </label>
+                    <input type="text" id="outputColumns" name="outputColumns" placeholder="Optional">
                 </div>
 
             </div> 
@@ -121,7 +130,7 @@
         </div>
     </div>
 
-    <div id="nextContainer">
+    <div id="nextContainer" style="margin-top: 5%;">
         <div id="selectBtn" style="width:200px; margin: auto; padding: 0px; text-align: center;">
             <a class="change next" onclick="next()">&raquo;</a>
         </div>
@@ -193,6 +202,10 @@
             // Save received workflow and add one to next attribute
             workflow = receivedWorkflow;
             workflow.next += 1;
+
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_tableMerged_${workflow.files.infile.name}`;
+
             iniReader();
 
             // If this is the last module, hidde next button and show run button
@@ -207,6 +220,10 @@
             // Refill all fiedls with iniString
             workflow = receivedWorkflow;
             workflow.next -= 1;
+
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_tableMerged_${workflow.files.infile.name}`;
+
             iniReader();
         });
 
@@ -223,7 +240,8 @@
             iniContent += "###";
             iniContent += "OutputColumns = " + document.getElementById('outputColumns').value;
             iniContent += "###";
-            iniContent += "N_Digits = " + document.getElementById('decimalPlaces').value;
+            iniContent += "N_Digits = ";
+            iniContent += document.getElementById('decimalPlaces').value == "" ? defaultValues.TableMerger.decimalPlaces : document.getElementById('decimalPlaces').value;
             iniContent += "###";
 
             iniContent = iniContent.replace(/###/g, "\n");
@@ -237,8 +255,8 @@
 
             var iniString = workflow.ini.tableMerger;
             
-            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
-            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
+            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\s\.()]*)\n/)[1];
+            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,()]*)\n/)[1];
             document.getElementById('decimalPlaces').value = iniString.match(/\nN_Digits = (\d*)\n/)[1];
         }
     </script>

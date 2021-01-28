@@ -9,10 +9,11 @@
     <link href="./assets/css/tooltip.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/changeButton.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/header.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="assets/js/defaultValues.js"></script>
     <style>
         /* SETTINGS CONTAINER */
         #settings {
-            margin: 5% 3% 5% 3%;
+            /*margin: 5% 3% 5% 3%;*/
         }
 
         #settings::after {
@@ -90,32 +91,40 @@
 
             <div class="paramContainer">
                 <label class="tooltip" for="comparedCol">Compared columns (Index/Name) <span class="icon">&#9432</span>
-                    <span class="tooltipText" style="top:-20%;">Name of columns compared among rows</span>
+                    <span class="tooltipText" id="comparedColTTT" style="top:-70%;">Name of columns compared among rows</span>
+                    <script>document.querySelector("#comparedColTTT").innerHTML += `. Default: ${defaultValues.RowMerger.comparedCol}`</script>
                 </label>
-                <input type="text" id="comparedCol" name="comparedCol" placeholder="Default: Experimental mass, Adduct, mz Error (ppm), Molecular Weight">
+                <input type="text" id="comparedCol" name="comparedCol" placeholder="Optional">
             </div>
 
             <div class="paramContainer">
                 <label class="tooltip" for="conservedCol">Conserved columns (Index/Name) <span class="icon">&#9432</span>
-                    <span class="tooltipText">Name of columns whose value will be conserved after row merge</span>
+                    <span class="tooltipText" id="conservedColTTT" style="top:-70%;">Name of columns whose value will be conserved after row merge</span>
+                    <script>document.querySelector("#conservedColTTT").innerHTML += `. Default: ${defaultValues.RowMerger.conservedCol}`</script>
                 </label>
-                <input type="text" id="conservedCol" name="conservedCol" placeholder="Default: Identifier, Name">
+                <input type="text" id="conservedCol" name="conservedCol" placeholder="Optional">
             </div>
 
+            <!--
             <div id="moreCont">
                 <button type="button" id="more" onclick="showMore()">Advanced</button>
             </div>
+            -->
 
-            <div id="hiddenParams" style="display: none;">
+            <div id="hiddenParams">
 
                 <div class="paramContainer">
-                    <label for="outputName">Output Name</label>
-                    <input type="text" id="outputName" name="outputName">
+                    <label class="tooltip" for="outputName">Output Name <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputNameTTT" style="top:-20%;"></span>
+                    </label>
+                    <input type="text" id="outputName" name="outputName" placeholder="Optional">
                 </div>
 
                 <div class="paramContainer">
-                    <label for="outputColumns">Output Columns</label>
-                    <input type="text" id="outputColumns" name="outputColumns">
+                    <label class="tooltip" for="outputColumns">Output Columns <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputColumnsTTT" style="top:-20%;">Default: All columns will be saved</span>
+                    </label>
+                    <input type="text" id="outputColumns" name="outputColumns" placeholder="Optional">
                 </div>
 
             </div> 
@@ -123,7 +132,7 @@
         </div>
     </div>
 
-    <div id="nextContainer" style="visibility: visible;">
+    <div id="nextContainer" style="visibility: visible; margin-top: 5%;">
         <div id="selectBtn" style="width:200px; margin: auto; padding: 0px; text-align: center;">
             <a class="change next" onclick="next()">&raquo;</a>
         </div>
@@ -182,6 +191,10 @@
             // Save received workflow and add one to next attribute
             workflow = receivedWorkflow;
             workflow.next += 1;
+
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_rowMerged_${workflow.files.infile.name}`;
+
             iniReader ();
 
             // If this is the last module, hidde next button and show run button
@@ -195,6 +208,10 @@
             // Refill all fiedls with iniString
             workflow = receivedWorkflow;
             workflow.next -= 1;
+
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_rowMerged_${workflow.files.infile.name}`;
+
             iniReader();
         });
 
@@ -208,8 +225,8 @@
             const conservedColumsElem = document.getElementById('conservedCol');
 
             var outputName = outputNameElem.value == "" ? `${workflow.next}_rowMerged_${workflow.files.infile.name}` : outputNameElem.value;
-            var comparedColumns = comparedColumsElem.value == "" ? "Experimental mass, Adduct, mz Error (ppm), Molecular Weight" : comparedColumsElem.value;
-            var conservedColumns = conservedColumsElem.value == "" ? "Identifier, Name" : conservedColumsElem.value;
+            var comparedColumns = comparedColumsElem.value == "" ? defaultValues.RowMerger.comparedCol : comparedColumsElem.value;
+            var conservedColumns = conservedColumsElem.value == "" ? defaultValues.RowMerger.conservedCol : conservedColumsElem.value;
 
             iniContent = "[Parameters]";
             iniContent += "###";
@@ -233,10 +250,10 @@
 
             var iniString = workflow.ini.rowMerger;
             
-            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
-            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
-            document.getElementById('comparedCol').value = iniString.match(/\nComparedColumns = ([\w\s,]*)\n/)[1];
-            document.getElementById('conservedCol').value = iniString.match(/\nConservedColumns = ([\w\s,]*)\n/)[1];
+            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\s\.()]*)\n/)[1];
+            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,()]*)\n/)[1];
+            document.getElementById('comparedCol').value = iniString.match(/\nComparedColumns = ([\w\s,()]*)\n/)[1];
+            document.getElementById('conservedCol').value = iniString.match(/\nConservedColumns = ([\w\s,()]*)\n/)[1];
         }
     </script>
 </body>

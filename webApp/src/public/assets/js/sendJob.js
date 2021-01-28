@@ -22,11 +22,13 @@ sendJob = function () {
     }
 
     // Assert that at least one column was given in RowMerger
+    /*
     if ((document.querySelector("#comparedCol").value == "" || document.querySelector("#conservedCol").value == "") && workflowObject.modules.includes("RowMerger")) {
         errorElem.innerHTML = "Write at least one column in 'Conserved Columns' and 'Comapred Columns' RowMerger parameters";
         errorElem.style.display = 'block';
         return;
     }
+    */
 
     // Assert that table with feature information was given
     if (workflowObject.modules.includes("TableMerger") && !workflowObject.featInfoFile) {

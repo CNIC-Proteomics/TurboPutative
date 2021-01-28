@@ -1,11 +1,20 @@
 <div class="text" id="REnameText">
 
     <div class="subTitle">REname</div>
-    
-    <div class="subSubTitle">Settings</div>
+    <br>
+
+    <div class="descriptionText">
+        REname must receive as input a table in <i>xls</i> or <i>xlsx</i> format. 
+        It must have at least two columns with the mass of the extracted features (Experimental mass) 
+        and the name of the annotated compounds (Name). The user can modify some parameters of 
+        the module as we can see below.
+    </div>
+
+    <div class="subSubTitle">Parameters</div>
     
     <ul class="list">
-        <li><b>Separator</b>: Regular expression that matches the character string used to separate compound names in the same row.</li>
+        <li><b>Separator</b>: Regular expression that matches the character string used to separate compound names in the same row.
+        Default value: "\s//\s".</li>
         <li><b>AminoAcidSeparator</b>: The table with the putative identifications may contain peptides. TurboPutative is capable of 
             processing them (amino acids must be expressed in the three-letter nomeclature, e.g. Arg, Pro, Ala...). 
             In the AminoAcidSeparator parameter, it must be specified a regular expression that
@@ -17,5 +26,71 @@
         
         <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
     </ul>
-
+    <br>
+    <br>
+    <table class="msTable">
+            <tr>
+                <th>Experimental mass</th>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td>131.0582</td>
+                <td>N-acetyl-L-Alanine</td>
+            </tr>
+            <tr>
+                <td>131.0582</td>
+                <td>N-Acetyl-beta-alanine</td>
+            </tr>
+            <tr>
+                <td>217.1045</td>
+                <td>(2R,3R)-heptane-1,2,3-triol</td>
+            </tr>
+            <tr>
+                <td>217.1045</td>
+                <td>heptane-1,2,3-triol</td>
+            </tr>
+            <tr>
+                <td>311.1262</td>
+                <td>6E,8E,14E-Hexadecatriene-10,12-diynoic acid</td>
+            </tr>
+            <tr>
+                <td>311.1262</td>
+                <td>6E,8E,14Z-Hexadecatriene-10,12-diynoic acid</td>
+            </tr>
+            <tr>
+                <td>433.1408</td>
+                <td>Trp Asp Asp</td>
+            </tr>
+            <tr>
+                <td>433.1408</td>
+                <td>Asp Asp Trp</td>
+            </tr>
+        </table>
+        <br>
+        <div class="downArrow">&darr;</div>
+        <br>
+        <table class="msTable">
+            <tr>
+                <th>Experimental mass</th>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td>131.0582</td>
+                <td>acetyl-Alanine</td>
+            </tr>
+            <tr>
+                <td>217.1045</td>
+                <td>heptane-triol</td>
+            </tr>
+            <tr>
+                <td>311.1262</td>
+                <td>Hexadecatriene-diynoate</td>
+            </tr>
+            <tr>
+                <td>433.1408</td>
+                <td>Asp Asp Trp</td>
+            </tr>
+        </table>
+    <br>
+    <br>
 </div>

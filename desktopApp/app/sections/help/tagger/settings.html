@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurboPutative</title>
     <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/table.css" rel="stylesheet" type="text/css">
     <link href="../../../assets/css/body.css" rel="stylesheet">
 </head>
 
@@ -28,30 +29,142 @@
     <div id="mainContent">
 
         <div id="parameters">
-            <h2>Settings</h2>
-            <p>
-            <h3>Labels</h3>
+            <div class="descriptionText">
+                <br>
+                The user can modify some parameters before starting Tagger execution. 
+                Thus, for example, depending on the experimental conditions (use of drugs or halogenated compounds, among other options), 
+                the user can select which classifications he wishes to perform (all or a selection of some of them) 
+                and which regular expressions to use to identify the halogenated and peptide compounds. 
+                The only thing that the user has to enter is a table, in <i>xls</i> or <i>xlsx</i> format, 
+                which must contain at least one column named “Name” and, optionally, another one named “Chemical Formula”, 
+                where the name of the metabolites and its chemical formula are found. After execution, 
+                Tagger will generate a table equal to the one entered, with an additional column for each classification performed.
+            
+        
+                <h2>Parameters</h2>
+            
                 <ul class="list">
-                    <li><b>Food</b>: Mark if you want to tag the compounds that appear in <a href="" onclick="openFolderTSV()">food_database.tsv</a>.</li>
-                        
-                    <li><b>Drug</b>: Mark if you want to tag the compounds that appear in <a href="" onclick="openFolderTSV()">drug_database.tsv</a>.</li>
+                    <li><b>Food</b>: Mark if you want to tag the compounds that appear in 
+                        <a class="folderLink" onclick="openFolderTSV()">food_list.tsv</a>.
+                    </li>
+                    
+                    <li><b>Drug</b>: Mark if you want to tag the compounds that appear in 
+                        <a class="folderLink" onclick="openFolderTSV()">drug_list.tsv</a>.
+                    </li>
+            
+                    <li><b>Microbial</b>: Mark if you want to tag the compounds that appear in 
+                        <a class="folderLink" onclick="openFolderTSV()">microbial_list.tsv</a>.
+                    </li>
 
-                    <li><b>Microbial</b>: Mark if you want to tag the compounds that appear in <a href="" onclick="openFolderTSV()">microbial_database.tsv</a>.</li>
-
+                    <li><b>Plant</b>: Mark if you want to tag the compounds that appear in 
+                        <a class="folderLink" onclick="openFolderTSV()">plant_list.tsv</a>.
+                    </li>
+            
                     <li><b>Halogenated</b>: Mark if you want to tag the compounds that match with the regular expression specified in 
                         <b>HalogenatedRegex</b> parameter.</li>
                         
                     <li><b>Peptide</b>: Mark if you want to tag the compounds that match with the regular expression specified in 
-                        <b>PeptideRegex</b> parameter.</li>                 
-                </ul>
-                <h3 style="margin-top:5%;">Settings</h3>
-                <ul class="list">
+                        <b>PeptideRegex</b> parameter.</li>  
+                <!-- </ul> -->
+            
+                <!-- <div class="subSubTitle">Settings</div> -->
+            
+                <!-- <ul class="list"> -->
+                    <li><b>HalogenatedRegex</b>: Regular expression used to detect halogenated compounds.<br> 
+                        Default: "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)"</li>
+                        
+                    <li><b>PeptideRegex</b>: Regular expression used to detect peptides. <br>
+                        Default: "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\s,]){3,}$"</li>
+            
                     <li><b>OutputName</b>: Name of the output file. By default, the name of the output file will be that of the 
                         input file with "Tagged_"</li>
+            
                     <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
                 </ul>
-            
-            </p>
+                <br>               
+                <br>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>102.0681</td>
+                        <td>Isovalerate</td>
+                    </tr>
+                    <tr>
+                        <td>162.1131</td>
+                        <td>Ethyl levulinate</td>
+                    </tr>
+                    <tr>
+                        <td>195.0876</td>
+                        <td>L-Pinitol</td>
+                    </tr>
+                    <tr>
+                        <td>274.123</td>
+                        <td>Gly Leu Cys</td>
+                    </tr>
+                    <tr>
+                        <td>401.2131</td>
+                        <td>6alpha-Fluoroprogesterone</td>
+                    </tr>
+                </table>
+                <br>
+                <div class="downArrow">&darr;</div>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                        <th>Peptide</th>
+                        <th>Halogenated</th>
+                        <th>Drug</th>
+                        <th>Food</th>
+                    </tr>
+                    <tr>
+                        <td>102.0681</td>
+                        <td>Isovalerate</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>162.1131</td>
+                        <td>Ethyl levulinate</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Food</td>
+                    </tr>
+                    <tr>
+                        <td>195.0876</td>
+                        <td>L-Pinitol</td>
+                        <td></td>
+                        <td></td>
+                        <td>Drug</td>
+                        <td>Food</td>
+                    </tr>
+                    <tr>
+                        <td>274.123</td>
+                        <td>Gly Leu Cys</td>
+                        <td>Peptide</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>401.2131</td>
+                        <td>6alpha-Fluoroprogesterone</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <br>
+            </div>
         </div>
     
     </div>
@@ -63,10 +176,6 @@
 
     function openFolderTSV() {
         shell.openPath(path.join(path.dirname(process.execPath), '../app/src/Data'));
-    }
-
-    function goTo(url) {
-        shell.openExternal(url);
     }
     
     </script>

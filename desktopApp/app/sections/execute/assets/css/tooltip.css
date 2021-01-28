@@ -11,8 +11,8 @@
     top: -50%;
     left: 105%;
     display: inline-block;
-    /*width: max-content;*/
-    width: 300px;
+    width: max-content;
+    max-width: 300px;
     visibility: hidden;
     background-color: black;
     color: lightgray;
@@ -21,6 +21,7 @@
     padding: 5px 8px;
     font-size: 0.8em;
     z-index: 1;
+    word-wrap: break-word;
 }
 
 .tooltip:hover .tooltipText {

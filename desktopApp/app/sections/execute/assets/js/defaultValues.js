@@ -1,5 +1,5 @@
-// Global variables
-var defaultValues = {
+// Default values parameters of different modules
+defaultValues = {
     
     Tagger: {
         halogenatedRegex: "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)",
@@ -8,22 +8,17 @@ var defaultValues = {
 
     REname: {
         removeRowRegex: "(?i)No compounds found for experimental mass",
-        compoundSeparator: "\\s//\\s",
-        aminoAcidSeparator: "\\s",
+        separator: "\\s//\\s",
+        aaSeparator: "\\s",
     },
 
     RowMerger: {
-        comparedColumns: "Experimental mass, Adduct, mz Error (ppm), Molecular Weight",
-        conservedColumns: "Identifier, Name",
+        comparedCol: "Experimental mass, Adduct, mz Error (ppm), Molecular Weight",
+        conservedCol: "Identifier, Name",
     },
 
     TableMerger: {
         decimalPlaces: "4",
     },
-
-    Ubiquitous: {
-        filename: "", // Got from event defined in infile.html view
-    }
     
-
 };

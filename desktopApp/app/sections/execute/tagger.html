@@ -9,22 +9,17 @@
     <link href="./assets/css/tooltip.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/changeButton.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/header.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="assets/js/defaultValues.js"></script>
     <style>
         /* SETTINGS CONTAINER */
         #settings {
-            margin: 5% 3% 5% 3%;
-        }
-
-        #settings::after {
-            content: "";
-            display: table;
-            clear: both;
+            margin: auto;
         }
 
         /* CHECKBOX */ 
         #tags {
             margin:auto;
-            width: 50%;
+            /*width: 35%;*/
         }
 
         #tags h3 {
@@ -36,7 +31,7 @@
             position: relative;
             padding-left: 40px;
             margin-bottom: 24px;
-            margin-left: 30%;
+            margin-left: 43%;
             cursor: pointer;
             font-size: 18px;
             user-select: none;
@@ -111,28 +106,37 @@
         }
 
         #params {
-            display: none;
-            padding-top: 25px;
-            width: 65%;
+            display: block;
+            width: 90%;
             margin: auto;
         }
 
         #params h3 {
+            margin: 0 0 0 0;
+            padding: 20px 0 0 0;
             text-align: center;
+        }
+        #paramsBuilder::after {
+            content: "";
+            display: table;
+            clear: both;
         }
 
         .paramContainer {
-            margin-top: 3%;
+            float: left;
+            width: 50%;
+            padding: 20px;
+            /*margin-top: 3%;*/
         }
 
-        #params label {
+        #paramsBuilder label {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 18px;
             font-weight: 300;
             color: white;
         }
 
-        #params input {
+        #paramsBuilder input {
             width: 100%;
             height: 30px;
             padding: 8px 8px;
@@ -140,10 +144,10 @@
             display: inline-block;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
+            /*box-sizing: border-box;*/
         }
 
-        #params input:focus {
+        #paramsBuilder input:focus {
             outline: none;
         }
 
@@ -161,9 +165,9 @@
         </div>
     </div>
 
-    <div id="settings" style="max-width: 700px; margin: auto;">
+    <div id="settings">
         <div id="tags">
-            <h3 style="color:white; font-size: 1.5em; font-weight: 300; font-family: Arial;">Tag Selection</h3>
+            <h3 style="color:white; font-size: 1.5em; font-weight: 300; font-family: Arial;">Tag Selection: Select tags you want to include</h3>
             <div>
                 <label class="cbContainer">Select all
                     <input class="cbTag" type="checkbox" id="all" name="all" value="true">
@@ -207,43 +211,52 @@
             </div>
         </div>
 
+        <!--
         <div id="moreCont">
         <button type="button" id="more" onclick="showMore()">Advanced</button>
         </div>
-
-
+        -->
+        
         <div id="params">
 
             <h3 style="color:white; font-size: 1.5em; font-weight: 300; font-family: Arial;">Parameters</h3>
 
-            <div class="paramContainer">
-                <!-- <label for="halogenatedRegex">Halogenated Regex</label> -->
-                <label class="tooltip" for="halogenatedRegex">HalogenatedRegex <span class="icon">&#9432</span>
-                    <span class="tooltipText">Regular expression that matches the name of halogenated compounds</span>
-                </label>
-                <input type="text" id="halogenatedRegex" name="halogenatedRegex">
-            </div>
+            <div id="paramsBuilder">
 
-            <div class="paramContainer">
-                <label class="tooltip" for="peptideRegex">PeptideRegex <span class="icon">&#9432</span>
-                    <span class="tooltipText">Regular expression that matches the name of peptides</span>
-                </label>
-                <input type="text" id="peptideRegex" name="peptideRegex">
-            </div>
+                <div class="paramContainer">
+                    <label class="tooltip" for="halogenatedRegex">HalogenatedRegex <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="halogenatedRegexTTT" style="top:-90%;">Regular expression that matches the name of halogenated compounds</span>
+                        <script>document.querySelector("#halogenatedRegexTTT").innerHTML += `. Default: ${defaultValues.Tagger.halogenatedRegex}`</script>
+                    </label>
+                    <input type="text" id="halogenatedRegex" name="halogenatedRegex" placeholder="Optional">
+                </div>
 
-            <div class="paramContainer">
-                <label for="outputName">Output Name</label>
-                <input type="text" id="outputName" name="outputName">
-            </div>
+                <div class="paramContainer">
+                    <label class="tooltip" for="peptideRegex">PeptideRegex <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="peptideRegexTTT" style="top:-120%; ">Regular expression that matches the name of peptides</span>
+                        <script>document.querySelector("#peptideRegexTTT").innerHTML += `. Default: ${defaultValues.Tagger.peptideRegex}`</script>
+                    </label>
+                    <input type="text" id="peptideRegex" name="peptideRegex" placeholder="Optional">
+                </div>
 
-            <div class="paramContainer">
-                <label for="outputColumns">Output Columns</label>
-                <input type="text" id="outputColumns" name="outputColumns">
-            </div>
+                <div class="paramContainer">
+                    <label class="tooltip" for="outputName">Output Name <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputNameTTT" style="top:-20%;"></span>
+                    </label>
+                    <input type="text" id="outputName" name="outputName" placeholder="Optional">
+                </div>
 
+                <div class="paramContainer">
+                    <label class="tooltip" for="outputColumns">Output Columns <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputColumnsTTT" style="top:-20%;">Default: All columns will be saved</span>
+                    </label>
+                    <input type="text" id="outputColumns" name="outputColumns" placeholder="Optional">
+                </div>
+
+            </div>
         </div>
-
-        <div id="nextContainer">
+        
+        <div id="nextContainer" style="margin-top:0;">
             <div id="selectBtn" style="width:200px; margin: auto; padding: 0px; text-align: center;">
                 <a class="change next" onclick="next()">&raquo;</a>
             </div>
@@ -260,9 +273,9 @@
         // Global variables
         const { ipcRenderer } = require('electron');
         var workflow;
-
-        document.getElementById("halogenatedRegex").value = "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)";
-        document.getElementById("peptideRegex").value = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\\s,]){3,}$";
+        
+        // document.getElementById("halogenatedRegex").value = "([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)";
+        // document.getElementById("peptideRegex").value = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\\s,]){3,}$";
 
         // Show advanced parameters
         var moreCont = 0;
@@ -334,8 +347,12 @@
             // Save received workflow and add one to next attribute
             workflow = receivedWorkflow;
             workflow.next += 1;
+
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_tagged_${workflow.files.infile.name}`;
+
             iniReader(); // Refill
-            showNext(); // Show next if if there is a checked
+            showNext(); // Show next if there is a checked
 
             // If this is the last module, hidde next button and show run button
             if (workflow.next == (workflow.modules.length)) {
@@ -347,7 +364,11 @@
         ipcRenderer.on('send-workflow-from-next', (e, receivedWorkflow) => {
             // Refill all fiedls with iniString
             workflow = receivedWorkflow;
-            workflow.next -= 1
+            workflow.next -= 1;
+
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_tagged_${workflow.files.infile.name}`;
+
             iniReader();
             showNext(); // Show next if if there is a checked
         });
@@ -397,9 +418,11 @@
             iniContent += "###";
             iniContent += "OutputColumns = " + document.getElementById('outputColumns').value;
             iniContent += "###";
-            iniContent += "HalogenatedRegex = " + document.getElementById('halogenatedRegex').value;
+            iniContent += "HalogenatedRegex = ";
+            iniContent += document.getElementById('halogenatedRegex').value == "" ? defaultValues.Tagger.halogenatedRegex : document.getElementById('halogenatedRegex').value;
             iniContent += "###";
-            iniContent += "PeptideRegex = " + document.getElementById('peptideRegex').value;
+            iniContent += "PeptideRegex = ";
+            iniContent += document.getElementById('peptideRegex').value == "" ? defaultValues.Tagger.peptideRegex : document.getElementById('peptideRegex').value;
             iniContent += "###";
             iniContent = iniContent.replace(/###/g, "\n");
 
@@ -419,9 +442,10 @@
             document.getElementById('peptide').checked = iniString.match(/\nPeptide = (true|false)\n/)[1] == "true"? true : false;
             document.getElementById('plant').checked = iniString.match(/\nPlant = (true|false)\n/)[1] == "true"? true : false;
             // document.getElementById('naturalProduct').checked = iniString.match(/\nNaturalProduct = (true|false)\n/)[1] == "true"? true : false;
-            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
-            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
+            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\s\.()]*)\n/)[1];
+            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,()]*)\n/)[1];
             document.getElementById('halogenatedRegex').value = iniString.match(/\nHalogenatedRegex = ([^\n]*)\n/)[1];
+            document.getElementById('peptideRegex').value = iniString.match(/\nPeptideRegex = ([^\n]*)\n/)[1];
         }
 
     </script>

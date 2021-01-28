@@ -37,7 +37,7 @@
     color: lightgray; 
     font-family: 'Lato', sans-serif; 
     text-align: center;
-    padding-top: 2%;
+    padding-top: 1%;
     user-select: none;
 }
 
@@ -49,7 +49,7 @@
 
 /* SECTION SELECTION */
 #sectionSel {
-    margin-top: 3%;
+    margin-top: 2%;
     text-align: center;
 }
 
@@ -74,27 +74,27 @@
 /* MAIN CONTENT */
 #mainContent {
     margin: auto;
-    margin-top: 0.5%;
-    margin-bottom: 0%;
-    max-width: 700px;
-    height: 85%;
+    margin-top: 2%;
+    /*margin-bottom: 2%;*/
+    max-width: 90%;
+    height: 87%;
     padding: 0px 4%;
     border-radius: 6px;
     background-color: rgba(255, 255, 255, 0.8);
     text-align: justify;
     font-family: Arial;
     overflow: auto;
+    color: rgba(0,0,0,0.8);
 }
 
-#mainContent p {
-    font-size: 1.1em;
+#mainContent .descriptionText {
+    font-size: 1.3em;
     font-weight: 300;
-    color: black;
+    /*color: black;*/
     line-height: 1.5;
 }
 
 .list {
-    font-size: 1.1em;
     line-height: 1.5;
     text-align: justify;
 }
@@ -103,7 +103,7 @@
     margin-bottom: 1%;
 }
 
-.link {
+.folderLink {
     color: darkblue;
     cursor: pointer;
 }

@@ -1,0 +1,51 @@
+/* Tables format */
+.msTable{
+    margin: auto;
+    border-collapse: collapse;
+    width: 80%;
+    color: #111
+}
+
+.msTable th, .msTable td {
+    border: 1px solid #bbb;
+    padding: 8px;
+    text-align: center;
+}
+
+.msTable tr:nth-child(even) {
+    background-color: #eee;
+}
+
+.msTable th {
+    background-color:rgba(139,0,0, 0.85);
+    color: white;
+}
+
+/* Arrow for table transformation */
+.downArrow {
+    font-size: 2.5em;
+    color: rgba(139,0,0, 0.85);
+    text-align: center;
+}
+
+/* Two horizontal tables */
+.twoTableContainer div {
+    float: left;
+}
+
+.twoTableContainer .tableContainer {
+    width: 48%;
+}
+
+.twoTableContainer .sumSign {
+    width: 3.5%;
+    font-size: 2.5em;
+    text-align: center;
+    color: rgba(139,0,0,1);
+}
+
+.twoTableContainer::after {
+    content: "";
+    display: table;
+    clear: both;
+}

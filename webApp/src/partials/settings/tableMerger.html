@@ -1,8 +1,17 @@
 <div class="text" id="TableMergerText">
 
     <div class="subTitle">TableMerger</div>
-
-    <div class="subSubTitle">Settings</div>
+    <br>
+    <div class="descriptionText">
+        TableMerger receives two user-specified tables as input and merge them in a single matrix. The equivalent features 
+        of both tables are identified thanks to the experimental mass (Experimental mass) and 
+        the retention time (RT [min]). However, if the RT is not contained in any of the input 
+        tables, only the experimental mass will be used. The output of this module will be a single 
+        matrix with the combined information from the two data sets.
+        Since the experimental mass of the features can be expressed with different number of decimals 
+        in both tables, the user will be able to specify the number of decimal places to which to round.
+    </div>
+    <div class="subSubTitle">Parameters</div>
     
     <ul class="list">
         <li><b>N_Digits</b>: Number of decimal places to which the experimental mass of the features will be rounded to make the "merge".</li>
@@ -11,5 +20,99 @@
         
         <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
     </ul>
+    <br>
+    <br>
+    <div class="twoTableContainer">
+        <div class="tableContainer">
+            <table class="msTable">
+                <tr>
+                    <td colspan="2" style="border-top:none; border-left:none; border-right: none;"><b>Putative annotations</b></td>
+                </tr>
+                <tr>
+                    <th>Experimental mass</th>
+                    <th>Name</th>
+                </tr>
+                <tr>
+                    <td>83.0607</td>
+                    <td>Methylimidazole</td>
+                </tr>
+                <tr>
+                    <td>104.107</td>
+                    <td>Neurine</td>
+                </tr>
+                <tr>
+                    <td>83.0607</td>
+                    <td>Valinol</td>
+                </tr>
+                <tr>
+                    <td>197.1009</td>
+                    <td>Arginine</td>
+                </tr>
+            </table>
+        </div>
+        <div class="sumSign" style="padding-top: 80px;">+</div>
+        <div class="tableContainer" style="padding-top: 15px;">
+            <table class="msTable">
+                <tr>
+                    <td colspan="3" style="border-top:none; border-left:none; border-right: none;"><b>Additional information</b></td>
+                </tr>
+                <tr>
+                    <th>Feature</th>
+                    <th>Experimental mass</th>
+                    <th>RT [min]</th>
+                </tr>
+                <tr>
+                    <td>A08295</td>
+                    <td>83.0607</td>
+                    <td>10.82</td>
+                </tr>
+                <tr>
+                    <td>A01122</td>
+                    <td>104.10704</td>
+                    <td>0.338</td>
+                </tr>
+                <tr>
+                    <td>A01178</td>
+                    <td>197.10092</td>
+                    <td>0.339</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+    <div class="downArrow">&darr;</div>
+    <br>
+    <table class="msTable">
+        <tr>
+            <th>Feature</th>
+            <th>Experimental mass</th>
+            <th>RT [min]</th>
+            <th>Name</th>
+        </tr>
+        <tr>
+            <td>A08295</td>
+            <td>83.0607</td>
+            <td>10.82</td>
+            <td>Methylimidazole</td>
+        </tr>
+        <tr>
+            <td>A01122</td>
+            <td>104.107</td>
+            <td>0.338</td>
+            <td>Neurine</td>
+        </tr>
+        <tr>
+            <td>A08295</td>
+            <td>83.0607</td>
+            <td>10.82</td>
+            <td>Valinol</td>
+        </tr>
+        <tr>
+            <td>A01178</td>
+            <td>197.1009</td>
+            <td>0.339</td>
+            <td>Arginine</td>
+        </tr>
+    </table>
     
 </div>

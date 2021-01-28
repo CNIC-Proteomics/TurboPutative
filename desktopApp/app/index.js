@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -35,8 +35,8 @@ const errorCode = JSON.parse(fs.readFileSync(path.join(__dirname, 'assets', 'fil
 function showMainPage () {
 
     win = new BrowserWindow({
-        width: 780,
-        height: 655,
+        width: 950,
+        height: 800,
         webPreferences: {
             nodeIntegration: true
         },
@@ -49,7 +49,13 @@ function showMainPage () {
     // Load index.html
     win.loadURL(index);
 
-    // win.webContents.openDevTools();
+    // Open links in external navigator
+    win.webContents.on('new-window', (e, url) => {
+        e.preventDefault();
+        shell.openExternal(url);
+    })
+
+    win.webContents.openDevTools();
 }
 
 // Start app

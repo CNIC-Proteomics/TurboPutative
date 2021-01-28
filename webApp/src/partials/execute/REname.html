@@ -5,10 +5,11 @@
     <div class="paramContent">
         <div class="paramContainer" style="width: 825px;">
             <label class="tooltip" for="removeRowRegex">Regular Expression to remove row <span class="icon">&#9432</span>
-                <span class="tooltipText">Regular expression that matches the name of rows to be removed</span>
+                <span class="tooltipText" id="removeRowRegexTTT">Regular expression that matches the name of rows to be removed</span>
+                <script>document.querySelector('#removeRowRegexTTT').innerHTML += `. Default: ${defaultValues.REname.removeRowRegex}`</script>
             </label>
-            <input type="text" id="removeRowRegex">
-            <script>document.querySelector("#removeRowRegex").value = "(?i)No compounds found for experimental mass";</script>
+            <input type="text" id="removeRowRegex" placeholder="Optional">
+            <!-- <script>document.querySelector("#removeRowRegex").value = "(?i)No compounds found for experimental mass";</script> -->
         </div>
     <!-- </div> -->
 
@@ -22,16 +23,18 @@
 
         <div class="paramContainer">
             <label class="tooltip" for="separator">Compound separator <span class="icon">&#9432</span>
-                <span class="tooltipText">Regular expression that matches the character used to separate compound names in the same row</span>
+                <span class="tooltipText" id="separatorTTT">Regular expression that matches the character used to separate compound names in the same row</span>
+                <script>document.querySelector('#separatorTTT').innerHTML += `. Default: ${defaultValues.REname.compoundSeparator}`</script>
             </label>
-            <input type="text" id="separator" value="\s//\s">
+            <input type="text" id="separator" placeholder="Optional">
         </div>
 
         <div class="paramContainer">
             <label class="tooltip" for="aaSeparator">Amino acid separator <span class="icon">&#9432</span>
-                <span class="tooltipText">Regular expression that matches the character used to separate aminoacid in peptides</span>
+                <span class="tooltipText" id="aaSeparatorTTT">Regular expression that matches the character used to separate aminoacid in peptides</span>
+                <script>document.querySelector('#aaSeparatorTTT').innerHTML += `. Default: ${defaultValues.REname.aminoAcidSeparator}`</script>
             </label>
-            <input type="text" id="aaSeparator" value="\s">
+            <input type="text" id="aaSeparator" placeholder="Optional">
         </div>
 
         <div class="paramContainer">

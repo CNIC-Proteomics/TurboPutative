@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurboPutative</title>
     <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/table.css" rel="stylesheet" type="text/css">
     <link href="../../../assets/css/body.css" rel="stylesheet">
 </head>
 
@@ -29,25 +30,221 @@
         
         <div id="intro">
             <h2>What is Tagger?</h2>
-            <p>Tagger module checks if the candidate metabolites contained
-            in the input table are considered to be <b>drug</b>, <b>food</b>
-            or of <b>microbial origin</b>. For this purpose, Tagger uses 
-            three lists
-            as a reference. In addition, Tagger uses regular expressions 
-            to check whether the candidate metabolites contain or not <b>halogen</b> elements.</p>
+            <div class="descriptionText">
+                Tagger is a classifier capable of detecting metabolites characterized as nutrients, 
+                drugs, microbial, halogenated or peptides. The main advantage of this tool consists in the possibility of classifying, 
+                from the list of possible identifications, those annotations that belong to any of the categories mentioned above.
+
+                While the classification of halogenated and peptide compounds is carried out through the use of regular expressions, 
+                which offer great precision and speed, in the case of nutrients, drugs and microbial origin compounds, 
+                predefined lists updated periodically are used.
+                
+                Here are the details for each of the possible annotations:
+
+                <ul class="list">
+                    <li><b>Nutrients</b>: 
+                        The list of nutrients used by Tagger was built using the <a href="https://hmdb.ca/" target="_blank">HMDB</a> 
+                        database, which includes more than 40,000 
+                        endogenous and exogenous metabolites detected in humans. Using its structured ontology, the compounds 
+                        characterized as "<i>Food</i>" and "<i>Food and Nutrition</i>" were extracted, excluding metabolites whose origin could be 
+                        endogenous ("<i>Endogenous</i>"). Given that the same metabolite can be named in different ways, it was necessary 
+                        to "enrich" the list of metabolites with their synonyms, for which the 
+                        <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank">PubChem</a> database was used. It is 
+                        possible to download the file with the list of nutrients from the repository on 
+                        <a href="https://github.com/CNIC-Proteomics/TurboPutative/raw/master/webApp/src/TurboPutative/Data/food_list.tsv" target="_blank" >GitHub</a>.
+                    </li>
+
+                    <li><b>Drugs</b>:
+                        The list of drugs used by Tagger was built using the 
+                        <a href="https://hmdb.ca/" target="_blank">HMDB</a> database was used, which thanks to its structured ontology 
+                        allows the extraction of compounds characterized as "<i>Drug</i>" or "<i>Pharmaceutical industry</i>", 
+                        excluding compounds whose origin could be endogenous ("<i>Endogenous</i>”). In addition, 
+                        the <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank">PubChem</a> 
+                        database was used to "enrich" the list of metabolites with their synonyms. 
+                        It is possible to download the file with the list of drugs from the repository on 
+                        <a href="https://github.com/CNIC-Proteomics/TurboPutative/raw/master/webApp/src/TurboPutative/Data/drug_list.tsv" target="_blank">GitHub</a>.            
+                    </li>
+
+                    <li><b>Microbial Compounds</b>:
+                        An <i>in-house</i> list was used for the identification of microbial metabolites, using
+                        <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank">PubChem</a> database to include the synonyms of
+                        the different compounds. 
+                        It is possible to download the file with the list of microbial compounds from the repository on 
+                        <a href="https://github.com/CNIC-Proteomics/TurboPutative/raw/master/webApp/src/TurboPutative/Data/microbial_list.tsv" target="_blank">GitHub</a>.                         
+                    </li>
+
+                    <li><b>Halogenated Compounds</b>:
+                        Regular expressions are used for the identification of the halogenated compounds.
+                        Regular expressions define patterns with which to find a certain combination of characters in a text string. 
+                        In this case, Tagger uses a regular expression that, applied to the name of a metabolite or its chemical formula, 
+                        makes it possible to determine the presence of a halogen.
+                    </li>
+                </ul>
+
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Regular Expression</th>
+                        <th>([Ff]luor(?!ene)|[Cc]hlor(?!ophyl)|[Bb]rom|[Ii]od)</th>
+                    </tr>
+                    <tr>
+                        <td>Compound 1</td>
+                        <td>14,14,14-Tri<span style="color:red;">fluor</span>o-11E-tetradecenyl acetate</td>
+                    </tr>
+                    <tr>
+                        <td>Compound 2</td>
+                        <td>6-(2-<span style="color:red;">Chlor</span>oallylthio)purine</td>
+                    </tr>
+                    <tr>
+                        <td>Compound 3</td>
+                        <td><span style="color:red;">Brom</span>hexine</td>
+                    </tr>
+                    <tr>
+                        <td>Compound 4</td>
+                        <td>Fluorene</td>
+                    </tr>
+                    <tr>
+                        <td>Compound 5</td>
+                        <td>Chlorophyl</td>
+                    </tr>
+                </table>
+                <br>
+
+                <ul class="list">
+
+                    <li><b>Peptide compounds</b>:
+                        Peptide compounds are detected through regular expressions,
+                        which recognize the amino acids in the compound's name. 
+                        For this, the amino acids must be expressed in the three-letter nomenclature.
+                    </li>
+                
+                </ul>
+
+                <br>
+                <table class="msTable" style="table-layout:fixed;">
+                    <tr>
+                        <th style="width:30%;">Regular Expression</th>
+                        <th style="word-wrap: break-word;">(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-,\s]){3,}$</th>
+                    </tr>
+                    <tr>
+                        <td>Compound 1</td>
+                        <td><span style="color:red;">Pro Gly</span></td>
+                    </tr>
+                    <tr>
+                        <td>Compound 2</td>
+                        <td><span style="color:red;">Glu Ala</span></td>
+                    </tr>
+                    <tr>
+                        <td>Compound 3</td>
+                        <td><span style="color:red;">Gly Leu Cys</span></td>
+                    </tr>
+                    <tr>
+                        <td>Compound 4</td>
+                        <td><span style="color:red;">Met-Ala-Ala</span></td>
+                    </tr>
+                    <tr>
+                        <td>Compound 5</td>
+                        <td><span style="color:red;">Ile,Gly,Cys</span></td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+
+                It should be noted that the user can modify some parameters before starting the execution of the module. 
+                Thus, for example, depending on the experimental conditions (use of drugs or halogenated compounds, among other options), 
+                the user can select which classifications he wishes to perform (all or a selection of some of them) 
+                and which regular expressions to use to identify the halogenated and peptide compounds. 
+                The only thing that the user has to enter is a table, in <i>xls</i> or <i>xlsx</i> format, 
+                which must contain at least one column named “Name” and, optionally, another one named “Chemical Formula”, 
+                where the name of the metabolites and its chemical formula are found. After execution, 
+                Tagger will generate a table equal to the one entered, with an additional column for each classification performed.
+
+                <br>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>102.0681</td>
+                        <td>Isovalerate</td>
+                    </tr>
+                    <tr>
+                        <td>162.1131</td>
+                        <td>Ethyl levulinate</td>
+                    </tr>
+                    <tr>
+                        <td>195.0876</td>
+                        <td>L-Pinitol</td>
+                    </tr>
+                    <tr>
+                        <td>274.123</td>
+                        <td>Gly Leu Cys</td>
+                    </tr>
+                    <tr>
+                        <td>401.2131</td>
+                        <td>6alpha-Fluoroprogesterone</td>
+                    </tr>
+                </table>
+                <br>
+                <div class="downArrow">&darr;</div>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                        <th>Peptide</th>
+                        <th>Halogenated</th>
+                        <th>Drug</th>
+                        <th>Food</th>
+                    </tr>
+                    <tr>
+                        <td>102.0681</td>
+                        <td>Isovalerate</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>162.1131</td>
+                        <td>Ethyl levulinate</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Food</td>
+                    </tr>
+                    <tr>
+                        <td>195.0876</td>
+                        <td>L-Pinitol</td>
+                        <td></td>
+                        <td></td>
+                        <td>Drug</td>
+                        <td>Food</td>
+                    </tr>
+                    <tr>
+                        <td>274.123</td>
+                        <td>Gly Leu Cys</td>
+                        <td>Peptide</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>401.2131</td>
+                        <td>6alpha-Fluoroprogesterone</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <br>
+            </div>
         </div>
     
     </div>
-
-    <script>
-    
-    const { shell } = require('electron');
-
-    function goTo(url) {
-        shell.openExternal(url);
-    }
-    
-    </script>
 
 </body>
 

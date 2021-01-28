@@ -1,0 +1,418 @@
+<div class="text" id="OverviewText">
+
+    <div class="subTitle">TurboPutative</div>
+    <br>
+    <div class="description">
+
+        <div class="descriptionText">
+            TurboPutative is a tool that simplifies the matrices with the possible 
+            identifications obtained in untargeted metabolomics studies based on liquid chromatography 
+            coupled with mass spectrometry (with high-resolution analyzers) using electrospray ionization (LC/ESI-MS).
+
+            In this type of studies, the matrices with the candidate metabolites are obtained using tools such as 
+            <a href="http://ceumass.eps.uspceu.es/mediator/index.xhtml" target="_blank">Ceu Mass Mediator 3.0</a>
+            or <a href="http://omics.georgetown.edu/metabosearch.html" target="_blank">MetaboSearch</a>, 
+            which compare the monoisotopic mass of the features detected with the masses of the compounds 
+            contained in the databases. Despite using high-resolution analyzers, 
+            multiple candidate metabolites can be assigned to the same feature due to the similarity in 
+            the compounds masses, which in the case of isomers is identical. Even compounds 
+            with different mass, when ionized with different adducts, can generate ions with very similar 
+            m/z ratios, so they could be assigned to the same feature.
+
+            <br>
+            <br>
+            <div class="twoTableContainer">
+                <div class="tableContainer" style="width:30%; padding-top: 120px;">
+                    <table class="msTable" style="width:100%;">
+                        <tr>
+                            <td style="border-top: none; border-left: none; border-right: none;"><b>Features detected</b></td>
+                        </tr>
+                        <tr>
+                            <th>Experimental mass</th>
+                        </tr>
+                        <tr>
+                            <td>336.8786</td>
+                        </tr>
+                        <tr>
+                            <td>98.0577</td>
+                        </tr>
+                        <tr>
+                            <td>189.0468</td>
+                        </tr>
+                        <!--
+                        <tr>
+                            <td>205.0244</td>
+                        </tr>
+                        <tr>
+                            <td>117.055</td>
+                        </tr>
+                        -->
+                    </table>
+                </div>
+                <div class="sumSign" style="padding-top:200px; width:10%;">&rarr;</div>
+                <div class="tableContainer" style="width: 60%;">
+                    <table class="msTable" style="width:100%;">
+                        <tr>
+                            <td colspan="4" style="border-top: none; border-left: none; border-right: none;"><b>Candidate metablites</b></td>
+                        </tr>
+                        <tr>
+                            <th>Experimental mass</th>
+                            <th>Adduct</th>
+                            <th>mz Error (ppm)</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr>
+                            <td>336.8786</td>
+                            <td>M+H-H2O</td>
+                            <td>7</td>
+                            <td>Bithionol</td>
+                        </tr>
+                        <tr>
+                            <td>336.8786</td>
+                            <td>M+H-H2O</td>
+                            <td>7</td>
+                            <td>Tetradifon</td>
+                        </tr>
+                        <tr>
+                            <td>98.0577</td>
+                            <td>M+Na</td>
+                            <td>1</td>
+                            <td>Trimethylamine-N-oxide</td>
+                        </tr>
+                        <tr>
+                            <td>98.0577</td>
+                            <td>M+Na</td>
+                            <td>1</td>
+                            <td>1-Amino-propan-2-ol</td>
+                        </tr>
+                        <tr>
+                            <td>98.0577</td>
+                            <td>M+Na</td>
+                            <td>1</td>
+                            <td>3-aminopropan-1-ol</td>
+                        </tr>
+                        <tr>
+                            <td>189.0468</td>
+                            <td>M+H</td>
+                            <td>1</td>
+                            <td>2-Chlorobiphenyl</td>
+                        </tr>
+                        <tr>
+                            <td>189.0468</td>
+                            <td>M+H</td>
+                            <td>1</td>
+                            <td>4-Chlorobiphenyl</td>
+                        </tr>
+                        <tr>
+                            <td>189.0468</td>
+                            <td>M+Na</td>
+                            <td>7</td>
+                            <td>Ethionamide</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            Therefore, after obtaining the matrices with the possible identifications, the researcher must 
+            determine which candidate metabolites are most likely, which will allow him to proceed with the
+            interpretation of the results, or prioritize the purchase of authentic chemical standards or 
+            analyzes in MS/MS mode.
+            
+            Consequently, researchers must manually review each entry to compare their associated errors and adducts, 
+            and frequently search databases to identify possible dietary, drug, or microorganism compound. 
+            Since this process consumes a lot of time and effort, we have developed TurboPutative, which makes 
+            it possible to streamline the handling and simplification of the tables with the possible identifications 
+            to facilitate their visualization and the extraction of useful information, 
+            with the aim of identifying the most probable candidate metabolites.
+            The <a href="https://github.com/CNIC-Proteomics/TurboPutative" target="_blank">code of the program</a>
+            and the <a href="https://github.com/CNIC-Proteomics/TurboPutative/releases" target="_blank">desktop version</a>
+            are available on GitHub.
+        </div>
+        <br>
+        <br>
+        <table class="msTable" style="width:100%;">
+            <tr>
+                <td colspan="4" style="border-top: none; border-left: none; border-right: none;"><b>Candidate metablites</b></td>
+            </tr>
+            <tr>
+                <th>Experimental mass</th>
+                <th>Adduct</th>
+                <th>mz Error (ppm)</th>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td>336.8786</td>
+                <td>M+H-H2O</td>
+                <td>7</td>
+                <td>Bithionol</td>
+            </tr>
+            <tr>
+                <td>336.8786</td>
+                <td>M+H-H2O</td>
+                <td>7</td>
+                <td>Tetradifon</td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>Trimethylamine-N-oxide</td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>1-Amino-propan-2-ol</td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>3-aminopropan-1-ol</td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+H</td>
+                <td>1</td>
+                <td>2-Chlorobiphenyl</td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+H</td>
+                <td>1</td>
+                <td>4-Chlorobiphenyl</td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+Na</td>
+                <td>7</td>
+                <td>Ethionamide</td>
+            </tr>
+        </table>
+        <br>
+        <div class="downArrow">&darr;</div>
+        <br>
+        <table class="msTable" style="width:100%;">
+            <tr>
+                <td colspan="7" style="border-top: none; border-left: none; border-right: none;"><b>Tagger</b></td>
+            </tr>
+            <tr>
+                <th>Experimental mass</th>
+                <th>Adduct</th>
+                <th>mz Error (ppm)</th>
+                <th>Name</th>
+                <th>Halogenated</th>
+                <th>Microbial</th>
+                <th>Drug</th>
+            </tr>
+            <tr>
+                <td>336.8786</td>
+                <td>M+H-H2O</td>
+                <td>7</td>
+                <td>Bithionol</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>336.8786</td>
+                <td>M+H-H2O</td>
+                <td>7</td>
+                <td>Tetradifon</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>Trimethylamine-N-oxide</td>
+                <td></td>
+                <td>MC</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>1-Amino-propan-2-ol</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>3-aminopropan-1-ol</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+H</td>
+                <td>1</td>
+                <td>2-Chlorobiphenyl</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+H</td>
+                <td>1</td>
+                <td>4-Chlorobiphenyl</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+Na</td>
+                <td>7</td>
+                <td>Ethionamide</td>
+                <td></td>
+                <td></td>
+                <td>Drug</td>
+            </tr>
+        </table>
+        <br>
+        <div class="downArrow">&darr;</div>
+        <br>
+        <table class="msTable" style="width:100%;">
+            <tr>
+                <td colspan="7" style="border-top: none; border-left: none; border-right: none;"><b>REname</b></td>
+            </tr>
+            <tr>
+                <th>Experimental mass</th>
+                <th>Adduct</th>
+                <th>mz Error (ppm)</th>
+                <th>Name</th>
+                <th>Halogenated</th>
+                <th>Microbial</th>
+                <th>Drug</th>
+            </tr>
+            <tr>
+                <td>336.8786</td>
+                <td>M+H-H2O</td>
+                <td>7</td>
+                <td>Bithionol</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>336.8786</td>
+                <td>M+H-H2O</td>
+                <td>7</td>
+                <td>Tetradifon</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>Trimethylamine-oxide</td>
+                <td></td>
+                <td>MC</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>Aminopropan-ol</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+H</td>
+                <td>1</td>
+                <td>Chlorobiphenyl</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+Na</td>
+                <td>7</td>
+                <td>Ethionamide</td>
+                <td></td>
+                <td></td>
+                <td>Drug</td>
+            </tr>
+        </table>
+        <br>
+        <div class="downArrow">&darr;</div>
+        <br>
+        <table class="msTable" style="width:100%;">
+            <tr>
+                <td colspan="7" style="border-top: none; border-left: none; border-right: none;"><b>RowMerger</b></td>
+            </tr>
+            <tr>
+                <th>Experimental mass</th>
+                <th>Adduct</th>
+                <th>mz Error (ppm)</th>
+                <th>Name</th>
+                <th>Halogenated</th>
+                <th>Microbial</th>
+                <th>Drug</th>
+            </tr>
+            <tr>
+                <td>336.8786</td>
+                <td>M+H-H2O</td>
+                <td>7</td>
+                <td>Bithionol // Tetradifon</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>Trimethylamine-oxide</td>
+                <td></td>
+                <td>MC</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>98.0577</td>
+                <td>M+Na</td>
+                <td>1</td>
+                <td>Aminopropan-ol</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+H</td>
+                <td>1</td>
+                <td>Chlorobiphenyl</td>
+                <td>x</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>189.0468</td>
+                <td>M+Na</td>
+                <td>7</td>
+                <td>Ethionamide</td>
+                <td></td>
+                <td></td>
+                <td>Drug</td>
+            </tr>
+        </table>
+    </div>
+</div>

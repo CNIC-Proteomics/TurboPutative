@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurboPutative</title>
     <link href="../assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/table.css" rel="stylesheet" type="text/css">
     <link href="../../../assets/css/body.css" rel="stylesheet">
 </head>
 
@@ -29,14 +30,264 @@
         
         <div id="intro">
             <h2>What is REname?</h2>
-            <p>
-                REname (<u>R</u>egular <u>E</u>xpressions processing of compound <u>name</u>s) 
-                parses the name of the candidate metabolites 
-                to eliminate the information related to the isomer (or convert all the acid forms into salt), and combine 
-                the rows of the table with isomeric metabolites assigned to the same "feature". The processing of the name 
-                of the compounds is done using the <span class="link" onclick="goTo('https://github.com/lifs-tools/goslin')">Goslin</span> 
-                library in the case of lipids, and a system of regular expressions for the rest of metabolites.
-            </p>
+            <div class="descriptionText">
+                The tables with the candidate metabolites obtained from the monoisotopic mass of the significant analytes 
+                (using softwares such as 
+                <a href="http://ceumass.eps.uspceu.es/mediator/index.xhtml" target="_blank">Ceu Mass Mediator 3.0</a>, 
+                <a href="http://omics.georgetown.edu/metabosearch.html" target="_blank">MetaboSearch</a> or 
+                <a href="https://xcmsonline.scripps.edu/landing_page.php?pgcontent=mainPage" target="_blank">XCMS</a>) 
+                contain multiple generic annotations, 
+                with limited utility for the researcher and with many repetitions. 
+                Thus, many of the candidate metabolites assigned to the same feature are isomeric compounds 
+                or compounds that may appear reported in the databases following different nomenclature, 
+                as is the case of acids and their conjugated bases. In order to facilitate the visualization of 
+                the tables and the extraction of useful information by the researcher, we have developed REname, 
+                an analyzer capable of identifying isomeric and equivalent compounds based on their names to merge 
+                them under a single annotation.
+                <br>
+                <br>
+                REname uses a 
+                <a onclick="openFolderTSV()" class="folderLink">regular expression system</a> 
+                that allows the modification of 
+                the name of compounds to eliminate information related to isomerism (<i>e.g.</i> position of functional groups, 
+                double bonds and chirality, among others). In the case of compounds that are not isomers but can have different forms, 
+                such as acid and base, all compounds are converted to one of their forms (<i>e.g.</i> converting all acids to bases). 
+                After applying the regular expressions, REname identifies the metabolites that must be fused under a 
+                single annotation by comparing the names obtained after processing.
+                <br>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>131.0582</td>
+                        <td>N-acetyl-L-Alanine</td>
+                    </tr>
+                    <tr>
+                        <td>131.0582</td>
+                        <td>N-Acetyl-beta-alanine</td>
+                    </tr>
+                    <tr>
+                        <td>217.1045</td>
+                        <td>(2R,3R)-heptane-1,2,3-triol</td>
+                    </tr>
+                    <tr>
+                        <td>217.1045</td>
+                        <td>heptane-1,2,3-triol</td>
+                    </tr>
+                    <tr>
+                        <td>311.1262</td>
+                        <td>6E,8E,14E-Hexadecatriene-10,12-diynoic acid</td>
+                    </tr>
+                    <tr>
+                        <td>311.1262</td>
+                        <td>6E,8E,14Z-Hexadecatriene-10,12-diynoic acid</td>
+                    </tr>
+                </table>
+                <div class="downArrow">&darr;</div>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>131.0582</td>
+                        <td>acetyl-Alanine</td>
+                    </tr>
+                    <tr>
+                        <td>217.1045</td>
+                        <td>heptane-triol</td>
+                    </tr>
+                    <tr>
+                        <td>311.1262</td>
+                        <td>Hexadecatriene-diynoate</td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                The regular expressions used by REname are in a file with INI format, divided into sections with different parameters. 
+                Each of the sections represents a processing unit applied to the name of the compounds. Thus, the section has two parameters 
+                with different functions. The first one contains the regular expression that allows detecting a certain combination of 
+                characters in the compound name. The second parameter contains the characters that will replace the string detected by 
+                the regular expression. Each of these processes are applied sequentially on the name of the compounds.
+                <br>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <td colspan="3">Input name</td>
+                        <td><b>Hexadecatriene-10,12-diynoic acid</b></td>
+                        <td rowspan="6" style="font-size:3em; border-top:none; border-bottom:none; border-right:none;">&darr;</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" style="background-color: rgba(0,0,0,0.3);">Section 1</td>
+                        <td style="background-color: rgba(134,0,0,0.3);">Regex</td>
+                        <td><span style="color:red;">([-\s])(\d+[,\s]{,2})+-</span></td>
+                        <td>Hexadecatriene<span style="color:red;">-10,12-</span>diynoic acid</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: rgba(0,0,134,0.3);">Replace</td>
+                        <td style="color:blue;">\g&#60;1&#62;</td>
+                        <td>Hexadecatriene-diynoic acid</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" style="background-color: rgba(0,0,0,0.3);">Section 2</td>
+                        <td style="background-color: rgba(134,0,0,0.3);">Regex</td>
+                        <td><span style="color:red;">(?i)ic acid</span></td>
+                        <td>Hexadecatriene-diyno<span style="color:red;">ic acid</span></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: rgba(0,0,134,0.3);">Replace</td>
+                        <td style="color:blue;">ate</td>
+                        <td>Hexadecatriene-diynoate</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Output name</td>
+                        <td><b>Hexadecatriene-diynoate</b></td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                However, there are compounds that 
+                receive additional treatment by REname. This is the case of peptides and lipids that have fatty acids 
+                in part of their structure (<i>e.g.</i> phospholipids, sphingolipids and glycerolipids).
+                <br>
+                In the first case, REname combines under a single annotation those peptides that have the same amino acid composition, 
+                although with a different sequence. Thus, only one of the compared sequences will be kept. For this, amino acids must 
+                be expressed in the three-letter nomenclature.
+                <br>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>388.1555</td>
+                        <td>Pro Pro Met</td>
+                    </tr>
+                    <tr>
+                        <td>388.1555</td>
+                        <td>Pro Met Pro</td>
+                    </tr>
+                    <tr>
+                        <td>388.1555</td>
+                        <td>Met Pro Pro</td>
+                    </tr>
+                    <tr>
+                        <td>433.1408</td>
+                        <td>Trp Asp Asp</td>
+                    </tr>
+                    <tr>
+                        <td>433.1408</td>
+                        <td>Asp Asp Trp</td>
+                    </tr>
+                    <tr>
+                        <td>433.1408</td>
+                        <td>Asp Trp Asp</td>
+                    </tr>
+                </table>
+                <div class="downArrow">&darr;</div>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>388.1555</td>
+                        <td>Met Pro Pro</td>
+                    </tr>
+                    <tr>
+                        <td>433.1408</td>
+                        <td>Trp Asp Asp</td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                In the case of fatty acid lipids, further processing is performed using the 
+                <a href="https://github.com/lifs-tools/pygoslin" target="_blank">Goslin</a> package. 
+                Goslin can process the name of lipids from different databases (<i>e.g.</i> LipidMaps, SwissLipids, HMDB ...) and 
+                classify them thanks to a system of parsers and predefined grammars. The information extracted from the name 
+                of the lipid is stored in an <i>object</i> with a fixed structure, which facilitates the programmer's access to the 
+                information of interest. In this Project we are interested in extracting the following information from lipid compounds:
+
+                <ul class="list">
+                    <li>Header group (<i>e.g.</i> PE or phosphoethanolamine).</li>
+                    <li>Total number of carbon atoms in fatty acids.</li>
+                    <li>Total number of double bonds in fatty acids.</li>
+                    <li>Type of bond (ether or vinyl ether) of fatty acids.</li>
+                    <li>Number of hydroxyl and methyl groups in fatty acids.</li>
+                </ul>
+
+                <br>
+                After processing, REname can fuse those isomeric lipids by comparing the names obtained.
+
+                <br>
+                <br>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>793.5565</td>
+                        <td>PE-Cer(d16:2(4E,6E)/24:0(2OH))</td>
+                    </tr>
+                    <tr>
+                        <td>800.5444</td>
+                        <td>PE(18:0(10(R)Me)/16:0)</td>
+                    </tr>
+                    <tr>
+                        <td>812.5478</td>
+                        <td>PC(15:0/18:1(9Z))</td>
+                    </tr>
+                    <tr>
+                        <td>812.5478</td>
+                        <td>PC(15:1(9Z)/18:0)</td>
+                    </tr>
+                    <tr>
+                        <td>869.5545</td>
+                        <td>PI(18:3(6Z,9Z,12Z)/20:0)</td>
+                    </tr>
+                    <tr>
+                        <td>869.5545</td>
+                        <td>PI(20:2(11Z,14Z)/18:1(9Z))</td>
+                    </tr>
+                </table>
+                <div class="downArrow">&darr;</div>
+                <table class="msTable">
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>793.5565</td>
+                        <td>PE-Cer(40:2(2OH))</td>
+                    </tr>
+                    <tr>
+                        <td>800.5444</td>
+                        <td>PE(34:0(Me))</td>
+                    </tr>
+                    <tr>
+                        <td>812.5478</td>
+                        <td>PC(33:1)</td>
+                    </tr>
+                    <tr>
+                        <td>869.5545</td>
+                        <td>PI(38:3)</td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                Regarding its execution, REname must receive as input a table in <i>xls</i> or <i>xlsx</i> format. 
+                It must have at least two columns with the mass of the extracted features (Experimental mass) 
+                and the name of the annotated compounds (Name). Likewise, the user can modify some parameters of 
+                the module and considerably alter the processing of the name of the compounds. For example, 
+                it is possible to change the regular expression system used by REname.
+                <br>
+                <br>
+            </div>
         </div>
    
     </div>
@@ -44,10 +295,13 @@
     <script>
     
     const { shell } = require('electron');
+    const path = require('path');
 
-    function goTo(url) {
-        shell.openExternal(url);
+    function openFolderTSV() {
+        shell.openPath(path.join(path.dirname(process.execPath), '../app/src/config/configREname'));
     }
+    
+    </script>
     
     </script>
 

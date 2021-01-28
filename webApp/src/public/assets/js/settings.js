@@ -21,6 +21,9 @@ var workflowObject = {
         this.ini.Tagger += "MicrobialCompound = ";
         this.ini.Tagger += document.querySelector("#microbial").checked;
         this.ini.Tagger += "####"
+        this.ini.Tagger += "Plant = ";
+        this.ini.Tagger += "false";
+        this.ini.Tagger += "####"
         this.ini.Tagger += "Halogenated = ";
         this.ini.Tagger += document.querySelector("#halogenated").checked;
         this.ini.Tagger += "####"
@@ -31,10 +34,10 @@ var workflowObject = {
         this.ini.Tagger += "[Parameters]";
         this.ini.Tagger += "####";
         this.ini.Tagger += "HalogenatedRegex = ";
-        this.ini.Tagger += document.querySelector("#halogenatedRegex").value == "" ? defaultValues.halogenatedRegex : document.querySelector("#halogenatedRegex").value;
+        this.ini.Tagger += document.querySelector("#halogenatedRegex").value == "" ? defaultValues.Tagger.halogenatedRegex : document.querySelector("#halogenatedRegex").value;
         this.ini.Tagger += "####";
         this.ini.Tagger += "PeptideRegex = ";
-        this.ini.Tagger += document.querySelector("#peptideRegex").value == "" ? defaultValues.peptideRegex : document.querySelector("#peptideRegex").value;
+        this.ini.Tagger += document.querySelector("#peptideRegex").value == "" ? defaultValues.Tagger.peptideRegex : document.querySelector("#peptideRegex").value;
         this.ini.Tagger += "####";
         this.ini.Tagger += "OutputColumns = "
         this.ini.Tagger += document.querySelector("#outputColumnsTagger").value;
@@ -52,13 +55,13 @@ var workflowObject = {
         this.ini.REname += "[Parameters]";
         this.ini.REname += "####";
         this.ini.REname += "RemoveRow = ";
-        this.ini.REname += document.querySelector("#removeRowRegex").value;
+        this.ini.REname += document.querySelector("#removeRowRegex").value == "" ? defaultValues.REname.removeRowRegex: document.querySelector("#removeRowRegex").value;
         this.ini.REname += "####";
         this.ini.REname += "Separator = ";
-        this.ini.REname += document.querySelector("#separator").value != "" ? document.querySelector("#separator").value: "\\s//\\s";
+        this.ini.REname += document.querySelector("#separator").value == "" ? defaultValues.REname.compoundSeparator : document.querySelector("#separator").value;
         this.ini.REname += "####";
         this.ini.REname += "AminoAcidSeparator = ";
-        this.ini.REname += document.querySelector("#aaSeparator").value;
+        this.ini.REname += document.querySelector("#aaSeparator").value == "" ? defaultValues.REname.aminoAcidSeparator : document.querySelector("#aaSeparator").value;
         this.ini.REname += "####";
         this.ini.REname += "OutputColumns = ";
         this.ini.REname += document.querySelector("#outputColumnsREname").value;
@@ -76,10 +79,10 @@ var workflowObject = {
         this.ini.RowMerger += "[Parameters]";
         this.ini.RowMerger += "####";
         this.ini.RowMerger += "ComparedColumns = ";
-        this.ini.RowMerger += document.querySelector("#comparedCol").value;
+        this.ini.RowMerger += document.querySelector("#comparedCol").value == "" ? defaultValues.RowMerger.comparedColumns : document.querySelector("#comparedCol").value;
         this.ini.RowMerger += "####";
         this.ini.RowMerger += "ConservedColumns = ";
-        this.ini.RowMerger += document.querySelector("#conservedCol").value;
+        this.ini.RowMerger += document.querySelector("#conservedCol").value == "" ? defaultValues.RowMerger.conservedColumns : document.querySelector("#conservedCol").value;
         this.ini.RowMerger += "####";
         this.ini.RowMerger += "OutputColumns = ";
         this.ini.RowMerger += document.querySelector("#outputColumnsRowMerger").value;
@@ -97,7 +100,7 @@ var workflowObject = {
         this.ini.TableMerger += "[Parameters]";
         this.ini.TableMerger += "####";
         this.ini.TableMerger += "N_Digits = ";
-        this.ini.TableMerger += document.querySelector("#decimalPlaces").value;
+        this.ini.TableMerger += document.querySelector("#decimalPlaces").value == "" ? defaultValues.TableMerger.decimalPlaces : document.querySelector("#decimalPlaces").value;
         this.ini.TableMerger += "####";
         this.ini.TableMerger += "OutputColumns = ";
         this.ini.TableMerger += document.querySelector("#outputColumnsTableMerger").value;

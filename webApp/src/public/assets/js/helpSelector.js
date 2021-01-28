@@ -3,9 +3,13 @@ var buttonNodeList = document.querySelectorAll("#moduleContent div");
 var textNodeList = document.querySelectorAll(".text");
 
 // Show Tagger module by default
-document.querySelector("#TaggerText").style.display = "block";
-document.querySelector("#TaggerButton").style.backgroundColor = "rgba(139,0,0,0.9)";
-document.querySelector("#TaggerButton").style.color = "rgba(255,255,255,0.9)";
+textNodeList[0].style.display = "block";
+buttonNodeList[0].style.backgroundColor = "rgba(139,0,0,0.9)";
+buttonNodeList[0].style.color = "rgba(255,255,255,0.9)";
+
+// document.querySelector("#TaggerText").style.display = "block";
+// document.querySelector("#TaggerButton").style.backgroundColor = "rgba(139,0,0,0.9)";
+// document.querySelector("#TaggerButton").style.color = "rgba(255,255,255,0.9)";
 
 // Add event to each button
 clickButton = function () {

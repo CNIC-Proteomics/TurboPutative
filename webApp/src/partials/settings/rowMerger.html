@@ -1,8 +1,15 @@
 <div class="text" id="RowMergerText">
 
     <div class="subTitle">RowMerger</div>
-
-    <div class="subSubTitle">Settings</div>
+    <br>
+    <div class="descriptionText">
+        RowMerger receives an input table, in <i>xls</i> or <i>xlsx</i> format, and outputs a processed matrix with the same structure. 
+        The user must specify which properties of the annotations  
+        will be taken into account for the merge to take place (<i>i.e.</i> ComparedColumns). 
+        Likewise, it must be indicated which properties will 
+        be kept in the entry resulting from the merging of the annotations (<i>i.e.</i> ConservedColumns).
+    </div>
+    <div class="subSubTitle">Parameters</div>
 
     <ul class="list">
         <li><b>ComparedColumns</b>: Name of the columns whose values will be compared when merging two rows. That is, two rows will 
@@ -14,5 +21,71 @@
         
         <li><b>OutputColumns</b>: Name of the columns present in the output table. By default, they will all appear.</li>
     </ul>
+
+    <br>
+    <br>
+    <table class="msTable">
+        <tr>
+            <th>Experimental mass</th>
+            <th>Identifier</th>
+            <th>Adduct</th>
+            <th>Name</th>
+        </tr>
+        <tr>
+            <td>83.0607</td>
+            <td>154396</td>
+            <td>M+H</td>
+            <td>Methylimidazole</td>
+        </tr>
+        <tr>
+            <td>83.0607</td>
+            <td>61184</td>
+            <td>M+H</td>
+            <td>Fomepizole</td>
+        </tr>
+        <tr>
+            <td>171.0628</td>
+            <td>150549</td>
+            <td>M+Na</td>
+            <td>Paratose</td>
+        </tr>
+        <tr>
+            <td>171.0628</td>
+            <td>158202</td>
+            <td>M+Na</td>
+            <td>Abequose</td>
+        </tr>
+        <tr>
+            <td>171.0628</td>
+            <td>151197</td>
+            <td>M+Na</td>
+            <td>Tyvelose</td>
+        </tr>
+    </table>
+    <br>
+    <div class="downArrow">&darr;</div>
+    <br>
+    <table class="msTable">
+        <tr>
+            <th>Experimental mass</th>
+            <th>Identifier</th>
+            <th>Adduct</th>
+            <th>Name</th>
+        </tr>
+        <tr>
+            <td>83.0607</td>
+            <td>154396 // 61184</td>
+            <td>M+H</td>
+            <td>Methylimidazole // Fomepizole</td>
+        </tr>
+        <tr>
+            <td>171.0628</td>
+            <td>150549 // 158202 // 151197</td>
+            <td>M+Na</td>
+            <td>Paratose // Abequose // Tyvelose</td>
+        </tr>
+    </table>
+    <br>
+    <br>
     
 </div>

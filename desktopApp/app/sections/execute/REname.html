@@ -9,11 +9,12 @@
     <link href="./assets/css/tooltip.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/changeButton.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/header.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="assets/js/defaultValues.js"></script>
 
     <style>
         /* SETTINGS CONTAINER */
         #settings {
-            margin: 5% 3% 5% 3%;
+            /*margin: 5% 3% 5% 3%;*/
         }
 
         #settings::after {
@@ -91,39 +92,48 @@
 
             <div class="paramContainer">
                 <label class="tooltip" for="removeRowRegex">Regular Expression to remove row <span class="icon">&#9432</span>
-                    <span class="tooltipText">Regular expression that matches the name of rows to be removed</span>
+                    <span class="tooltipText" id="removeRowRegexTTT" style="top:-70%;">Regular expression that matches the name of rows to be removed</span>
+                    <script>document.querySelector("#removeRowRegexTTT").innerHTML += `. Default: ${defaultValues.REname.removeRowRegex}`</script>
                 </label>
-                <input type="text" id="removeRowRegex" name="removeRowRegex" value="(?i)No compounds found for experimental mass">
+                <input type="text" id="removeRowRegex" name="removeRowRegex" defaultValue="(?i)No compounds found for experimental mass" placeholder="Optional">
             </div>
 
+            <!--
             <div id="moreCont">
                 <button type="button" id="more" onclick="showMore()">Advanced</button>
             </div>
+            -->
 
-            <div id="hiddenParams" style="display: none;">
+            <div id="hiddenParams">
 
                 <div class="paramContainer">
                     <label class="tooltip" for="separator">Compound separator <span class="icon">&#9432</span>
-                        <span class="tooltipText">Regular expression that matches the character used to separate compound names in the same row</span>
+                        <span class="tooltipText" id="separatorTTT" style="top:-70%;">Regular expression that matches the character used to separate compound names in the same row</span>
+                        <script>document.querySelector("#separatorTTT").innerHTML += `. Default: ${defaultValues.REname.separator}`</script>
                     </label>
-                    <input type="text" id="separator" name="separator" value="\s//\s">
+                    <input type="text" id="separator" name="separator" defaultValue="\s//\s" placeholder="Optional">
                 </div>
 
                 <div class="paramContainer">
                     <label class="tooltip" for="aaSeparator">Amino acid separator <span class="icon">&#9432</span>
-                        <span class="tooltipText">Regular expression that matches the character used to separate aminoacid in peptides</span>
+                        <span class="tooltipText" id="aaSeparatorTTT" style="top:-60%;">Regular expression that matches the character used to separate aminoacid in peptides</span>
+                        <script>document.querySelector("#aaSeparatorTTT").innerHTML += `. Default: ${defaultValues.REname.aaSeparator}`</script>
                     </label>
-                    <input type="text" id="aaSeparator" name="aaSeparator" value="\s">
+                    <input type="text" id="aaSeparator" name="aaSeparator" defaultValue="\s" placeholder="Optional">
                 </div>
 
                 <div class="paramContainer">
-                    <label for="outputName">Output Name</label>
-                    <input type="text" id="outputName" name="outputName">
+                    <label class="tooltip" for="outputName">Output Name <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputNameTTT" style="top:-20%;"></span>
+                    </label>
+                    <input type="text" id="outputName" name="outputName" placeholder="Optional">
                 </div>
 
                 <div class="paramContainer">
-                    <label for="outputColumns">Output Columns</label>
-                    <input type="text" id="outputColumns" name="outputColumns">
+                    <label class="tooltip" for="outputColumns">Output Columns <span class="icon">&#9432</span>
+                        <span class="tooltipText" id="outputColumnsTTT" style="top:-20%;">Default: All columns will be saved</span>
+                    </label>
+                    <input type="text" id="outputColumns" name="outputColumns" placeholder="Optional">
                 </div>
 
                 <div class="paramContainer">
@@ -136,7 +146,7 @@
         </div>
     </div>
 
-    <div id="nextContainer" style="visibility: visible;">
+    <div id="nextContainer" style="visibility: visible; margin-top: 4%;">
         <div id="selectBtn" style="width:200px; margin: auto; padding: 0px; text-align: center;">
             <a class="change next" onclick="next()">&raquo;</a>
         </div>
@@ -197,6 +207,9 @@
             workflow = receivedWorkflow;
             workflow.next += 1;
 
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_REnamed_${workflow.files.infile.name}`;
+
             iniReader();
 
             // If this is the last module, hidde next button and show run button
@@ -210,7 +223,10 @@
             // Refill all fiedls with iniString
             workflow = receivedWorkflow;
             workflow.next -= 1;
-            
+
+            // Show default output name in tooltip
+            document.querySelector("#outputNameTTT").innerHTML += `Default: ${workflow.next}_REnamed_${workflow.files.infile.name}`;
+
             iniReader();
 
         });
@@ -230,11 +246,13 @@
             iniContent += "OutputColumns = " + document.getElementById('outputColumns').value;
             iniContent += "###";
             iniContent += "Separator = "
-            iniContent += document.getElementById('separator').value == "" ? "\\s//\\s" : document.getElementById('separator').value;
+            iniContent += document.getElementById('separator').value == "" ? defaultValues.REname.separator : document.getElementById('separator').value;
             iniContent += "###";
             iniContent += "AminoAcidSeparator = " + document.getElementById('aaSeparator').value;
+            iniContent += document.getElementById('aaSeparator').value == "" ? defaultValues.REname.aaSeparator : document.getElementById('aaSeparator').value;
             iniContent += "###";
-            iniContent += "RemoveRow = " + document.getElementById('removeRowRegex').value;
+            iniContent += "RemoveRow = ";
+            iniContent += document.getElementById('removeRowRegex').value == "" ? defaultValues.REname.removeRowRegex : document.getElementById('removeRowRegex').value;
             iniContent += "###";
 
             iniContent = iniContent.replace(/###/g, "\n");
@@ -248,8 +266,8 @@
 
             var iniString = workflow.ini.REname;
             
-            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\.]*)\n/)[1];
-            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,]*)\n/)[1];
+            document.getElementById('outputName').value = iniString.match(/\nOutputName = ([-\w\s\.()]*)\n/)[1];
+            document.getElementById('outputColumns').value = iniString.match(/\nOutputColumns = ([\w\s,()]*)\n/)[1];
             document.getElementById('separator').value = iniString.match(/\nSeparator = ([^\n]*)\n/)[1];
             document.getElementById('aaSeparator').value = iniString.match(/\nAminoAcidSeparator = ([^\n]*)\n/)[1];
             document.getElementById('removeRowRegex').value = iniString.match(/\nRemoveRow = ([^\n]*)\n/)[1];

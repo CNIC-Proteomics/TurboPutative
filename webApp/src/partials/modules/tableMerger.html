@@ -1,7 +1,130 @@
 <div class="text" id="TableMergerText">
 
     <div class="subTitle">TableMerger</div>
+    <br>
+    <div class="description">
 
-    <div class="description">Description...</div>
+        <div class="descriptionText">
+
+            TableMerger is a table comparer that allows to unify in a single matrix the information that 
+            the features could have in different data sets. Thus, many of the softwares used to make the putative 
+            annotations (<i>e.g.</i> 
+            <a href="http://omics.georgetown.edu/metabosearch.html" target="_blank">MetaboSearch</a> or 
+            <a href="http://ceumass.eps.uspceu.es/mediator/index.xhtml" target="_blank">Ceu Mass Mediator 3.0</a>) 
+            only receive a list with the 
+            experimental mass of the detected features, and generate a table with the information of the 
+            annotated compounds. With TableMerger it is possible to combine in a single matrix the table with the putative 
+            annotations and another table with additional information 
+            (<i>e.g.</i> peak area, statistical analysis results, RT, among others) 
+            of the features.
+            <br>
+            <br>
+            Therefore, TableMerger receives two user-specified tables as input. The equivalent features 
+            of both tables are identified thanks to the experimental mass (Experimental mass) and 
+            the retention time (RT [min]). However, if the RT is not contained in any of the input 
+            tables, only the experimental mass will be used. The output of this module will be a single 
+            matrix with the combined information from the two data sets.
+            <br>
+            <br>
+            Since the experimental mass of the features can be expressed with different number of decimals 
+            in both tables, the user will be able to specify the number of decimal places to which to round.
+            <br>
+            <br>
+
+        </div>
+
+        <div class="twoTableContainer">
+            <div class="tableContainer">
+                <table class="msTable">
+                    <tr>
+                        <td colspan="2" style="border-top:none; border-left:none; border-right: none;"><b>Putative annotations</b></td>
+                    </tr>
+                    <tr>
+                        <th>Experimental mass</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>83.0607</td>
+                        <td>Methylimidazole</td>
+                    </tr>
+                    <tr>
+                        <td>104.107</td>
+                        <td>Neurine</td>
+                    </tr>
+                    <tr>
+                        <td>83.0607</td>
+                        <td>Valinol</td>
+                    </tr>
+                    <tr>
+                        <td>197.1009</td>
+                        <td>Arginine</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="sumSign" style="padding-top: 80px;">+</div>
+            <div class="tableContainer" style="padding-top: 15px;">
+                <table class="msTable">
+                    <tr>
+                        <td colspan="3" style="border-top:none; border-left:none; border-right: none;"><b>Additional information</b></td>
+                    </tr>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Experimental mass</th>
+                        <th>RT [min]</th>
+                    </tr>
+                    <tr>
+                        <td>A08295</td>
+                        <td>83.0607</td>
+                        <td>10.82</td>
+                    </tr>
+                    <tr>
+                        <td>A01122</td>
+                        <td>104.10704</td>
+                        <td>0.338</td>
+                    </tr>
+                    <tr>
+                        <td>A01178</td>
+                        <td>197.10092</td>
+                        <td>0.339</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="downArrow">&darr;</div>
+        <br>
+        <table class="msTable">
+            <tr>
+                <th>Feature</th>
+                <th>Experimental mass</th>
+                <th>RT [min]</th>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td>A08295</td>
+                <td>83.0607</td>
+                <td>10.82</td>
+                <td>Methylimidazole</td>
+            </tr>
+            <tr>
+                <td>A01122</td>
+                <td>104.107</td>
+                <td>0.338</td>
+                <td>Neurine</td>
+            </tr>
+            <tr>
+                <td>A08295</td>
+                <td>83.0607</td>
+                <td>10.82</td>
+                <td>Valinol</td>
+            </tr>
+            <tr>
+                <td>A01178</td>
+                <td>197.1009</td>
+                <td>0.339</td>
+                <td>Arginine</td>
+            </tr>
+        </table>
+    </div>
     
 </div>
