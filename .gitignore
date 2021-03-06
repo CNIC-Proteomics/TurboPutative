@@ -54,6 +54,8 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 ############################
 /tools/Tagger/dbs/scripts/DataBaseGenerator.ipynb
 /tools/Tagger/dbs/scripts/getAllSynonyms.ipynb
+/tools/REname/.ipynb_checkpoints/
+/tools/REname/regex_test.ipynb
 
 # Compilation files #
 #####################

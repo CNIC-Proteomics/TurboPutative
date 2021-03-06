@@ -16,6 +16,7 @@ SET FOODLIST=%SRC_HOME%\Data\food_list.tsv
 SET DRUGLIST=%SRC_HOME%\Data\drug_list.tsv
 SET MICROBIALLIST=%SRC_HOME%\Data\microbial_list.tsv
 SET PLANTLIST=%SRC_HOME%\Data\plant_list.tsv
+SET NPLIST=%SRC_HOME%\Data\natural_product_list.tsv
 SET GOSLINLIST=%SRC_HOME%\Data\goslinLipidList.csv
 SET SYNONYMS=%SRC_HOME%\Data\synonyms.json
 
@@ -41,7 +42,7 @@ SETLOCAL EnableDelayedExpansion
 	IF %MODULE% == 1 (
 	:: Execute Tagger
 		ECHO Running Tagger >> "!JOB_DIR!\WF.log"
-		CMD /C " "!TAGGER!" -i "!INFILE!" -c "!JOB_DIR!\Tagger.ini" -od "!JOB_DIR!" -cpu %CPU% -fL "!FOODLIST!" -dL "!DRUGLIST!" -mL "!MICROBIALLIST!" -pL "!PLANTLIST!" "
+		CMD /C " "!TAGGER!" -i "!INFILE!" -c "!JOB_DIR!\Tagger.ini" -od "!JOB_DIR!" -cpu %CPU% -fL "!FOODLIST!" -dL "!DRUGLIST!" -mL "!MICROBIALLIST!" -pL "!PLANTLIST!" -npL "!NPLIST!" "
 		IF !ERRORLEVEL! NEQ 0 (
 			SET ERROR_CODE=!ERRORLEVEL!
 			GOTO :EndProcess

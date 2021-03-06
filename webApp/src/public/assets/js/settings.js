@@ -22,7 +22,10 @@ var workflowObject = {
         this.ini.Tagger += document.querySelector("#microbial").checked;
         this.ini.Tagger += "####"
         this.ini.Tagger += "Plant = ";
-        this.ini.Tagger += "false";
+        this.ini.Tagger += document.querySelector("#plant").checked;
+        this.ini.Tagger += "####"
+        this.ini.Tagger += "NaturalProduct = ";
+        this.ini.Tagger += document.querySelector("#naturalProduct").checked;
         this.ini.Tagger += "####"
         this.ini.Tagger += "Halogenated = ";
         this.ini.Tagger += document.querySelector("#halogenated").checked;

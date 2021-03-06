@@ -462,7 +462,7 @@ def npTaggerBatch(df, np_list):
     # Tag corresponding compounds
     np_tag = ["" if pd.isna(compound) else "NP" if getFirstSynonym(compound) in np_list else "" for compound in compound_names]
 
-    # Add Drug tag column to the dataframe
+    # Add NP tag column to the dataframe
     name_column_index = getNameColumnIndex(df.columns)
     df.insert(name_column_index+1, "NaturalProduct", np_tag, True)
     
@@ -777,8 +777,8 @@ def main(args):
     if re.search('(?i)true', config_param['TagSelection']['Plant']):
         df = plantTagger(df, n_cores)
 
-    # if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
-    #    df = npTagger(df, n_cores)
+    if re.search('(?i)true', config_param['TagSelection']['NaturalProduct']):
+        df = npTagger(df, n_cores)
 
     if re.search('(?i)true', config_param['TagSelection']['Halogenated']):
         df = halogenatedTagger(df, n_cores)

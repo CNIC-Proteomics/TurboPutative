@@ -118,7 +118,7 @@ def main():
     allSynonyms = getAllSynonyms(compoundList)
 
     # Write table.tsv
-    df = pd.DataFrame(allSynonyms, columns=['Name', 'HMDB_ID'])
+    df = pd.DataFrame(allSynonyms, columns=['Name', 'ID'])
     df.drop_duplicates(inplace=True)
     df.to_csv(os.path.join(scriptDir,"allSynonyms.tsv"), sep='\t', index=False)
 
