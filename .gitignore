@@ -71,6 +71,11 @@ webApp/src/TurboPutative/pyModules/pygoslin_library.zip
 /tools/Tagger/dbs/plants/files/*
 /tools/Tagger/dbs/plants/.ipynb_checkpoints/*
 
+# LOTUS (Natural Product) List #
+################################
+/tools/Tagger/dbs/LOTUS/210223_frozen.csv
+/tools/Tagger/dbs/LOTUS/LOTUS_DB_LATEST.sdf
+
 # other files #
 ###############
 /build.bat
