@@ -61,6 +61,8 @@ def openFile(infile, row):
         logging.info(f"ERROR: Cannot read file with {extension} extension")
         sys.exit(52)
 
+    df.dropna(axis=1, how='all', inplace=True)
+    df.dropna(axis=0, how='all', inplace=True)
 
     return df
 
@@ -446,6 +448,7 @@ def reMatch(feature_table_original, identification_table_original, merged_table,
     '''
 
     # Get unmatched rows of feature table
+    #pdb.set_trace()
     feature_table_unmatched = merged_table.loc[merged_table.loc[:, 'Name'].apply(lambda name: str(name) == 'nan'), feature_table_original.columns]
     feature_table_unmatched_restored = feature_table_unmatched.apply(massRestore, axis=1, args=(feature_table_original, n_digits))
 

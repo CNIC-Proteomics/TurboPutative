@@ -1,0 +1,10 @@
+03/23/2021 01:58:14 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\Features_info_ND_Identification.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\CMM_PGC1a_ND.xlsx -n 4
+03/23/2021 01:58:14 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\Features_info_ND_Identification.xlsx
+03/23/2021 01:58:18 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\Features_info_ND_Identification.xlsx was read
+03/23/2021 01:58:18 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\CMM_PGC1a_ND.xlsx
+03/23/2021 01:58:36 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\CMM_PGC1a_ND.xlsx was read
+03/23/2021 01:59:04 PM - INFO - start script: TableMerger.py -if C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\Features_info_ND_Identification.xlsx -id C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\CMM_PGC1a_ND.xlsx -n 4
+03/23/2021 01:59:04 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\Features_info_ND_Identification.xlsx
+03/23/2021 01:59:05 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\Features_info_ND_Identification.xlsx was read
+03/23/2021 01:59:05 PM - INFO - Reading input file: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\CMM_PGC1a_ND.xlsx
+03/23/2021 01:59:27 PM - INFO - C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test17\CMM_PGC1a_ND.xlsx was read
