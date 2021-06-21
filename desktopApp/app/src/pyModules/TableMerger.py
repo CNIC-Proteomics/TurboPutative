@@ -25,7 +25,8 @@ import pandas as pd
 import re
 import decimal
 
-import pdb
+# import pdb
+import time; start_time = time.time(); get_time = lambda : f"{round(time.time()-start_time, 3)}s"
 
 
 ###################
@@ -52,10 +53,10 @@ def openFile(infile, row):
     extension = os.path.splitext(infile)[1]
 
     if extension == '.xls':
-        df = pd.read_excel(infile, header=row, engine="xlrd")
+        df = pd.read_excel(infile, header=row, engine="xlrd", keep_default_na=False)
 
     elif extension == '.xlsx':
-        df = pd.read_excel(infile, header=row, engine="openpyxl")
+        df = pd.read_excel(infile, header=row, engine="openpyxl", keep_default_na=False)
 
     else: 
         logging.info(f"ERROR: Cannot read file with {extension} extension")
@@ -448,7 +449,6 @@ def reMatch(feature_table_original, identification_table_original, merged_table,
     '''
 
     # Get unmatched rows of feature table
-    #pdb.set_trace()
     feature_table_unmatched = merged_table.loc[merged_table.loc[:, 'Name'].apply(lambda name: str(name) == 'nan'), feature_table_original.columns]
     feature_table_unmatched_restored = feature_table_unmatched.apply(massRestore, axis=1, args=(feature_table_original, n_digits))
 
@@ -696,6 +696,6 @@ if __name__=="__main__":
 
     
     # start main function
-    logging.info('start script: '+"{0}".format(" ".join([x for x in sys.argv])))
+    logging.info(f'{get_time()} - start script: '+"{0}".format(" ".join([x for x in sys.argv])))
     main(args)
-    logging.info('end script')
+    logging.info(f'{get_time()} - end script')

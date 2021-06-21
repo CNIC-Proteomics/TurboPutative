@@ -26,7 +26,8 @@ import re
 import multiprocessing
 from multiprocessing import Pool, cpu_count
 
-import pdb
+# import pdb
+import time; start_time = time.time(); get_time = lambda : f"{round(time.time()-start_time, 3)}s"
 
 
 ###################
@@ -43,10 +44,10 @@ def openFile(infile, row):
     extension = os.path.splitext(infile)[1]
 
     if extension == '.xls':
-        df = pd.read_excel(infile, header=row, engine="xlrd")
+        df = pd.read_excel(infile, header=row, engine="xlrd", keep_default_na=False)
 
     elif extension == '.xlsx':
-        df = pd.read_excel(infile, header=row, engine="openpyxl")
+        df = pd.read_excel(infile, header=row, engine="openpyxl", keep_default_na=False)
 
     else: 
         logging.info(f"ERROR: Cannot read file with {extension} extension")
@@ -69,7 +70,7 @@ def readInfile(infile, row):
     
     infile = os.path.join(os.path.dirname(infile), file)
 
-    log_str = f'Reading input file: {str(Path(infile))}'
+    log_str = f'{get_time()} - Reading input file: {str(Path(infile))}'
     logging.info(log_str)
 
     try:
@@ -107,7 +108,7 @@ def readInfile(infile, row):
 
         sys.exit(10) # Status code for file format
     
-    log_str = f'{str(Path(infile))} was read'
+    log_str = f'{get_time()} - {str(Path(infile))} was read'
     logging.info(log_str)
 
     return df
@@ -132,7 +133,7 @@ def readFoodTable(path):
         - food_list: Numpy array of strings containing all food compounds in the table
     '''
 
-    logging.info(f"Reading Food Table: {path}")
+    logging.info(f"{get_time()} - Reading Food Table: {path}")
 
     df = pd.read_csv(path, header=0, sep="\t", dtype=str)
     food_list = np.array(df.iloc[:, 0].drop_duplicates(keep='first', inplace=False))
@@ -191,7 +192,7 @@ def foodTagger(df, n_cores):
         - df_out: Pandas dataframe with the whole content and the added tag
     '''
     
-    logging.info("Start food tagging")
+    logging.info(f"{get_time()} - Start food tagging")
     
     # Get numpy array with food compounds in database
     food_list = readFoodTable(args.foodList)
@@ -207,11 +208,11 @@ def foodTagger(df, n_cores):
         
     with Pool(n_cores) as p:
 
-        logging.info("Tagging food compounds")
+        logging.info(f"{get_time()} - Tagging food compounds")
         result = p.starmap(foodTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
     
-    logging.info("Finished food tagging")
+    logging.info(f"{get_time()} - Finished food tagging")
 
     return df_out
 
@@ -225,7 +226,7 @@ def readDrugTable(path):
         - drug_list: String Numpy Array containing drugs name extracted from the database
     '''
 
-    logging.info(f"Reading Drug Table: {path}")
+    logging.info(f"{get_time()} - Reading Drug Table: {path}")
 
     # Import drug table as a pandas dataframe
     df = pd.read_csv(path, header=0, sep="\t", dtype=str)
@@ -269,7 +270,7 @@ def drugTagger(df, n_cores):
     added in a new column
     '''
 
-    logging.info("Start drug tagging")
+    logging.info(f"{get_time()} - Start drug tagging")
 
     # Get numpy array with drug list
     drug_list = readDrugTable(args.drugList)
@@ -285,11 +286,11 @@ def drugTagger(df, n_cores):
 
     with Pool(n_cores) as p:
 
-        logging.info("Tagging drug compounds")
+        logging.info(f"{get_time()} - Tagging drug compounds")
         result = p.starmap(drugTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
     
-    logging.info("Finished drug tagging")
+    logging.info(f"{get_time()} - Finished drug tagging")
 
     return df_out
 
@@ -302,7 +303,7 @@ def readMicrobialTable(path):
         - microbial_list: String Numpy Array containing micrbial name extracted from the database
     '''
 
-    logging.info(f"Reading Microbial Table: {path}")
+    logging.info(f"{get_time()} - Reading Microbial Table: {path}")
 
     # Import drug table as a pandas dataframe
     df = pd.read_csv(path, header=0, sep="\t", dtype=str)
@@ -346,7 +347,7 @@ def microbialTagger(df, n_cores):
     added in a new column
     '''
 
-    logging.info("Start microbial compound tagging")
+    logging.info(f"{get_time()} - Start microbial compound tagging")
 
     # Get numpy array with microbial compound list
     microbial_list = readMicrobialTable(args.microbialList)
@@ -362,11 +363,11 @@ def microbialTagger(df, n_cores):
 
     with Pool(n_cores) as p:
 
-        logging.info("Tagging microbial compounds")
+        logging.info(f"{get_time()} - Tagging microbial compounds")
         result = p.starmap(microbialTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
 
-    logging.info("Finished microbial tagging")
+    logging.info(f"{get_time()} - Finished microbial tagging")
 
     return df_out
 
@@ -380,7 +381,7 @@ def readPlantTable(path):
         - plant_list: String Numpy Array containing plant name extracted from the database
     '''
 
-    logging.info(f"Reading Plant Table: {path}")
+    logging.info(f"{get_time()} - Reading Plant Table: {path}")
 
     # Import drug table as a pandas dataframe
     df = pd.read_csv(path, header=0, sep="\t", dtype=str)
@@ -424,7 +425,7 @@ def plantTagger(df, n_cores):
     added in a new column
     '''
 
-    logging.info("Start plant compound tagging")
+    logging.info(f"{get_time()} - Start plant compound tagging")
 
     # Get numpy array with microbial compound list
     plant_list = readPlantTable(args.plantList)
@@ -437,11 +438,11 @@ def plantTagger(df, n_cores):
 
     with Pool(n_cores) as p:
 
-        logging.info("Tagging plant compounds")
+        logging.info(f"{get_time()} - Tagging plant compounds")
         result = p.starmap(plantTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
 
-    logging.info("Finished plant tagging")
+    logging.info(f"{get_time()} - Finished plant tagging")
 
     return df_out
 
@@ -478,7 +479,7 @@ def readNPTable(path):
         - np_list: Numpy array of strings containing all natural products in the table
     '''
 
-    logging.info(f"Reading Natural Product Table: {path}")
+    logging.info(f"{get_time()} - Reading Natural Product Table: {path}")
 
     df = pd.read_csv(path, header=0, sep="\t", dtype=str)
     np_list = np.array(df.iloc[:, 0].drop_duplicates(keep='first', inplace=False))
@@ -496,7 +497,7 @@ def npTagger(df, n_cores):
     added in a new column
     '''
 
-    logging.info("Start natural products tagging")
+    logging.info(f"{get_time()} - Start natural products tagging")
 
     # Split dataframe so that each batch is processed by one core
     df_split = np.array_split(df, n_cores)
@@ -509,11 +510,11 @@ def npTagger(df, n_cores):
 
     with Pool(n_cores) as p:
 
-        logging.info("Tagging natural products")
+        logging.info(f"{get_time()} - Tagging natural products")
         result = p.starmap(npTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
     
-    logging.info("Finished natural products tagging")
+    logging.info(f"{get_time()} - Finished natural products tagging")
 
     return df_out
 
@@ -579,7 +580,7 @@ def halogenatedTagger(df, n_cores):
         - df_out: Pandas dataframe with halogenated tag added in a new column
     '''
 
-    logging.info("Start halogenated compounds tagging")
+    logging.info(f"{get_time()} - Start halogenated compounds tagging")
 
     # Get string with the regular expression used to identify halogenated compounds
     halogen_regex = config_param.get('Parameters', 'HalogenatedRegex')
@@ -595,11 +596,11 @@ def halogenatedTagger(df, n_cores):
 
     with Pool(n_cores) as p:
 
-        logging.info("Tagging halogenated compounds")
+        logging.info(f"{get_time()} - Tagging halogenated compounds")
         result = p.starmap(halogenatedTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
     
-    logging.info("Finished halogenated compounds tagging")
+    logging.info(f"{get_time()} - Finished halogenated compounds tagging")
 
     return df_out 
 
@@ -637,7 +638,7 @@ def peptideTagger(df, n_cores):
         - df_out: Pandas dataframe with peptide tag added in a new column
     '''
 
-    logging.info("Start peptide compounds tagging")
+    logging.info(f"{get_time()} - Start peptide compounds tagging")
 
     # Get string with the regular expression used to identify peptide compounds
     # peptide_regex = "(?i)^(Ala|Arg|Asn|Asp|Cys|Gln|Glu|Gly|His|Ile|Leu|Lys|Met|Phe|Pro|Ser|Thr|Trp|Tyr|Val|[-\s,]){3,}$"
@@ -655,11 +656,11 @@ def peptideTagger(df, n_cores):
 
     with Pool(n_cores) as p:
 
-        logging.info("Tagging peptides")
+        logging.info(f"{get_time()} - Tagging peptides")
         result = p.starmap(peptideTaggerBatch, subprocess_args)
         df_out = pd.concat(result)
     
-    logging.info("Finished peptide tagging")
+    logging.info(f"{get_time()} - Finished peptide tagging")
 
     return df_out    
 
@@ -743,7 +744,7 @@ def writeDataFrame(df, path):
 
         sys.exit(12)
     
-    log_str = f'Write Output Table: {str(Path(output_file))}'
+    log_str = f'{get_time()} - Write Output Table: {str(Path(output_file))}'
     logging.info(log_str)
 
 
@@ -896,6 +897,6 @@ if __name__=="__main__":
 
     
     # start main function
-    logging.info('start script: '+"{0}".format(" ".join([x for x in sys.argv])))
+    logging.info(f'{get_time()} - start script: '+"{0}".format(" ".join([x for x in sys.argv])))
     main(args)
-    logging.info('end script')
+    logging.info(f'{get_time()} - end script')

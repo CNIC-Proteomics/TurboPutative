@@ -1,0 +1,6 @@
+04/09/2021 02:40:42 PM - INFO - start script: TPPreProcesser\PreProcesser.py -wd C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test18 -wf 123 -i MS_experiment_1_1.xlsx
+04/09/2021 02:40:56 PM - INFO - MSTable was read successfully: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test18\MS_experiment_1_1.xlsx
+04/09/2021 02:40:56 PM - INFO - MSTable columns checked successfully
+04/09/2021 02:40:56 PM - INFO - preProcessedTable.tsv was written successfully: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test18\preProcessedTable.tsv
+04/09/2021 02:40:56 PM - INFO - Config file written successfully: C:\Users\Rafael\CNIC\Metabolomica\TurboPutative_GitHub_TFM\desktopApp\app\assets\files\tests\test18\configFile.ini
+04/09/2021 02:40:56 PM - INFO - end script

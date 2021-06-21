@@ -29,7 +29,8 @@ from pygoslin.parser.Parser import LipidParser
 import multiprocessing
 from multiprocessing import Pool, cpu_count
 
-import pdb
+#import pdb
+import time; start_time = time.time(); get_time = lambda : f"{round(time.time()-start_time, 3)}s"
 
 ###################
 # Local functions #
@@ -91,10 +92,10 @@ def openFile(infile, row):
     extension = os.path.splitext(infile)[1]
 
     if extension == '.xls':
-        df = pd.read_excel(infile, header=row, engine="xlrd")
+        df = pd.read_excel(infile, header=row, engine="xlrd", keep_default_na=False)
 
     elif extension == '.xlsx':
-        df = pd.read_excel(infile, header=row, engine="openpyxl")
+        df = pd.read_excel(infile, header=row, engine="openpyxl", keep_default_na=False)
 
     else: 
         logging.info(f"ERROR: Cannot read file with {extension} extension")
@@ -117,7 +118,7 @@ def readInfile(infile, row):
     file = [file for file in os.listdir(os.path.dirname(infile)) if re.search(f'^{infile_base_name}\.(?!.*\.)', file)][0]
     infile = os.path.join(os.path.dirname(infile), file)
 
-    log_str = f'Reading input file: {str(Path(infile))}'
+    log_str = f'{get_time()} - Reading input file: {str(Path(infile))}'
     logging.info(log_str)
 
     try:
@@ -171,7 +172,7 @@ def readInfile(infile, row):
         sys.exit(20) # Status code for file format
     
 
-    log_str = f'{str(Path(infile))} was read'
+    log_str = f'{get_time()} - {str(Path(infile))} was read'
     logging.info(log_str)
 
     return df
@@ -662,21 +663,26 @@ def getMethyl(compound):
         - String added to new compound name
     '''
 
+    sequence = compound
+
     # Regular expression used to match Me
     regex = r'\(\d+(\([RS]\))?Me\)'
 
     # Number of methyl groups detected
     n_methyl = 0
 
-    re_Me = re.search(regex, compound)
+    re_Me = re.search(regex, sequence)
     while re_Me:
-        
         # Increment methyl group unit
         n_methyl += 1
 
         # Define new start in the string and apply regular expression again
-        new_start = re_Me.span()[1]
-        re_Me = re.search(regex, compound[new_start:])
+        # new_start = re_Me.span()[1]
+
+        # Define new subsequence
+        sequence = sequence[re_Me.span()[1]:]
+
+        re_Me = re.search(regex, sequence)
 
     # Handle return depending on the number of Me groups detected
     if n_methyl == 0:
@@ -748,7 +754,6 @@ def parserLipidCompound(compound, lipid_list):
 
         # Build lipid name using extracted information
         compound_out = '###' + head_group + '(' + fa_bond_type + str(n_carbon_atoms) + ':' + str(n_double_bonds) + methyl + hydroxyl + ')' '###'
-
         return compound_out
 
     except:
@@ -778,8 +783,11 @@ def parserLipidTable(df_row, name_col_index, regex_sep, lipid_list):
     # Obtain a list with different compounds names within the field (one or more)
     compound_list, separator = splitCompoundField(compound_name, regex_sep)
 
+    logging.info(compound_list)
+
     # Parse each compound of the list, and join by the separator
     parsed_compound_list = [parserLipidCompound(compound, lipid_list) for compound in compound_list]
+
     parsed_compound_name = separator.join(parsed_compound_list)
 
     df_row_out.iat[name_col_index] = parsed_compound_name
@@ -811,7 +819,7 @@ def subProcessFuncLipid(df_i, name_col_index, regex_sep, lipid_list):
     Description: Function executed using starmap() method from Pool. It receives chunks of dataframe,
     processed using apply with parserLipidTable, which is going to process lipids with Goslin.
     '''
-    
+
     df_i_out = df_i.copy()
 
     # Parse name of compound lipids in the dataframe using goslin (parserLipidTable)
@@ -1232,7 +1240,7 @@ def writeDataFrame(df, path):
 
         sys.exit(22)
     
-    log_str = f'Write Output Table: {str(Path(output_path_filename))}'
+    log_str = f'{get_time()} - Write Output Table: {str(Path(output_path_filename))}'
     logging.info(log_str)
 
     return True
@@ -1249,7 +1257,7 @@ def main(args):
     
     # Number of cores. This should be a user variable
     n_cores = min([args.cpuCount, cpu_count()])
-    logging.info(f"Using {n_cores} cores")
+    logging.info(f"{get_time()} - Using {n_cores} cores")
 
     # Store compound name column index
     # name_col_index = args.column      # Column containing compound names (0-based)
@@ -1271,12 +1279,12 @@ def main(args):
     name_col_index = [index for index, col_name in enumerate(df.columns) if str(col_name).lower() == 'name'][0]
 
     # Remove rows given by RemoveRow regular expression
-    logging.info("Removing rows identified by RemoveRow parameter")
+    logging.info(f"{get_time()} - Removing rows identified by RemoveRow parameter")
     remove_row_bool = df.apply(func=removeRow, axis=1, args=(name_col_index, regex_remove))
     df.drop(axis=0, index=np.where(remove_row_bool)[0], inplace=True)
 
     # Synonym substitution prior to parsing
-    logging.info(f'Synonyms substitution prior to parsing')
+    logging.info(f'{get_time()} - Synonyms substitution prior to parsing')
     df_processed = synonymsSubstitution(df, name_col_index, synonyms_dict, regex_sep, n_cores)
 
     # PARSE WITH GOSLIN WITHOUT PARALLEL PROCESS (AVOID MEMORY ERROR)
@@ -1291,13 +1299,13 @@ def main(args):
     subprocess_args = [(df_i, name_col_index, regex_sep, lipid_list) for df_i in df_split]
 
     with Pool(n_cores) as p:
-        logging.info(f'Parsing lipid names using Goslin')
+        logging.info(f'{get_time()} - Parsing lipid names using Goslin')
         result = p.starmap(subProcessFuncLipid, subprocess_args)
         df_processed = pd.concat(result)
     # '''
 
     # Fuse rows with the same value for the selected columns
-    logging.info(f'Collapsing rows after lipid processing')
+    logging.info(f'{get_time()} - Collapsing rows after lipid processing')
     df_processed = fuseTable(df_processed, name_col_index)
     
     # APPLY REGULAR EXPRESSION WITHOUT PARALLEL PROCESS (AVOID MEMORY ERROR)
@@ -1312,14 +1320,14 @@ def main(args):
     subprocess_args = [(df_i, name_col_index, regex_sep, aa_sep, config_regex) for df_i in df_split]
 
     with Pool(n_cores) as p: 
-        logging.info(f'Applying regular expression from {os.path.basename(args.regex)} and sorting peptide aminoacids alphabetically')
+        logging.info(f'{get_time()} - Applying regular expression from {os.path.basename(args.regex)} and sorting peptide aminoacids alphabetically')
         
         # User may send regular expressions, so we must handle possible errors
         try:
             result = p.starmap(subProcessFuncRegex, subprocess_args)
         
         except:
-            logging.info('Error when applying regular expressions')
+            logging.info(f'{get_time()} - Error when applying regular expressions')
             
             # Log error class and message
             exctype, value = sys.exc_info()[:2]
@@ -1332,18 +1340,19 @@ def main(args):
     # '''
 
     # Synonym substitution after to parsing
-    logging.info(f'Synonyms substitution after parsing')
+    logging.info(f'{get_time()} - Synonyms substitution after parsing')
     df_processed = synonymsSubstitution(df_processed, name_col_index, synonyms_dict, regex_sep, n_cores)
 
     # Fuse rows with the same value for the selected columns. Make a fusion before goslin lipid processing to make the code faster
-    logging.info(f'Collapsing rows after metabolite name parsing')
+    logging.info(f'{get_time()} - Collapsing rows after metabolite name parsing')
     df_processed = fuseTable(df_processed, name_col_index)
 
     # For each peptide, take only the original part
-    logging.info(f'Peptides post-processing (replace alphabetically sorted name by one of the original names)')
+    logging.info(f'{get_time()} - Peptides post-processing (replace alphabetically sorted name by one of the original names)')
     df_processed = originalPeptides(df_processed, name_col_index)
 
     # Fuse stereoisomers using InChIKey
+    logging.info(f'{get_time()} - Row fusion by InChiKey')
     df_processed = fuseByInChIKey(df_processed, name_col_index)
 
     # Write output dataframe
@@ -1457,6 +1466,6 @@ if __name__ == '__main__':
 
     
     # start main function
-    logging.info('start script: '+"{0}".format(" ".join([x for x in sys.argv])))
+    logging.info(f'{get_time()} - start script: '+"{0}".format(" ".join([x for x in sys.argv])))
     main(args)
-    logging.info('end script')
+    logging.info(f'{get_time()} - end script')
